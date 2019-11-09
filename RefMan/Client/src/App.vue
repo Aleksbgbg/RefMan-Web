@@ -1,7 +1,16 @@
 <template lang="pug">
+div#app
+  file-tree
 </template>
 
 <script>
+import FileTree from "./components/FileTree";
+
+export default {
+  components: {
+    "file-tree": FileTree
+  }
+};
 </script>
 
 <style lang="stylus">
