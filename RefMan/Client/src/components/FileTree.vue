@@ -1,5 +1,5 @@
 <template lang="pug">
-div.m-10
+.h-screen.inline-block.border-2.border-orange-500
   folder.select-none(:identity="rootFolderIdentity")
 </template>
 

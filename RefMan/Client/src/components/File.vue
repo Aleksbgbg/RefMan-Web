@@ -1,7 +1,7 @@
 <template lang="pug">
 div
   file-system-entry(
-    image="https://img.icons8.com/cute-clipart/344/file.png"
+    :image="require('@/assets/file.svg')"
     :name="identity.name"
     :canExpand="false"
   )

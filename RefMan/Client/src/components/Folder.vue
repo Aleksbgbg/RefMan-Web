@@ -1,8 +1,8 @@
 <template lang="pug">
 div
   file-system-entry(
-    image="https://img.icons8.com/color/344/folder-invoices.png"
-    imageExpanded="https://img.icons8.com/color/344/opened-folder.png"
+    :image="require('@/assets/folder.svg')"
+    :imageExpanded="require('@/assets/open-folder.svg')"
     :name="identity.name"
     :canExpand="identity.children.length > 0"
     :isExpanded="isExpanded"
