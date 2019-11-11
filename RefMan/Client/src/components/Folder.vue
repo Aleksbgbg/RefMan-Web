@@ -1,10 +1,19 @@
 <template lang="pug">
 div
-  .inline-flex.px-1(class="hover:bg-blue-200" :class="{ 'bg-blue-300': isSelected }")
+  .inline-flex.px-1(
+    class="hover:bg-blue-200"
+    :class="{ 'bg-blue-300': isSelected }"
+    @click="isExpanded = !isExpanded"
+  )
     .expand.self-center(:class="{ expanded: isExpanded, collapsed: !isExpanded }")
-    img(src="https://img.icons8.com/color/344/folder-invoices.png" alt="folder" height="25" width="25")
+    img(
+      src="https://img.icons8.com/color/344/folder-invoices.png"
+      alt="folder"
+      height="25"
+      width="25"
+    )
     p hello
-  folder.pl-5(v-if="isExpanded && name !== 'b'" :name="name === 'a' ? 'c' : 'b'")
+  folder.pl-5(v-if="name !== 'b'" v-show="isExpanded" :name="name === 'a' ? 'c' : 'b'")
 </template>
 
 <script>
