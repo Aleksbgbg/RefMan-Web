@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-  .inline-flex.px-1(class="hover:bg-blue-400")
+  .inline-flex.px-1(class="hover:bg-blue-200" :class="{ 'bg-blue-300': isSelected }")
     .expand.self-center(:class="{ expanded: isExpanded, collapsed: !isExpanded }")
     img(src="https://img.icons8.com/color/344/folder-invoices.png" alt="folder" height="25" width="25")
     p hello
@@ -8,7 +8,6 @@ div
 </template>
 
 <script>
-
 export default {
   name: "folder",
   props: {
@@ -16,8 +15,12 @@ export default {
   },
   data() {
     return {
-      isExpanded: true
+      isExpanded: true,
+      isSelected: false
     };
+  },
+  mounted() {
+    this.isSelected = this.name === "b";
   }
 };
 </script>
