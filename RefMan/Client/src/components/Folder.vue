@@ -3,7 +3,7 @@ div
   .inline-flex.px-1(
     class="hover:bg-blue-200"
     :class="{ 'bg-blue-300': isSelected }"
-    @click="isExpanded = !isExpanded"
+    @click="click"
   )
     .expand.self-center(:class="{ expanded: isExpanded, collapsed: !isExpanded }")
     img(
@@ -17,6 +17,8 @@ div
 </template>
 
 <script>
+import { focusManager } from "@/services/FocusTracking/FocusManagerFactory";
+
 export default {
   name: "folder",
   props: {
@@ -28,8 +30,17 @@ export default {
       isSelected: false
     };
   },
-  mounted() {
-    this.isSelected = this.name === "b";
+  methods: {
+    click() {
+      // this.isExpanded = !this.isExpanded;
+      focusManager.focus(this);
+    },
+    focus() {
+      this.isSelected = true;
+    },
+    removeFocus() {
+      this.isSelected = false;
+    }
   }
 };
 </script>
