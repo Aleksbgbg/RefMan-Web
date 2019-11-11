@@ -1,7 +1,7 @@
 <template lang="pug">
 div
-  div.flex
-    div.expand.self-center(:class="{ expanded: isExpanded, collapsed: !isExpanded }")
+  .inline-flex.px-1(class="hover:bg-blue-400")
+    .expand.self-center(:class="{ expanded: isExpanded, collapsed: !isExpanded }")
     img(src="https://img.icons8.com/color/344/folder-invoices.png" alt="folder" height="25" width="25")
     p hello
   folder.pl-5(v-if="isExpanded && name !== 'b'" :name="name === 'a' ? 'c' : 'b'")
