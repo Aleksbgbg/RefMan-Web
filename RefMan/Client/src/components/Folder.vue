@@ -4,6 +4,7 @@ div
     class="hover:bg-blue-200"
     :class="{ 'bg-blue-300': isSelected }"
     @click="click"
+    @dblclick="doubleClick"
   )
     .expand.self-center(:class="{ expanded: isExpanded, collapsed: !isExpanded }")
     img(
@@ -32,8 +33,10 @@ export default {
   },
   methods: {
     click() {
-      // this.isExpanded = !this.isExpanded;
       focusManager.focus(this);
+    },
+    doubleClick() {
+      this.isExpanded = !this.isExpanded;
     },
     focus() {
       this.isSelected = true;

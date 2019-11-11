@@ -1,6 +1,6 @@
 <template lang="pug">
 div.m-10
-  folder(name="a")
+  folder.select-none(name="a")
 </template>
 
 <script>
