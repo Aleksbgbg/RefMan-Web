@@ -4,7 +4,7 @@ div
     image="https://img.icons8.com/color/344/folder-invoices.png"
     imageExpanded="https://img.icons8.com/color/344/opened-folder.png"
     :name="identity.name"
-    :canExpand="true"
+    :canExpand="identity.children.length > 0"
     :isExpanded="isExpanded"
     @dblclick.native="doubleClick"
   )

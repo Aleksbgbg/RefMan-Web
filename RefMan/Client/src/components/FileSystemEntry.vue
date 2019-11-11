@@ -6,10 +6,10 @@
 )
   .bg-cover.self-center.expand-image(
     v-if="canExpand"
-    :class="{ expanded: isExpanded, collapsed: !isExpanded }"
+    :class="{ expanded: isExpandedLocal, collapsed: !isExpandedLocal }"
   )
   img(
-    :src="isExpanded ? imageExpanded : image"
+    :src="isExpandedLocal ? imageExpanded : image"
     alt=""
     height="25"
     width="25"
@@ -32,6 +32,11 @@ export default {
     return {
       isSelected: false
     };
+  },
+  computed: {
+    isExpandedLocal() {
+      return this.canExpand && this.isExpanded;
+    }
   },
   methods: {
     click() {
