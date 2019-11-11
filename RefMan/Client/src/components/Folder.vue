@@ -6,7 +6,7 @@ div
     @click="click"
     @dblclick="doubleClick"
   )
-    .expand.self-center(:class="{ expanded: isExpanded, collapsed: !isExpanded }")
+    .bg-cover.self-center.expand-image(:class="{ expanded: isExpanded, collapsed: !isExpanded }")
     img(
       src="https://img.icons8.com/color/344/folder-invoices.png"
       alt="folder"
@@ -49,20 +49,19 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.expand
+.expand-image
   width: 5px
   height: 10px
-  background-size: cover
 
-.collapsed
-  background-image: url("../assets/expand.svg")
+  &.collapsed
+    background-image: url("../assets/expand.svg")
 
-  &:hover
-    background-image: url("../assets/expand-select.svg")
+    &:hover
+      background-image: url("../assets/expand-select.svg")
 
-.expanded
-  background-image: url("../assets/expanded.svg")
+  &.expanded
+    background-image: url("../assets/expanded.svg")
 
-  &:hover
-    background-image: url("../assets/expanded-select.svg")
+    &:hover
+      background-image: url("../assets/expanded-select.svg")
 </style>
