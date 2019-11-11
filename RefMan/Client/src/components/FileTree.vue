@@ -3,10 +3,12 @@
   div
     image-button(
       :src="require('@/assets/new-file.png')"
+      tooltipText="New File"
       @click.native="newFile"
     )
     image-button(
       :src="require('@/assets/new-folder.png')"
+      tooltipText="New Folder"
       @click.native="newFolder"
     )
   folder.select-none(:identity="rootFolderIdentity")
