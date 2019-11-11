@@ -1,9 +1,19 @@
 <template lang="pug">
 .h-screen.inline-block.border-2.border-orange-500
+  div
+    image-button(
+      :src="require('@/assets/new-file.png')"
+      @click.native="newFile"
+    )
+    image-button(
+      :src="require('@/assets/new-folder.png')"
+      @click.native="newFolder"
+    )
   folder.select-none(:identity="rootFolderIdentity")
 </template>
 
 <script>
+import ImageButton from "./ImageButton";
 import Folder from "./Folder";
 
 const rootFolderIdentity = {
@@ -29,12 +39,26 @@ const rootFolderIdentity = {
 
 export default {
   components: {
-    "folder": Folder
+    "image-button": ImageButton,
+    folder: Folder
   },
   data() {
     return {
       rootFolderIdentity
     };
+  },
+  methods: {
+    newFile() {
+      this.rootFolderIdentity.children.push({
+        name: "New File"
+      });
+    },
+    newFolder() {
+      this.rootFolderIdentity.children.push({
+        name: "New Folder",
+        children: []
+      });
+    }
   }
 };
 </script>
