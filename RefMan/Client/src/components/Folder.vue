@@ -13,17 +13,23 @@ div
       height="25"
       width="25"
     )
-    p hello
-  folder.pl-5(v-if="name !== 'b'" v-show="isExpanded" :name="name === 'a' ? 'c' : 'b'")
+    p {{ identity.name }}
+  .pl-5(v-if="identity.children" v-show="isExpanded")
+    template(v-for="child of identity.children")
+      template(v-if="child.children")
+        folder(:identity="child")
+      template(v-else)
+        file(:identity="child")
 </template>
 
 <script>
+import { FileSystemEntryIdentity } from "@/types/FileSystemEntryIdentity";
 import { focusManager } from "@/services/FocusTracking/FocusManagerFactory";
 
 export default {
   name: "folder",
   props: {
-    name: String
+    identity: FileSystemEntryIdentity
   },
   data() {
     return {
