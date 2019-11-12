@@ -17,14 +17,20 @@ export class Folder extends Node {
     public addFolder(folder: Folder): void {
       this.setParent(folder);
       this._folders.push(folder);
+      this.sortByName(this._folders);
     }
 
     public addFile(file: File): void {
       this.setParent(file);
       this._files.push(file);
+      this.sortByName(this._files);
     }
 
     private setParent(node: Node): void {
       node.parent = this;
+    }
+
+    private sortByName<T extends Node>(nodes: T[]): void {
+      nodes.sort((a, b) => a.name.localeCompare(b.name));
     }
 }
