@@ -1,12 +1,12 @@
 <template lang="pug">
 .h-screen.inline-block.border-2.border-orange-500
-  div
-    image-button(
+  .bg-gray-200
+    image-button.mx-1(
       :src="require('@/assets/new-file.png')"
       tooltipText="New File"
       @click.native="newFile"
     )
-    image-button(
+    image-button.mx-1(
       :src="require('@/assets/new-folder.png')"
       tooltipText="New Folder"
       @click.native="newFolder"
