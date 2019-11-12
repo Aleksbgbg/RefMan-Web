@@ -1,11 +1,11 @@
 <template lang="pug">
 .inline-flex.px-1(
-  :class="{ 'bg-blue-300': isSelected, 'hover:bg-blue-200': !isSelected }"
+  :class="isSelected ? 'bg-blue-300' : 'hover:bg-blue-200'"
   @click="click"
 )
   .bg-cover.self-center.expand-image(
     v-if="canExpand"
-    :class="{ expanded: isExpandedLocal, collapsed: !isExpandedLocal }"
+    :class="isExpandedLocal ? 'expanded' : 'collapsed'"
   )
   img(
     :src="isExpandedLocal ? imageExpanded : image"
@@ -13,7 +13,12 @@
     height="25"
     width="25"
   )
-  p {{ name }}
+  p(v-show="!isEditing") {{ name }}
+  input.outline-none.bg-transparent.border.border-solid.border-black(
+    v-show="isEditing"
+    type="text"
+    :value="name"
+  )
 </template>
 
 <script>
@@ -27,6 +32,7 @@ export default {
     name: String,
     canExpand: Boolean,
     isExpanded: Boolean,
+    isEditing: Boolean,
     node: Node
   },
   data() {
