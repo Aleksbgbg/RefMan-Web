@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { focusManager } from "@/services/FocusTracking/FocusManagerFactory";
+import { focusManager } from "@/services/FocusTracking/FocusTrackingFactory";
 
 export default {
   props: {
