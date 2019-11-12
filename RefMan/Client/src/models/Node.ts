@@ -1,9 +1,7 @@
-import { Folder } from "./Folder";
-
 export class Node {
     private readonly _name: string;
 
-    private _parent: Folder | null = null;
+    private _parent: Node | null = null;
 
     constructor(name: string) {
       this._name = name;
@@ -13,11 +11,11 @@ export class Node {
       return this._name;
     }
 
-    public get parent(): Folder | null {
+    public get parent(): Node | null {
       return this._parent;
     }
 
-    public set parent(value: Folder | null) {
+    public set parent(value: Node | null) {
       this._parent = value;
     }
 }

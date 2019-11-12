@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { Node } from "@/models/Node";
 import { focusManager } from "@/services/FocusTracking/FocusTrackingFactory";
 
 export default {
@@ -26,7 +27,8 @@ export default {
     imageExpanded: String,
     name: String,
     canExpand: Boolean,
-    isExpanded: Boolean
+    isExpanded: Boolean,
+    node: Node
   },
   data() {
     return {
@@ -40,7 +42,7 @@ export default {
   },
   methods: {
     click() {
-      focusManager.focus(this);
+      focusManager.focus(this, this.node);
     },
     focus() {
       this.isSelected = true;

@@ -6,6 +6,7 @@ div
     :name="model.name"
     :canExpand="canExpand"
     :isExpanded="isExpanded"
+    :node="model"
     @dblclick.native="doubleClick"
   )
   .pl-5(v-if="canExpand" v-show="isExpanded")

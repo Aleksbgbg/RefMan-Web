@@ -1,5 +1,8 @@
 import { Focusable } from "./Focusable";
+import { Node } from "@/models/Node";
 
 export interface FocusTracker {
-    getFocusedNode(): Focusable | null;
+    getCurrentFocusable(): Focusable | null;
+
+    getFocusedNode(): Node | null;
 }

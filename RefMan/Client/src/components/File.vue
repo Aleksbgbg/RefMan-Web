@@ -4,6 +4,7 @@ div
     :image="require('@/assets/file.svg')"
     :name="model.name"
     :canExpand="false"
+    :node="model"
   )
 </template>
 
