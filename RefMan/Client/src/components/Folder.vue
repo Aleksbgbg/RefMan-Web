@@ -10,22 +10,17 @@ div
     @dblclick.native="doubleClick"
   )
   .ml-5(v-if="canExpand" v-show="isExpanded")
-    template(v-for="folder of model.folders")
-      folder(:model="folder")
-    template(v-for="file of model.files")
-      file(:model="file")
+    node-list(:model="model")
 </template>
 
 <script>
 import FileSystemEntryComponent from "./FileSystemEntry";
-import FileComponent from "./File";
 import { Folder } from "@/models/Folder";
 
 export default {
-  name: "folder",
   components: {
     "file-system-entry": FileSystemEntryComponent,
-    file: FileComponent
+    "node-list": () => import("./NodeList")
   },
   props: {
     model: Folder

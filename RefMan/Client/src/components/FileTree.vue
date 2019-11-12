@@ -12,16 +12,12 @@
       @click.native="newFolder"
     )
   div
-    template(v-for="folder of rootFolder.folders")
-      folder(:model="folder")
-    template(v-for="file of rootFolder.files")
-      file(:model="file")
+    node-list(:model="rootFolder")
 </template>
 
 <script>
 import ImageButtonComponent from "./ImageButton";
-import FolderComponent from "./Folder";
-import FileComponent from "./File";
+import NodeListComponent from "./NodeList";
 import { Folder } from "@/models/Folder";
 import { File } from "@/models/File";
 import { focusTracker } from "@/services/FocusTracking/FocusTrackingFactory";
@@ -39,8 +35,7 @@ assignmentFolder.addFile(new File("Part 2"));
 export default {
   components: {
     "image-button": ImageButtonComponent,
-    folder: FolderComponent,
-    file: FileComponent
+    "node-list": NodeListComponent
   },
   data() {
     return {
