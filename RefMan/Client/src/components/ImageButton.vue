@@ -1,12 +1,12 @@
 <template lang="pug">
-button.group.inline-block.relative.border.border-dotted.border-black
+button.group.relative(class="focus:outline-none")
   img(
     :src="src"
     alt=""
     width="25"
     height="25"
   )
-  span.invisible.bg-black.text-white.text-center.px-3.rounded.absolute(class="group-hover:visible") {{ tooltipText }}
+  span.invisible.bg-black.text-white.text-center.text-xs.px-2.rounded.absolute(class="group-hover:visible") {{ tooltipText }}
 </template>
 
 <script>
