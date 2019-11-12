@@ -9,7 +9,7 @@ div
     :node="model"
     @dblclick.native="doubleClick"
   )
-  .pl-5(v-if="canExpand" v-show="isExpanded")
+  .ml-5(v-if="canExpand" v-show="isExpanded")
     folder(v-for="folder of model.folders" :model="folder")
     file(v-for="file of model.files" :model="file")
 </template>
