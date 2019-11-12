@@ -42,7 +42,11 @@ export default {
   },
   methods: {
     click() {
-      focusManager.focus(this, this.node);
+      if (this.isSelected) {
+        focusManager.removeFocus();
+      } else {
+        focusManager.focus(this, this.node);
+      }
     },
     focus() {
       this.isSelected = true;

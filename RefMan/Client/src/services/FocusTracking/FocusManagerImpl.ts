@@ -25,4 +25,12 @@ export class FocusManagerImpl implements FocusManager, FocusTracker {
       this._currentFocus = focusable;
       this._currentFocus.focus();
     }
+
+    public removeFocus(): void {
+      if (this._currentFocus) {
+        this._currentFocus.removeFocus();
+      }
+      this._currentFocus = null;
+      this._currentNode = null;
+    }
 }
