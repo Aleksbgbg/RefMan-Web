@@ -1,7 +1,6 @@
 <template lang="pug">
 .inline-flex.px-1(
-  class="hover:bg-blue-200"
-  :class="{ 'bg-blue-300': isSelected }"
+  :class="{ 'bg-blue-300': isSelected, 'hover:bg-blue-200': !isSelected }"
   @click="click"
 )
   .bg-cover.self-center.expand-image(
