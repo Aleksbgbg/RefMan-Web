@@ -42,7 +42,9 @@ export default {
   },
   methods: {
     doubleClick() {
-      this.isExpanded = !this.isExpanded;
+      if (this.canExpand) {
+        this.isExpanded = !this.isExpanded;
+      }
     }
   }
 };
