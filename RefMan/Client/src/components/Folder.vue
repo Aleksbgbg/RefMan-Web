@@ -10,8 +10,10 @@ div
     @dblclick.native="doubleClick"
   )
   .ml-5(v-if="canExpand" v-show="isExpanded")
-    folder(v-for="folder of model.folders" :model="folder")
-    file(v-for="file of model.files" :model="file")
+    template(v-for="folder of model.folders")
+      folder(:model="folder")
+    template(v-for="file of model.files")
+      file(:model="file")
 </template>
 
 <script>
