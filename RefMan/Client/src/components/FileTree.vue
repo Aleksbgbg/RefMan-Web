@@ -11,55 +11,41 @@
       tooltipText="New Folder"
       @click.native="newFolder"
     )
-  folder.select-none(:identity="rootFolderIdentity")
+  folder.select-none(:model="rootFolder")
 </template>
 
 <script>
-import ImageButton from "./ImageButton";
-import Folder from "./Folder";
+import ImageButtonComponent from "./ImageButton";
+import FolderComponent from "./Folder";
+import { Folder } from "@/models/Folder";
+import { File } from "@/models/File";
 
-const rootFolderIdentity = {
-  name: "References",
-  children: [
-    {
-      name: "Assignment",
-      children: [
-        {
-          name: "Part 1"
-        },
-        {
-          name: "Part 2"
-        }
-      ]
-    },
-    {
-      name: "Some Other Folder",
-      children: []
-    }
-  ]
-};
+const rootFolder = new Folder("Root");
+const assignmentFolder = new Folder("Assignments");
+const otherFolder = new Folder("Some Other Folder");
+
+rootFolder.addFolder(assignmentFolder);
+rootFolder.addFolder(otherFolder);
+
+assignmentFolder.addFile(new File("Part 1"));
+assignmentFolder.addFile(new File("Part 2"));
 
 export default {
   components: {
-    "image-button": ImageButton,
-    folder: Folder
+    "image-button": ImageButtonComponent,
+    folder: FolderComponent
   },
   data() {
     return {
-      rootFolderIdentity
+      rootFolder
     };
   },
   methods: {
     newFile() {
-      this.rootFolderIdentity.children.push({
-        name: "New File"
-      });
+      this.rootFolder.addFile(new File("New File"));
     },
     newFolder() {
-      this.rootFolderIdentity.children.push({
-        name: "New Folder",
-        children: []
-      });
+      this.rootFolder.addFolder(new Folder("New Folder"));
     }
   }
 };

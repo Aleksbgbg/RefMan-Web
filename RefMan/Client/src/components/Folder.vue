@@ -3,37 +3,39 @@ div
   file-system-entry(
     :image="require('@/assets/folder.svg')"
     :imageExpanded="require('@/assets/open-folder.svg')"
-    :name="identity.name"
-    :canExpand="identity.children.length > 0"
+    :name="model.name"
+    :canExpand="canExpand"
     :isExpanded="isExpanded"
     @dblclick.native="doubleClick"
   )
-  .pl-5(v-if="identity.children" v-show="isExpanded")
-    template(v-for="child of identity.children")
-      template(v-if="child.children")
-        folder(:identity="child")
-      template(v-else)
-        file(:identity="child")
+  .pl-5(v-if="canExpand" v-show="isExpanded")
+    folder(v-for="folder of model.folders" :model="folder")
+    file(v-for="file of model.files" :model="file")
 </template>
 
 <script>
-import FileSystemEntry from "./FileSystemEntry";
-import File from "./File";
-import { FileSystemEntryIdentity } from "@/types/FileSystemEntryIdentity";
+import FileSystemEntryComponent from "./FileSystemEntry";
+import FileComponent from "./File";
+import { Folder } from "@/models/Folder";
 
 export default {
   name: "folder",
   components: {
-    "file-system-entry": FileSystemEntry,
-    file: File
+    "file-system-entry": FileSystemEntryComponent,
+    file: FileComponent
   },
   props: {
-    identity: FileSystemEntryIdentity
+    model: Folder
   },
   data() {
     return {
       isExpanded: true
     };
+  },
+  computed: {
+    canExpand() {
+      return this.model.folders.length > 0 || this.model.files.length > 0;
+    }
   },
   methods: {
     doubleClick() {

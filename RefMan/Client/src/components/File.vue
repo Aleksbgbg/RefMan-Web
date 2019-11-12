@@ -2,21 +2,21 @@
 div
   file-system-entry(
     :image="require('@/assets/file.svg')"
-    :name="identity.name"
+    :name="model.name"
     :canExpand="false"
   )
 </template>
 
 <script>
-import FileSystemEntry from "./FileSystemEntry";
-import { FileSystemEntryIdentity } from "@/types/FileSystemEntryIdentity";
+import FileSystemEntryComponent from "./FileSystemEntry";
+import { File } from "@/models/File";
 
 export default {
   components: {
-    "file-system-entry": FileSystemEntry
+    "file-system-entry": FileSystemEntryComponent
   },
   props: {
-    identity: FileSystemEntryIdentity
+    model: File
   }
 };
 </script>
