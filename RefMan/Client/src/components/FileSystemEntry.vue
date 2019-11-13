@@ -13,11 +13,12 @@
     height="25"
     width="25"
   )
-  p(v-show="!isEditing") {{ name }}
+  p(v-show="!isEditing") {{ node.name }}
   input.outline-none.bg-transparent.border.border-solid.border-black(
     v-show="isEditing"
     type="text"
-    v-model="name"
+    v-model="node.name"
+    ref="nameInput"
   )
 </template>
 
@@ -35,31 +36,31 @@ export default {
   },
   data() {
     return {
-      isSelected: false,
-      isEditing: false,
-      name: this.node.name
+      isSelected: false
     };
   },
   computed: {
     isExpandedLocal() {
       return this.canExpand && this.isExpanded;
+    },
+    isEditing() {
+      return this.node.isEditing;
     }
   },
   watch: {
-    name() {
-      this.node.name = this.name;
+    isEditing() {
+      this.beginEditIfEditing();
     }
+  },
+  mounted() {
+    this.beginEditIfEditing();
   },
   methods: {
     click() {
       if (this.isSelected) {
         focusManager.removeFocus();
       } else {
-        focusManager.focus({
-          focusable: this,
-          editable: this,
-          node: this.node
-        });
+        this.focusSelf();
       }
     },
     focus() {
@@ -67,10 +68,25 @@ export default {
     },
     removeFocus() {
       this.isSelected = false;
-      this.isEditing = false;
+      this.node.isEditing = false;
     },
     edit() {
-      this.isEditing = true;
+      this.node.isEditing = true;
+    },
+    focusSelf() {
+      focusManager.focus({
+        focusable: this,
+        editable: this,
+        node: this.node
+      });
+    },
+    beginEditIfEditing() {
+      if (this.isEditing) {
+        this.focusSelf();
+        this.$nextTick(() => {
+          this.$refs.nameInput.focus();
+        });
+      }
     }
   }
 };

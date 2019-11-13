@@ -3,8 +3,11 @@ export class Node {
 
     private _parent: Node | null = null;
 
-    constructor(name: string) {
+    private _isEditing: boolean;
+
+    constructor(name: string = "", isEditing: boolean = false) {
       this._name = name;
+      this._isEditing = isEditing;
     }
 
     public get name(): string {
@@ -21,5 +24,13 @@ export class Node {
 
     public set parent(value: Node | null) {
       this._parent = value;
+    }
+
+    public get isEditing(): boolean {
+      return this._isEditing;
+    }
+
+    public set isEditing(value: boolean) {
+      this._isEditing = value;
     }
 }

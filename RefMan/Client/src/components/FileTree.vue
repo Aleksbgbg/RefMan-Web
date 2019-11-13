@@ -44,10 +44,10 @@ export default {
   },
   methods: {
     newFile() {
-      this.findClosestFolderToFocus().addFile(new File("New File"));
+      this.findClosestFolderToFocus().addFile(new File("New File", true));
     },
     newFolder() {
-      this.findClosestFolderToFocus().addFolder(new Folder("New Folder"));
+      this.findClosestFolderToFocus().addFolder(new Folder("New Folder", true));
     },
     findClosestFolderToFocus() {
       const currentFocal = focusTracker.getFocal();
