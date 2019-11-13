@@ -55,7 +55,11 @@ export default {
       if (this.isSelected) {
         focusManager.removeFocus();
       } else {
-        focusManager.focus(this, this, this.node);
+        focusManager.focus({
+          focusable: this,
+          editable: this,
+          node: this.node
+        });
       }
     },
     focus() {
