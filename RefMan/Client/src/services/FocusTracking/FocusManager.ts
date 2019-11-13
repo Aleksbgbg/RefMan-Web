@@ -1,9 +1,7 @@
-import { Focusable } from "./Focusable";
-import { Editable } from "./Editable";
-import { Node } from "@/models/Node";
+import { Focal } from "./Focal";
 
 export interface FocusManager {
-    focus(focusable: Focusable, editable: Editable, node: Node): void;
+    focus(focal: Focal): void;
 
     removeFocus(): void;
 }

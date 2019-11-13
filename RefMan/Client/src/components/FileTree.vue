@@ -50,7 +50,9 @@ export default {
       this.findClosestFolderToFocus().addFolder(new Folder("New Folder"));
     },
     findClosestFolderToFocus() {
-      const currentNode = focusTracker.getFocusedNode();
+      const currentFocal = focusTracker.getFocal();
+
+      const currentNode = currentFocal.node;
 
       if (currentNode === null) {
         return this.rootFolder;

@@ -1,46 +1,28 @@
 import { FocusManager } from "./FocusManager";
 import { FocusTracker } from "./FocusTracker";
-import { Focusable } from "./Focusable";
-import { Editable } from "./Editable";
-import { Node } from "@/models/Node";
+import { Focal } from "./Focal";
 
 export class FocusManagerImpl implements FocusManager, FocusTracker {
-    private _currentFocus: Focusable | null = null;
+    private _currentFocal: Focal | null = null;
 
-    private _currentEditable: Editable | null = null;
-
-    private _currentNode: Node | null = null;
-
-    public getCurrentFocusable(): Focusable | null {
-      return this._currentFocus;
+    public getFocal(): Focal | null {
+      return this._currentFocal;
     }
 
-    public getCurrentEditable(): Editable | null {
-      return this._currentEditable;
-    }
-
-    public getFocusedNode(): Node | null {
-      return this._currentNode;
-    }
-
-    public focus(focusable: Focusable, editable: Editable, node: Node): void {
-      if (this._currentFocus) {
-        this._currentFocus.removeFocus();
+    public focus(focal: Focal): void {
+      if (this._currentFocal) {
+        this._currentFocal.focusable.removeFocus();
       }
 
-      this._currentFocus = focusable;
-      this._currentEditable = editable;
-      this._currentNode = node;
-
-      this._currentFocus.focus();
+      this._currentFocal = focal;
+      this._currentFocal.focusable.focus();
     }
 
     public removeFocus(): void {
-      if (this._currentFocus) {
-        this._currentFocus.removeFocus();
+      if (this._currentFocal) {
+        this._currentFocal.focusable.removeFocus();
       }
-      this._currentFocus = null;
-      this._currentEditable = null;
-      this._currentNode = null;
+
+      this._currentFocal = null;
     }
 }
