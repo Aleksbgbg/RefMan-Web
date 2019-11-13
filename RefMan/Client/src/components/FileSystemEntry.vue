@@ -55,7 +55,7 @@ export default {
       if (this.isSelected) {
         focusManager.removeFocus();
       } else {
-        focusManager.focus(this, this.node);
+        focusManager.focus(this, this, this.node);
       }
     },
     focus() {
@@ -64,6 +64,9 @@ export default {
     removeFocus() {
       this.isSelected = false;
       this.isEditing = false;
+    },
+    edit() {
+      this.isEditing = true;
     }
   }
 };
