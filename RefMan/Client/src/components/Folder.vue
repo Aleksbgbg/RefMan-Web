@@ -3,7 +3,6 @@ div
   file-system-entry(
     :image="require('@/assets/folder.svg')"
     :imageExpanded="require('@/assets/open-folder.svg')"
-    :name="model.name"
     :canExpand="canExpand"
     :isExpanded="isExpanded"
     :node="model"

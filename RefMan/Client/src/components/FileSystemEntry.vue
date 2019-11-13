@@ -17,7 +17,7 @@
   input.outline-none.bg-transparent.border.border-solid.border-black(
     v-show="isEditing"
     type="text"
-    :value="name"
+    v-model="name"
   )
 </template>
 
@@ -29,7 +29,6 @@ export default {
   props: {
     image: String,
     imageExpanded: String,
-    name: String,
     canExpand: Boolean,
     isExpanded: Boolean,
     isEditing: Boolean,
@@ -37,12 +36,18 @@ export default {
   },
   data() {
     return {
-      isSelected: false
+      isSelected: false,
+      name: this.node.name
     };
   },
   computed: {
     isExpandedLocal() {
       return this.canExpand && this.isExpanded;
+    }
+  },
+  watch: {
+    name() {
+      this.node.name = this.name;
     }
   },
   methods: {
@@ -58,6 +63,7 @@ export default {
     },
     removeFocus() {
       this.isSelected = false;
+      this.isEditing = false;
     }
   }
 };
