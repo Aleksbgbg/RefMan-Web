@@ -52,14 +52,16 @@ export default {
     findClosestFolderToFocus() {
       const currentFocal = focusTracker.getFocal();
 
-      const currentNode = currentFocal.node;
-
-      if (currentNode === null) {
+      if (currentFocal === null) {
         return this.rootFolder;
-      } else if (currentNode instanceof File) {
-        return currentNode.parent;
       } else {
-        return currentNode;
+        const currentNode = currentFocal.node;
+
+        if (currentNode instanceof File) {
+          return currentNode.parent;
+        } else {
+          return currentNode;
+        }
       }
     }
   }
