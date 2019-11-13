@@ -31,12 +31,12 @@ export default {
     imageExpanded: String,
     canExpand: Boolean,
     isExpanded: Boolean,
-    isEditing: Boolean,
     node: Node
   },
   data() {
     return {
       isSelected: false,
+      isEditing: false,
       name: this.node.name
     };
   },
