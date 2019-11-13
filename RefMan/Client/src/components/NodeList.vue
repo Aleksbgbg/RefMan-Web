@@ -2,9 +2,9 @@
 div
   <!-- TODO: UUID keys from database -->
   template(v-for="folder of model.folders")
-    folder(:model="folder")
+    folder(:key="folder.name" :model="folder")
   template(v-for="file of model.files")
-    file(:model="file")
+    file(:key="file.name" :model="file")
 </template>
 
 <script>
