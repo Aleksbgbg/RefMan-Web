@@ -1,5 +1,7 @@
 <template lang="pug">
-.select-none.h-screen.inline-block.border-2.border-orange-500
+.select-none.h-screen.inline-block.border-2.border-orange-500(
+  @click.self="loseFocus"
+)
   .bg-gray-200
     image-button.mx-1(
       :src="require('@/assets/new-file.png')"
@@ -20,7 +22,7 @@ import ImageButtonComponent from "./ImageButton";
 import NodeListComponent from "./NodeList";
 import { Folder } from "@/models/Folder";
 import { File } from "@/models/File";
-import { focusTracker } from "@/services/FocusTracking/FocusTrackingFactory";
+import { focusManager, focusTracker } from "@/services/FocusTracking/FocusTrackingFactory";
 
 const rootFolder = new Folder();
 const assignmentFolder = new Folder("Assignments");
@@ -43,6 +45,9 @@ export default {
     };
   },
   methods: {
+    loseFocus() {
+      focusManager.removeFocus();
+    },
     newFile() {
       this.findClosestFolderToFocus().addFile(new File("New File", true));
     },

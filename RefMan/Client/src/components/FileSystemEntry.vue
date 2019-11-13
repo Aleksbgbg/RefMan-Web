@@ -57,9 +57,7 @@ export default {
   },
   methods: {
     click() {
-      if (this.isSelected) {
-        focusManager.removeFocus();
-      } else {
+      if (!this.isSelected) {
         this.focusSelf();
       }
     },
