@@ -1,4 +1,4 @@
-export class Node {
+export abstract class Node {
     private _name: string;
 
     private _parent: Node | null = null;
@@ -9,6 +9,8 @@ export class Node {
       this._name = name;
       this._isEditing = isEditing;
     }
+
+    public abstract get isLeaf(): boolean;
 
     public get name(): string {
       return this._name;

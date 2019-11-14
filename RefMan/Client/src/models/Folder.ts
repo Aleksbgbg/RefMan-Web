@@ -6,6 +6,10 @@ export class Folder extends Node {
 
     private readonly _files: File[] = [];
 
+    public get isLeaf(): boolean {
+      return false;
+    }
+
     public get folders(): Folder[] {
       return this._folders;
     }

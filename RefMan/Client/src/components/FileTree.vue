@@ -62,7 +62,7 @@ export default {
       } else {
         const currentNode = currentFocal.node;
 
-        if (currentNode instanceof File) {
+        if (currentNode.isLeaf) {
           return currentNode.parent;
         } else {
           return currentNode;
