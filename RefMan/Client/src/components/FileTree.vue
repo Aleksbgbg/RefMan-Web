@@ -13,6 +13,16 @@
       tooltipText="New Folder"
       @click.native="newFolder"
     )
+    image-button.mx-1(
+      :src="require('@/assets/rename.png')"
+      tooltipText="Rename Selected"
+      @click.native="renameNode"
+    )
+    image-button.mx-1(
+      :src="require('@/assets/delete.png')"
+      tooltipText="Delete Selected"
+      @click.native="deleteNode"
+    )
   div
     node-list(:model="rootFolder")
 </template>
@@ -47,6 +57,18 @@ export default {
   methods: {
     loseFocus() {
       focusManager.removeFocus();
+    },
+    deleteNode() {
+      const currentFocal = focusTracker.getFocal();
+
+      const currentNode = currentFocal.node;
+      const currentNodeParent = currentNode.parent;
+
+      currentNodeParent.remove(currentNode);
+    },
+    renameNode() {
+      const currentFocal = focusTracker.getFocal();
+      currentFocal.node.isEditing = true;
     },
     newFile() {
       this.findClosestFolderToFocus().addFile(new File("New File", true));
