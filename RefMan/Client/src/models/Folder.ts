@@ -30,11 +30,30 @@ export class Folder extends Node {
       this.sortByName(this._files);
     }
 
+    public remove(node: Node): void {
+      const removedFolder = this.removeNodeFromArray(node, this._folders);
+
+      if (!removedFolder) {
+        this.removeNodeFromArray(node, this._files);
+      }
+    }
+
     private setParent(node: Node): void {
       node.parent = this;
     }
 
     private sortByName<T extends Node>(nodes: T[]): void {
       nodes.sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    private removeNodeFromArray<T extends Node>(node: Node, nodes: T[]): boolean {
+      for (let index = 0; index < nodes.length; ++index) {
+        if (nodes[index] === node) {
+          nodes.splice(index, 1);
+          return true;
+        }
+      }
+
+      return false;
     }
 }
