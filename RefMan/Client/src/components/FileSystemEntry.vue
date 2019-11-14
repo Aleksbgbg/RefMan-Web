@@ -57,9 +57,7 @@ export default {
   },
   methods: {
     click() {
-      if (!this.isSelected) {
-        this.focusSelf();
-      }
+      this.focusSelf();
     },
     focus() {
       this.isSelected = true;
@@ -72,11 +70,13 @@ export default {
       this.node.isEditing = true;
     },
     focusSelf() {
-      focusManager.focus({
-        focusable: this,
-        editable: this,
-        node: this.node
-      });
+      if (!this.isSelected) {
+        focusManager.focus({
+          focusable: this,
+          editable: this,
+          node: this.node
+        });
+      }
     },
     beginEditIfEditing() {
       if (this.isEditing) {
