@@ -6,7 +6,7 @@ div
     :canExpand="canExpand"
     :isExpanded="isExpanded"
     :node="model"
-    @dblclick.native="doubleClick"
+    @expand="expand"
   )
   .ml-5(v-if="canExpand" v-show="isExpanded")
     node-list(:model="model")
@@ -35,7 +35,7 @@ export default {
     }
   },
   methods: {
-    doubleClick() {
+    expand() {
       if (this.canExpand) {
         this.isExpanded = !this.isExpanded;
       }

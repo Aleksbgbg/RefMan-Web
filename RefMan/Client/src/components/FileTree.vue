@@ -23,8 +23,7 @@
       tooltipText="Delete Selected"
       @click.native="deleteNode"
     )
-  div
-    node-list(:model="rootFolder")
+  node-list(:model="rootFolder")
 </template>
 
 <script>

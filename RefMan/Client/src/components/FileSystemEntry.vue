@@ -1,25 +1,27 @@
 <template lang="pug">
-.inline-flex.px-1(
-  :class="isSelected ? 'bg-blue-300' : 'hover:bg-blue-200'"
-  @click="click"
-)
-  .bg-cover.self-center.expand-image(
-    v-if="canExpand"
-    :class="isExpandedLocal ? 'expanded' : 'collapsed'"
+.inline-flex
+  .flex.flex-none.expander.px-1(@click="$emit('expand')")
+    .self-center.bg-cover.expand-image(
+      :class="[{ invisible: !canExpand }, isExpandedLocal ? 'expanded' : 'collapsed']"
+    )
+  .inline-flex.px-1(
+    :class="isSelected ? 'bg-blue-300' : 'hover:bg-blue-200'"
+    @click="click"
+    @dblclick="$emit('expand')"
   )
-  img(
-    :src="isExpandedLocal ? imageExpanded : image"
-    alt=""
-    height="25"
-    width="25"
-  )
-  p(v-show="!isEditing") {{ node.name }}
-  input.outline-none.bg-transparent.border.border-solid.border-black(
-    v-show="isEditing"
-    type="text"
-    v-model="node.name"
-    ref="nameInput"
-  )
+    img.flex-none(
+      :src="isExpandedLocal ? imageExpanded : image"
+      alt=""
+      height="25"
+      width="25"
+    )
+    p.flex-1(v-show="!isEditing") {{ node.name }}
+    input.flex-1.outline-none.bg-transparent.border.border-solid.border-black(
+      v-show="isEditing"
+      ref="nameInput"
+      type="text"
+      v-model="node.name"
+    )
 </template>
 
 <script>
@@ -91,19 +93,22 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.expand-image
-  width: 5px
-  height: 10px
+.expander
+  .expand-image
+    width: 5px
+    height: 10px
 
-  &.collapsed
-    background-image: url("../assets/expand.svg")
+    &.collapsed
+      background-image: url("../assets/expand.svg")
 
-    &:hover
-      background-image: url("../assets/expand-select.svg")
+    &.expanded
+      background-image: url("../assets/expanded.svg")
 
-  &.expanded
-    background-image: url("../assets/expanded.svg")
+  &:hover
+    .expand-image
+      &.collapsed
+        background-image: url("../assets/expand-select.svg")
 
-    &:hover
-      background-image: url("../assets/expanded-select.svg")
+      &.expanded
+        background-image: url("../assets/expanded-select.svg")
 </style>
