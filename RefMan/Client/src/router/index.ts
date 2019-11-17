@@ -1,9 +1,25 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
+import MainComponent from "@/components/Main.vue";
 
 Vue.use(VueRouter);
 
-const routes: RouteConfig[] = [];
+const routes: RouteConfig[] = [
+  {
+    path: "/",
+    component: MainComponent,
+    children: [
+      {
+        path: "/references",
+        component: () => import("@/components/references/References.vue")
+      },
+      {
+        path: "/",
+        redirect: "references"
+      }
+    ]
+  }
+];
 
 const router = new VueRouter({
   mode: "history",

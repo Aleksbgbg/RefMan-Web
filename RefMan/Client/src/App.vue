@@ -1,17 +1,7 @@
 <template lang="pug">
-div#app
-  file-tree
+#app
+  router-view
 </template>
-
-<script>
-import FileTree from "./components/file-system/FileTree";
-
-export default {
-  components: {
-    "file-tree": FileTree
-  }
-};
-</script>
 
 <style lang="stylus">
 #app
