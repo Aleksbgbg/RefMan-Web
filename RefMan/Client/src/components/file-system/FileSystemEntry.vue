@@ -100,16 +100,16 @@ export default {
     height: 12px
 
     &.collapsed
-      background-image: url(../assets/expand.svg)
+      background-image: url("~@/assets/expand.svg")
 
     &.expanded
-      background-image: url(../assets/expanded.svg)
+      background-image: url("~@/assets/expanded.svg")
 
   &:hover
     .expand-image
       &.collapsed
-        background-image: url(../assets/expand-select.svg)
+        background-image: url("~@/assets/expand-select.svg")
 
       &.expanded
-        background-image: url(../assets/expanded-select.svg)
+        background-image: url("~@/assets/expanded-select.svg")
 </style>

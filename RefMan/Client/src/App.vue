@@ -4,7 +4,7 @@ div#app
 </template>
 
 <script>
-import FileTree from "./components/FileTree";
+import FileTree from "./components/file-system/FileTree";
 
 export default {
   components: {
