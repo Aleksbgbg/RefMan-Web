@@ -85,6 +85,7 @@ export default {
         this.focusSelf();
         this.$nextTick(() => {
           this.$refs.nameInput.focus();
+          this.$refs.nameInput.setSelectionRange(0, this.node.name.length);
         });
       }
     }
