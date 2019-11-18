@@ -10,6 +10,7 @@ const routes: RouteConfig[] = [
     component: MainComponent,
     children: [
       {
+        name: "references",
         path: "/references",
         component: () => import("@/components/references/References.vue")
       },
