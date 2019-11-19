@@ -1,5 +1,5 @@
 <template lang="pug">
-nav.bg-dark-light.px-4.py-2
+nav.flex.flex-row.bg-dark-light.px-4.py-2
   router-link.text-white.text-xl.mr-4(to="/")
     img.inline-block(
       :src="require('@/assets/logo.png')"
@@ -8,7 +8,19 @@ nav.bg-dark-light.px-4.py-2
       height="25"
     )
     span RefMan
-  nav-item(:to="{ name: 'references' }") References
+  .flex.flex-grow
+    nav-item(:to="{ name: 'references' }") References
+    c-dropdown-button.ml-auto
+      template(v-slot:button-content)
+        img.inline(
+          src="https://api.adorable.io/avatars/285/username.png"
+          alt=""
+          width="15"
+          height="15"
+        )
+        span Username
+      c-dropdown-item(:to="{ name: 'login' }") Login
+      c-dropdown-item(:to="{ name: 'register' }") Register
 </template>
 
 <script>
