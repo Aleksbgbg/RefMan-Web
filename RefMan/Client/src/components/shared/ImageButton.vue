@@ -1,5 +1,5 @@
 <template lang="pug">
-button.group.relative(class="focus:outline-none")
+button.group.relative.mx-1(class="focus:outline-none")
   img(
     :src="src"
     alt=""

@@ -3,22 +3,22 @@
   @click.self="loseFocus"
 )
   .bg-gray-200
-    image-button.mx-1(
+    image-button(
       :src="require('@/assets/new-file.png')"
       tooltipText="New File"
       @click.native="newFile"
     )
-    image-button.mx-1(
+    image-button(
       :src="require('@/assets/new-folder.png')"
       tooltipText="New Folder"
       @click.native="newFolder"
     )
-    image-button.mx-1(
+    image-button(
       :src="require('@/assets/rename.png')"
       tooltipText="Rename Selected"
       @click.native="renameNode"
     )
-    image-button.mx-1(
+    image-button(
       :src="require('@/assets/delete.png')"
       tooltipText="Delete Selected"
       @click.native="deleteNode"
