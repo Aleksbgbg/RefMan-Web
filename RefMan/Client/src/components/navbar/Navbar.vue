@@ -1,5 +1,5 @@
 <template lang="pug">
-nav.bg-gray-900.px-4.py-2
+nav.bg-dark-light.px-4.py-2
   router-link.text-white.text-xl.mr-4(to="/")
     img.inline-block(
       :src="require('@/assets/logo.png')"
