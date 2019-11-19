@@ -4,7 +4,7 @@ router-link.mx-2(
   v-bind="$attrs"
 )
   a(
-    :class="isActive ? 'text-white' : 'text-gray-400 hover:text-gray-200'"
+    :class="isActive ? 'text-white' : 'text-gray-400 hover-text-gray-200'"
     :href="href"
     @click="navigate"
   )

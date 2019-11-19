@@ -1,4 +1,5 @@
 module.exports = {
+  separator: "-",
   theme: {
     extend: {
       colors: {
