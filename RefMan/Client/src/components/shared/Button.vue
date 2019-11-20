@@ -1,4 +1,17 @@
 <template lang="pug">
-button.bg-purple-500.hover-bg-purple-700.text-white.focus-outline-none.focus-shadow-outline.rounded.py-2.px-4
+button.text-white.rounded.focus-outline-none.focus-shadow-outline.py-2.px-4(
+  :class="`bg-${variant}-500 hover-bg-${variant}-700`"
+)
   slot
 </template>
+
+<script>
+export default {
+  props: {
+    variant: {
+      type: String,
+      default: "blue"
+    }
+  }
+};
+</script>

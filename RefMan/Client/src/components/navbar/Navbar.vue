@@ -11,7 +11,7 @@ nav.flex.flex-row.bg-dark-light.px-4.py-2
   .flex.flex-grow
     navigation
       nav-item(:to="{ name: 'references' }") References
-    c-dropdown-button.ml-auto
+    c-dropdown-button.ml-auto(variant="purple")
       template(v-slot:button-content)
         img.inline-block.mr-1(
           src="https://api.adorable.io/avatars/285/username.png"

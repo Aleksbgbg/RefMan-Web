@@ -1,6 +1,10 @@
 <template lang="pug">
 .relative
-  c-button.dropdown-btn(@click.native="isOpen = !isOpen" @focusout.native="isOpen = false")
+  c-button.dropdown-btn(
+    v-bind="$attrs"
+    @click.native="isOpen = !isOpen"
+    @focusout.native="isOpen = false"
+  )
     slot(name="button-content")
   ul.absolute.align-right.rounded.bg-white.shadow.py-3(v-show="isOpen")
     slot
@@ -8,6 +12,7 @@
 
 <script>
 export default {
+  inheritAttrs: false,
   data() {
     return {
       isOpen: false
