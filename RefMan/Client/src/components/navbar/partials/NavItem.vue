@@ -10,3 +10,9 @@ router-link.p-2(
   )
     slot
 </template>
+
+<script>
+export default {
+  inheritAttrs: false
+};
+</script>

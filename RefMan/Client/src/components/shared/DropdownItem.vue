@@ -6,3 +6,9 @@ li.hover-bg-gray-200.px-5.py-1
   template(v-else)
     slot
 </template>
+
+<script>
+export default {
+  inheritAttrs: false
+};
+</script>
