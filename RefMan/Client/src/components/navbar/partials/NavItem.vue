@@ -1,5 +1,5 @@
 <template lang="pug">
-router-link.mx-2(
+router-link.p-2(
   v-slot="{ href, navigate, isActive }"
   v-bind="$attrs"
 )

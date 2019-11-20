@@ -1,6 +1,6 @@
 <template lang="pug">
 nav.flex.flex-row.bg-dark-light.px-4.py-2
-  router-link.text-white.text-xl.mr-4(to="/")
+  router-link.text-white.text-xl.py-1.mr-4(to="/")
     img.inline-block(
       :src="require('@/assets/logo.png')"
       alt="logo"
@@ -12,11 +12,11 @@ nav.flex.flex-row.bg-dark-light.px-4.py-2
     nav-item(:to="{ name: 'references' }") References
     c-dropdown-button.ml-auto
       template(v-slot:button-content)
-        img.inline(
+        img.inline.mr-1(
           src="https://api.adorable.io/avatars/285/username.png"
           alt=""
-          width="15"
-          height="15"
+          width="21"
+          height="21"
         )
         span Username
       c-dropdown-item(:to="{ name: 'login' }") Login
