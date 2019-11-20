@@ -1,14 +1,15 @@
 <template lang="pug">
-router-link.p-2(
-  v-slot="{ href, navigate, isActive }"
-  v-bind="$attrs"
-)
-  a(
-    :class="isActive ? 'text-white' : 'text-gray-400 hover-text-gray-200'"
-    :href="href"
-    @click="navigate"
+li.p-2
+  router-link(
+    v-slot="{ href, navigate, isActive }"
+    v-bind="$attrs"
   )
-    slot
+    a(
+      :class="isActive ? 'text-white' : 'text-gray-400 hover-text-gray-200'"
+      :href="href"
+      @click="navigate"
+    )
+      slot
 </template>
 
 <script>

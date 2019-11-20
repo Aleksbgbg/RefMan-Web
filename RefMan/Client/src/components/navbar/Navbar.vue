@@ -9,10 +9,11 @@ nav.flex.flex-row.bg-dark-light.px-4.py-2
     )
     span RefMan
   .flex.flex-grow
-    nav-item(:to="{ name: 'references' }") References
+    navigation
+      nav-item(:to="{ name: 'references' }") References
     c-dropdown-button.ml-auto
       template(v-slot:button-content)
-        img.inline.mr-1(
+        img.inline-block.mr-1(
           src="https://api.adorable.io/avatars/285/username.png"
           alt=""
           width="21"
@@ -24,10 +25,12 @@ nav.flex.flex-row.bg-dark-light.px-4.py-2
 </template>
 
 <script>
+import NavigationComponent from "./partials/Navigation";
 import NavItemComponent from "./partials/NavItem";
 
 export default {
   components: {
+    "navigation": NavigationComponent,
     "nav-item": NavItemComponent
   }
 };
