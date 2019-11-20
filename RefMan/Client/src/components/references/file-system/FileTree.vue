@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import ImageButtonComponent from "@/components/shared/ImageButton";
+import ImageButtonComponent from "@/components/shared/buttons/ImageButton";
 import NodeListComponent from "./NodeList";
 import { Folder } from "@/models/Folder";
 import { File } from "@/models/File";

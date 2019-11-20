@@ -4,9 +4,9 @@ import router from "./router";
 
 import "@/assets/tailwind.css";
 
-import ButtonComponent from "@/components/shared/Button.vue";
-import DropdownButtonComponent from "@/components/shared/DropdownButton.vue";
-import DropdownItemComponent from "@/components/shared/DropdownItem.vue";
+import ButtonComponent from "@/components/shared/buttons/Button.vue";
+import DropdownButtonComponent from "@/components/shared/dropdowns/DropdownButton.vue";
+import DropdownItemComponent from "@/components/shared/dropdowns/DropdownItem.vue";
 
 Vue.component("c-button", ButtonComponent);
 Vue.component("c-dropdown-button", DropdownButtonComponent);
