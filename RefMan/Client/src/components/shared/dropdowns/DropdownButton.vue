@@ -2,8 +2,8 @@
 .relative
   c-button.dropdown-btn(
     v-bind="$attrs"
+    v-external-click="hide"
     @click.native="isOpen = !isOpen"
-    @focusout.native="isOpen = false"
   )
     slot(name="button-content")
   ul.absolute.align-right.rounded.bg-white.shadow.py-3(v-show="isOpen")
@@ -11,12 +11,27 @@
 </template>
 
 <script>
+import ExternalClick from "@/directives/ExternalClick";
+
 export default {
   inheritAttrs: false,
+  directives: {
+    "external-click": ExternalClick
+  },
+  provide() {
+    return {
+      dropdownMenu: this
+    };
+  },
   data() {
     return {
       isOpen: false
     };
+  },
+  methods: {
+    hide() {
+      this.isOpen = false;
+    }
   }
 };
 </script>

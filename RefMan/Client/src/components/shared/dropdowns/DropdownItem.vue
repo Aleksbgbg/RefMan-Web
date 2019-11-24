@@ -1,14 +1,28 @@
 <template lang="pug">
-li.hover-bg-gray-200.px-5.py-1
+div
   template(v-if="$attrs.to")
-    router-link(v-bind="$attrs")
-      slot
+    router-link(v-bind="$attrs" @click.native="click")
+      li.hover-bg-gray-200.px-5.py-1
+        slot
   template(v-else)
-    slot
+    li.hover-bg-gray-200.px-5.py-1
+      slot
 </template>
 
 <script>
 export default {
-  inheritAttrs: false
+  inheritAttrs: false,
+  inject: {
+    dropdownMenu: {
+      default: null
+    }
+  },
+  methods: {
+    click() {
+      this.$nextTick(() => {
+        this.dropdownMenu.hide();
+      });
+    }
+  }
 };
 </script>
