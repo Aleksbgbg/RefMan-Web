@@ -11,12 +11,12 @@
 </template>
 
 <script>
-import ExternalClick from "@/directives/ExternalClick";
+import ExternalClickDirective from "@/directives/ExternalClick";
 
 export default {
   inheritAttrs: false,
   directives: {
-    "external-click": ExternalClick
+    "external-click": ExternalClickDirective
   },
   provide() {
     return {
