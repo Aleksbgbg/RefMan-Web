@@ -1,12 +1,12 @@
 <template lang="pug">
-auth-form(title="Login" @submit="submit")
-  username-input(
+c-auth-form(title="Login" @submit="submit")
+  c-username-input(
     placeholder="Enter your username"
     v-model="username.value"
     :validation-state="username.isValid"
     :invalid-state-message="username.invalidMessage"
   )
-  password-input(
+  c-password-input(
     placeholder="Enter your password"
     v-model="password.value"
     :validation-state="password.isValid"
@@ -22,9 +22,9 @@ import { generateStub } from "@/utilities/FormDataStubGenerator";
 
 export default {
   components: {
-    "auth-form": AuthFormComponent,
-    "username-input": UsernameInputComponent,
-    "password-input": PasswordInputComponent
+    "c-auth-form": AuthFormComponent,
+    "c-username-input": UsernameInputComponent,
+    "c-password-input": PasswordInputComponent
   },
   data() {
     return {

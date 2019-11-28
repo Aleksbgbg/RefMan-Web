@@ -9,8 +9,8 @@ nav.flex.flex-row.bg-dark-light.px-4.py-2
     )
     span RefMan
   .flex.flex-grow
-    navigation
-      nav-item(:to="{ name: 'references' }") References
+    c-navigation
+      c-nav-item(:to="{ name: 'references' }") References
     c-dropdown-button.ml-auto(variant="purple")
       template(v-slot:button-content)
         img.inline-block.mr-1(
@@ -32,8 +32,8 @@ import DropdownItemComponent from "@/components/shared/dropdowns/DropdownItem";
 
 export default {
   components: {
-    "navigation": NavigationComponent,
-    "nav-item": NavItemComponent,
+    "c-navigation": NavigationComponent,
+    "c-nav-item": NavItemComponent,
     "c-dropdown-button": DropdownButtonComponent,
     "c-dropdown-item": DropdownItemComponent
   }

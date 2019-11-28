@@ -2,9 +2,9 @@
 div
   <!-- TODO: UUID keys from database -->
   template(v-for="folder of model.folders")
-    folder(:key="folder.name" :model="folder")
+    c-folder(:key="folder.name" :model="folder")
   template(v-for="file of model.files")
-    file(:key="file.name" :model="file")
+    c-file(:key="file.name" :model="file")
 </template>
 
 <script>
@@ -13,8 +13,8 @@ import { Folder } from "@/models/Folder";
 
 export default {
   components: {
-    folder: () => import("./Folder"),
-    file: FileComponent
+    "c-folder": () => import("./Folder"),
+    "c-file": FileComponent
   },
   props: {
     model: Folder

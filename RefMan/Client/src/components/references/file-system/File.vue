@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-  file-system-entry(
+  c-file-system-entry(
     :image="require('@/assets/file.svg')"
     :canExpand="false"
     :node="model"
@@ -13,7 +13,7 @@ import { File } from "@/models/File";
 
 export default {
   components: {
-    "file-system-entry": FileSystemEntryComponent
+    "c-file-system-entry": FileSystemEntryComponent
   },
   props: {
     model: File

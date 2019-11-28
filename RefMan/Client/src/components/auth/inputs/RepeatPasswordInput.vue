@@ -1,5 +1,5 @@
 <template lang="pug">
-generic-password-input(
+c-generic-password-input(
   name="repeat-password"
   title="Repeat Password"
   placeholder="Repeat the above password"
@@ -17,7 +17,7 @@ export default {
   inheritAttrs: false,
   mixins: [NestedInputForwarderMixin],
   components: {
-    "generic-password-input": GenericPasswordInputComponent
+    "c-generic-password-input": GenericPasswordInputComponent
   }
 };
 </script>

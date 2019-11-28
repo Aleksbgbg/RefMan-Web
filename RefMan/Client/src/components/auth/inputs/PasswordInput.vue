@@ -1,5 +1,5 @@
 <template lang="pug">
-generic-password-input(
+c-generic-password-input(
   name="password"
   title="Password"
   valid-state-message="Your password is valid."
@@ -16,7 +16,7 @@ export default {
   inheritAttrs: false,
   mixins: [NestedInputForwarderMixin],
   components: {
-    "generic-password-input": GenericPasswordInputComponent
+    "c-generic-password-input": GenericPasswordInputComponent
   }
 };
 </script>

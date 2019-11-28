@@ -1,5 +1,5 @@
 <template lang="pug">
-file-tree
+c-file-tree
 </template>
 
 <script>
@@ -7,7 +7,7 @@ import FileTreeComponent from "./file-system/FileTree";
 
 export default {
   components: {
-    "file-tree": FileTreeComponent
+    "c-file-tree": FileTreeComponent
   }
 };
 </script>

@@ -3,27 +3,27 @@
   @click.self="loseFocus"
 )
   .bg-gray-200
-    image-button(
+    c-image-button(
       :src="require('@/assets/new-file.png')"
       tooltipText="New File"
       @click.native="newFile"
     )
-    image-button(
+    c-image-button(
       :src="require('@/assets/new-folder.png')"
       tooltipText="New Folder"
       @click.native="newFolder"
     )
-    image-button(
+    c-image-button(
       :src="require('@/assets/rename.png')"
       tooltipText="Rename Selected"
       @click.native="renameNode"
     )
-    image-button(
+    c-image-button(
       :src="require('@/assets/delete.png')"
       tooltipText="Delete Selected"
       @click.native="deleteNode"
     )
-  node-list(:model="rootFolder")
+  c-node-list(:model="rootFolder")
 </template>
 
 <script>
@@ -45,8 +45,8 @@ assignmentFolder.addFile(new File("Part 2"));
 
 export default {
   components: {
-    "image-button": ImageButtonComponent,
-    "node-list": NodeListComponent
+    "c-image-button": ImageButtonComponent,
+    "c-node-list": NodeListComponent
   },
   data() {
     return {

@@ -1,7 +1,7 @@
 <template lang="pug">
 div
   header
-    navbar
+    c-navbar
   main
     router-view
 </template>
@@ -11,7 +11,7 @@ import NavbarComponent from "./navbar/Navbar.vue";
 
 export default {
   components: {
-    navbar: NavbarComponent
+    "c-navbar": NavbarComponent
   }
 };
 </script>
