@@ -1,6 +1,6 @@
 <template lang="pug">
 .relative
-  c-button.dropdown-btn(
+  gc-button.dropdown-btn(
     v-bind="$attrs"
     v-external-click="hide"
     @click.native="isOpen = !isOpen"
