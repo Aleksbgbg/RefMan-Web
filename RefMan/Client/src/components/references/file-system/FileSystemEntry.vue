@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { Node } from "@/models/Node";
+import { Node } from "@/models/file-tree/Node";
 
 export default {
   inject: ["focusManager"],

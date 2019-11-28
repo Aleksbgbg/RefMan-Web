@@ -29,8 +29,8 @@
 <script>
 import ImageButtonComponent from "@/components/shared/buttons/ImageButton";
 import NodeListComponent from "./NodeList";
-import { Folder } from "@/models/Folder";
-import { File } from "@/models/File";
+import { Folder } from "@/models/file-tree/Folder";
+import { File } from "@/models/file-tree/File";
 import { createFocusTrackers } from "@/services/focus-tracking/FocusTrackingFactory";
 
 const { focusManager, focusTracker } = createFocusTrackers();

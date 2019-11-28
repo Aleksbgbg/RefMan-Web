@@ -9,7 +9,7 @@ div
 
 <script>
 import FileSystemEntryComponent from "./FileSystemEntry";
-import { File } from "@/models/File";
+import { File } from "@/models/file-tree/File";
 
 export default {
   components: {

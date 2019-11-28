@@ -14,7 +14,7 @@ div
 
 <script>
 import FileSystemEntryComponent from "./FileSystemEntry";
-import { Folder } from "@/models/Folder";
+import { Folder } from "@/models/file-tree/Folder";
 
 export default {
   components: {
