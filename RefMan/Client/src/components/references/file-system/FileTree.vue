@@ -31,7 +31,9 @@ import ImageButtonComponent from "@/components/shared/buttons/ImageButton";
 import NodeListComponent from "./NodeList";
 import { Folder } from "@/models/Folder";
 import { File } from "@/models/File";
-import { focusManager, focusTracker } from "@/services/focus-tracking/FocusTrackingFactory";
+import { createFocusTrackers } from "@/services/focus-tracking/FocusTrackingFactory";
+
+const { focusManager, focusTracker } = createFocusTrackers();
 
 const rootFolder = new Folder();
 const assignmentFolder = new Folder("Assignments");
@@ -47,6 +49,9 @@ export default {
   components: {
     "c-image-button": ImageButtonComponent,
     "c-node-list": NodeListComponent
+  },
+  provide: {
+    focusManager
   },
   data() {
     return {

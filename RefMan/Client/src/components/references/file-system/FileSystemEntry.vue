@@ -26,9 +26,9 @@
 
 <script>
 import { Node } from "@/models/Node";
-import { focusManager } from "@/services/focus-tracking/FocusTrackingFactory";
 
 export default {
+  inject: ["focusManager"],
   props: {
     image: String,
     imageExpanded: String,
@@ -73,7 +73,7 @@ export default {
     },
     focusSelf() {
       if (!this.isSelected) {
-        focusManager.focus({
+        this.focusManager.focus({
           focusable: this,
           editable: this,
           node: this.node

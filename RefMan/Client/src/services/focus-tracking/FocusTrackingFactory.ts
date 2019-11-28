@@ -2,7 +2,17 @@ import { FocusManager } from "./FocusManager";
 import { FocusManagerImpl } from "./FocusManagerImpl";
 import { FocusTracker } from "./FocusTracker";
 
-const implementation = new FocusManagerImpl();
+interface FocusTrackingPair {
+  focusManager: FocusManager;
 
-export const focusManager: FocusManager = implementation;
-export const focusTracker: FocusTracker = implementation;
+  focusTracker: FocusTracker;
+}
+
+export function createFocusTrackers(): FocusTrackingPair {
+  const implementation = new FocusManagerImpl();
+
+  return {
+    focusManager: implementation,
+    focusTracker: implementation
+  };
+}
