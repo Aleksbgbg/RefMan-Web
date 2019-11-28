@@ -12,7 +12,7 @@
     using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
     [ApiController]
-    [Route("[Controller]/[Action]")]
+    [Route("api/[Controller]/[Action]")]
     public class AccountController : ControllerBaseWrapper
     {
         private readonly UserManager<AppUser> _userManager;
