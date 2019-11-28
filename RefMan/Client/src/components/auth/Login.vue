@@ -19,6 +19,7 @@ import AuthFormComponent from "./AuthForm";
 import UsernameInputComponent from "./inputs/UsernameInput";
 import PasswordInputComponent from "./inputs/PasswordInput";
 import { generateStub } from "@/utilities/FormDataStubGenerator";
+import { actionTypes } from "@/store/account/Types";
 
 export default {
   components: {
@@ -34,6 +35,10 @@ export default {
   },
   methods: {
     submit() {
+      this.$store.dispatch(actionTypes.LOG_IN, {
+        username: this.username.value,
+        password: this.password.value
+      });
     }
   }
 };
