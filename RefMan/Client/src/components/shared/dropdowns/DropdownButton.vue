@@ -6,7 +6,7 @@
     @click.native="isOpen = !isOpen"
   )
     slot(name="button-content")
-  ul.hang.absolute.align-right.rounded.bg-white.shadow.py-3(v-show="isOpen")
+  ul.hang.absolute.rounded.bg-white.shadow.py-3(v-show="isOpen")
     slot
 </template>
 
