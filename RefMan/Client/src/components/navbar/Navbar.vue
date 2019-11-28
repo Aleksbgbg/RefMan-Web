@@ -19,7 +19,7 @@ nav.flex.flex-row.bg-dark-light.px-4.py-2
           width="21"
           height="21"
         )
-        span Username
+        span {{ username }}
       c-dropdown-item(:to="{ name: 'login' }") Login
       c-dropdown-item(:to="{ name: 'register' }") Register
 </template>
@@ -29,6 +29,7 @@ import NavigationComponent from "./partials/Navigation";
 import NavItemComponent from "./partials/NavItem";
 import DropdownButtonComponent from "@/components/shared/dropdowns/DropdownButton";
 import DropdownItemComponent from "@/components/shared/dropdowns/DropdownItem";
+import { mapState } from "vuex";
 
 export default {
   components: {
@@ -36,6 +37,11 @@ export default {
     "c-nav-item": NavItemComponent,
     "c-dropdown-button": DropdownButtonComponent,
     "c-dropdown-item": DropdownItemComponent
+  },
+  computed: {
+    ...mapState({
+      username: (state) => state.account.username
+    })
   }
 };
 </script>
