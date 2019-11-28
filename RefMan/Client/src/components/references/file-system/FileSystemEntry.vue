@@ -26,7 +26,7 @@
 
 <script>
 import { Node } from "@/models/Node";
-import { focusManager } from "@/services/FocusTracking/FocusTrackingFactory";
+import { focusManager } from "@/services/focus-tracking/FocusTrackingFactory";
 
 export default {
   props: {
