@@ -15,6 +15,16 @@ const routes: RouteConfig[] = [
         component: () => import("@/components/references/References.vue")
       },
       {
+        name: "login",
+        path: "/login",
+        component: () => import("@/components/auth/Login.vue")
+      },
+      {
+        name: "register",
+        path: "/register",
+        component: () => import("@/components/auth/Register.vue")
+      },
+      {
         path: "/",
         redirect: "references"
       }
