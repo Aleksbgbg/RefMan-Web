@@ -6,7 +6,7 @@
     @click.native="isOpen = !isOpen"
   )
     slot(name="button-content")
-  ul.absolute.align-right.rounded.bg-white.shadow.py-3(v-show="isOpen")
+  ul.hang.absolute.align-right.rounded.bg-white.shadow.py-3(v-show="isOpen")
     slot
 </template>
 
@@ -46,6 +46,6 @@ export default {
   border-right: .3em solid transparent
   border-left: .3em solid transparent
 
-ul
+.hang
   transform: translateY(.25rem)
 </style>
