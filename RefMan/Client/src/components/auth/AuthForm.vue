@@ -7,11 +7,13 @@ c-card.max-w-xs.mx-auto.mt-4
 </template>
 
 <script>
+import CardComponent from "@/components/shared/cards/Card";
 import FormComponent from "@/components/shared/forms/Form";
 import FormSubmitButtonComponent from "@/components/shared/forms/FormSubmitButton";
 
 export default {
   components: {
+    "c-card": CardComponent,
     "c-form": FormComponent,
     "c-form-submit-button": FormSubmitButtonComponent
   },

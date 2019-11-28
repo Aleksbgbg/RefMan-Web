@@ -27,11 +27,15 @@ nav.flex.flex-row.bg-dark-light.px-4.py-2
 <script>
 import NavigationComponent from "./partials/Navigation";
 import NavItemComponent from "./partials/NavItem";
+import DropdownButtonComponent from "@/components/shared/dropdowns/DropdownButton";
+import DropdownItemComponent from "@/components/shared/dropdowns/DropdownItem";
 
 export default {
   components: {
     "navigation": NavigationComponent,
-    "nav-item": NavItemComponent
+    "nav-item": NavItemComponent,
+    "c-dropdown-button": DropdownButtonComponent,
+    "c-dropdown-item": DropdownItemComponent
   }
 };
 </script>
