@@ -26,6 +26,18 @@
             _signInManager = signInManager;
         }
 
+        [HttpGet]
+        public CurrentUser CurrentUser()
+        {
+            bool isLoggedIn = User.IsLoggedIn();
+
+            return new CurrentUser
+            {
+                IsLoggedIn = isLoggedIn,
+                Username = isLoggedIn ? User.ReadUsername() : null
+            };
+        }
+
         [HttpPost]
         public async Task<IActionResult> Register(Registration registration)
         {
