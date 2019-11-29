@@ -1,13 +1,14 @@
 <template lang="pug">
-c-card.max-w-xs.mx-auto.mt-4
-  h4.text-2xl {{ title }}
-  c-form(@submit="$emit('submit')")
-    slot
-    c-form-submit-button
+.w-full.max-w-sm.mx-auto.px-3.mt-4
+  c-card
+    h4.text-2xl {{ title }}
+    c-form(@submit="$emit('submit')")
+      slot
+      c-form-submit-button
 
-    c-hr
+      c-hr
 
-    slot(name="footer")
+      slot(name="footer")
 </template>
 
 <script>
