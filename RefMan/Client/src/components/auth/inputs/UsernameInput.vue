@@ -3,6 +3,7 @@ c-form-input(
   name="username"
   title="Username"
   type="text"
+  maxlength="32"
   valid-state-message="Your username is valid."
   v-bind="$attrs"
   v-on="forwardInputListeners"
