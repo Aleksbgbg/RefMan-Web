@@ -2,15 +2,15 @@
 c-auth-form(title="Login" @submit="submit")
   c-username-input(
     placeholder="Enter your username"
-    v-model="username.value"
-    :validation-state="username.isValid"
-    :invalid-state-message="username.invalidMessage"
+    v-model="form.username.value"
+    :validation-state="form.username.isValid"
+    :invalid-state-message="form.username.invalidMessage"
   )
   c-password-input(
     placeholder="Enter your password"
-    v-model="password.value"
-    :validation-state="password.isValid"
-    :invalid-state-message="password.invalidMessage"
+    v-model="form.password.value"
+    :validation-state="form.password.isValid"
+    :invalid-state-message="form.password.invalidMessage"
   )
 </template>
 
@@ -20,6 +20,8 @@ import UsernameInputComponent from "./inputs/UsernameInput";
 import PasswordInputComponent from "./inputs/PasswordInput";
 import { generateStub } from "@/utilities/FormDataStubGenerator";
 import { actionTypes } from "@/store/account/Types";
+import { fillValidationErrors } from "@/utilities/FormValidationFiller";
+import { grabValues } from "@/utilities/ValueGrabber";
 
 export default {
   components: {
@@ -29,16 +31,19 @@ export default {
   },
   data() {
     return {
-      username: generateStub(),
-      password: generateStub()
+      form: {
+        username: generateStub(),
+        password: generateStub()
+      }
     };
   },
   methods: {
-    submit() {
-      this.$store.dispatch(actionTypes.LOG_IN, {
-        username: this.username.value,
-        password: this.password.value
-      });
+    async submit() {
+      try {
+        await this.$store.dispatch(actionTypes.LOG_IN, grabValues(this.form));
+      } catch (error) {
+        fillValidationErrors(this.form, error);
+      }
     }
   }
 };
