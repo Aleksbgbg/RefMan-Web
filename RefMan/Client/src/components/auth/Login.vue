@@ -15,15 +15,15 @@ c-auth-form(title="Login" @submit="submit")
 </template>
 
 <script>
+import { submitToVuexStore } from "@/mixins/FormSubmit";
+import { actionTypes } from "@/store/account/Types";
 import AuthFormComponent from "./AuthForm";
 import UsernameInputComponent from "./inputs/UsernameInput";
 import PasswordInputComponent from "./inputs/PasswordInput";
 import { generateStub } from "@/utilities/FormDataStubGenerator";
-import { actionTypes } from "@/store/account/Types";
-import { fillValidationErrors } from "@/utilities/FormValidationFiller";
-import { grabValues } from "@/utilities/ValueGrabber";
 
 export default {
+  mixins: [submitToVuexStore(actionTypes.LOG_IN)],
   components: {
     "c-auth-form": AuthFormComponent,
     "c-username-input": UsernameInputComponent,
@@ -36,15 +36,6 @@ export default {
         password: generateStub()
       }
     };
-  },
-  methods: {
-    async submit() {
-      try {
-        await this.$store.dispatch(actionTypes.LOG_IN, grabValues(this.form));
-      } catch (error) {
-        fillValidationErrors(this.form, error);
-      }
-    }
   }
 };
 </script>
