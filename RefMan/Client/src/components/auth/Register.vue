@@ -2,25 +2,27 @@
 c-auth-form(title="Register" @submit="submit")
   c-username-input(
     placeholder="Enter a username"
-    v-model="username.value"
-    :validation-state="username.isValid"
-    :invalid-state-message="username.invalidMessage"
+    v-model="form.username.value"
+    :validation-state="form.username.isValid"
+    :invalid-state-message="form.username.invalidMessage"
   )
   c-password-input(
     placeholder="Enter a password"
     description="Your password is not stored verbatim."
-    v-model="password.value"
-    :validation-state="password.isValid"
-    :invalid-state-message="password.invalidMessage"
+    v-model="form.password.value"
+    :validation-state="form.password.isValid"
+    :invalid-state-message="form.password.invalidMessage"
   )
   c-repeat-password-input(
-    v-model="repeatPassword.value"
-    :validation-state="repeatPassword.isValid"
-    :invalid-state-message="repeatPassword.invalidMessage"
+    v-model="form.repeatPassword.value"
+    :validation-state="form.repeatPassword.isValid"
+    :invalid-state-message="form.repeatPassword.invalidMessage"
   )
 </template>
 
 <script>
+import { submitToVuexStore } from "@/mixins/FormSubmit";
+import { actionTypes } from "@/store/account/Types";
 import AuthFormComponent from "./AuthForm";
 import UsernameInputComponent from "./inputs/UsernameInput";
 import PasswordInputComponent from "./inputs/PasswordInput";
@@ -28,6 +30,7 @@ import RepeatPasswordInputComponent from "./inputs/RepeatPasswordInput";
 import { generateStub } from "@/utilities/FormDataStubGenerator";
 
 export default {
+  mixins: [submitToVuexStore(actionTypes.REGISTER)],
   components: {
     "c-auth-form": AuthFormComponent,
     "c-username-input": UsernameInputComponent,
@@ -36,14 +39,12 @@ export default {
   },
   data() {
     return {
-      username: generateStub(),
-      password: generateStub(),
-      repeatPassword: generateStub()
+      form: {
+        username: generateStub(),
+        password: generateStub(),
+        repeatPassword: generateStub()
+      }
     };
-  },
-  methods: {
-    submit() {
-    }
   }
 };
 </script>

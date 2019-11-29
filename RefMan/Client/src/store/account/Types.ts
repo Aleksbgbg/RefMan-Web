@@ -3,5 +3,6 @@ export const mutationTypes = {
 };
 
 export const actionTypes = {
+  REGISTER: "account/register",
   LOG_IN: "account/login"
 };
