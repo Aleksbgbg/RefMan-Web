@@ -18,6 +18,8 @@ c-auth-form(title="Register" @submit="submit")
     :validation-state="form.repeatPassword.isValid"
     :invalid-state-message="form.repeatPassword.invalidMessage"
   )
+  template(v-slot:footer)
+    c-router-link(:to="{ name: 'login' }") Already have an account? Login instead!
 </template>
 
 <script>
@@ -27,6 +29,7 @@ import AuthFormComponent from "./AuthForm";
 import UsernameInputComponent from "./inputs/UsernameInput";
 import PasswordInputComponent from "./inputs/PasswordInput";
 import RepeatPasswordInputComponent from "./inputs/RepeatPasswordInput";
+import RouterLinkComponent from "@/components/shared/RouterLink";
 import { generateStub } from "@/utilities/FormDataStubGenerator";
 
 export default {
@@ -35,7 +38,8 @@ export default {
     "c-auth-form": AuthFormComponent,
     "c-username-input": UsernameInputComponent,
     "c-password-input": PasswordInputComponent,
-    "c-repeat-password-input": RepeatPasswordInputComponent
+    "c-repeat-password-input": RepeatPasswordInputComponent,
+    "c-router-link": RouterLinkComponent
   },
   data() {
     return {

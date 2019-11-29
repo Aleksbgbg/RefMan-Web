@@ -12,6 +12,8 @@ c-auth-form(title="Login" @submit="submit")
     :validation-state="form.password.isValid"
     :invalid-state-message="form.password.invalidMessage"
   )
+  template(v-slot:footer)
+    c-router-link(:to="{ name: 'register' }") Don't have an account? Register!
 </template>
 
 <script>
@@ -20,6 +22,7 @@ import { actionTypes } from "@/store/account/Types";
 import AuthFormComponent from "./AuthForm";
 import UsernameInputComponent from "./inputs/UsernameInput";
 import PasswordInputComponent from "./inputs/PasswordInput";
+import RouterLinkComponent from "@/components/shared/RouterLink";
 import { generateStub } from "@/utilities/FormDataStubGenerator";
 
 export default {
@@ -27,7 +30,8 @@ export default {
   components: {
     "c-auth-form": AuthFormComponent,
     "c-username-input": UsernameInputComponent,
-    "c-password-input": PasswordInputComponent
+    "c-password-input": PasswordInputComponent,
+    "c-router-link": RouterLinkComponent
   },
   data() {
     return {
