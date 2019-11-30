@@ -1,4 +1,4 @@
-import { ApiClientBase } from "@/services/api-clients/ApiClientBase";
+import { ApiClientBase } from "./ApiClientBase";
 import { CurrentUser } from "@/models/accounts/CurrentUser";
 import { Registration } from "@/models/accounts/Registration";
 import { Login } from "@/models/accounts/Login";
