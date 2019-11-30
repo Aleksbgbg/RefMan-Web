@@ -18,7 +18,10 @@ export default {
   actions: {
     async [actionTypes.CHECK_LOGIN](context: any) {
       const currentUser: CurrentUser = await accountClient.currentUser();
-      context.commit(mutationTypes.CURRENT_USER, currentUser);
+      context.commit(mutationTypes.CURRENT_USER, {
+        isLoggedIn: currentUser.isLoggedIn,
+        username: currentUser.isLoggedIn ? currentUser.username : "Anonymous"
+      });
     },
     async [actionTypes.REGISTER](context: any, registration: Registration) {
       await accountClient.register(registration);
