@@ -4,22 +4,22 @@
 )
   .bg-gray-200
     c-image-button(
-      :src="require('@/assets/new-file.png')"
+      src="/img/new-file.png"
       tooltipText="New File"
       @click.native="newFile"
     )
     c-image-button(
-      :src="require('@/assets/new-folder.png')"
+      src="/img/new-folder.png"
       tooltipText="New Folder"
       @click.native="newFolder"
     )
     c-image-button(
-      :src="require('@/assets/rename.png')"
+      src="/img/rename.png"
       tooltipText="Rename Selected"
       @click.native="renameNode"
     )
     c-image-button(
-      :src="require('@/assets/delete.png')"
+      src="/img/delete.png"
       tooltipText="Delete Selected"
       @click.native="deleteNode"
     )

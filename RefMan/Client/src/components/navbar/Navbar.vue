@@ -2,7 +2,7 @@
 nav.nav-height.flex.flex-row.bg-dark-light.px-4.py-2
   router-link.text-white.text-xl.py-1.mx-auto.sm-mr-4(to="/")
     img.inline-block(
-      :src="require('@/assets/logo.png')"
+      src="/img/logo.png"
       alt="RefMan logo"
       width="25"
       height="25"
@@ -14,7 +14,7 @@ nav.nav-height.flex.flex-row.bg-dark-light.px-4.py-2
     c-dropdown-button.ml-auto(variant="purple")
       template(v-slot:button-content)
         img.inline-block.mr-1(
-          src="https://api.adorable.io/avatars/285/username.png"
+          src="/img/avatar.png"
           alt="user avatar"
           width="21"
           height="21"

@@ -1,7 +1,7 @@
 <template lang="pug">
 div
   c-file-system-entry(
-    :image="require('@/assets/file.svg')"
+    image="/img/file.svg"
     :canExpand="false"
     :node="model"
   )

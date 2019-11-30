@@ -1,8 +1,8 @@
 <template lang="pug">
 div
   c-file-system-entry(
-    :image="require('@/assets/folder.svg')"
-    :imageExpanded="require('@/assets/open-folder.svg')"
+    image="/img/folder.svg"
+    imageExpanded="/img/open-folder.svg"
     :canExpand="canExpand"
     :isExpanded="isExpanded"
     :node="model"
