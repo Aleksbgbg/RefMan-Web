@@ -1,21 +1,21 @@
 <template lang="pug">
-nav.flex.flex-row.bg-dark-light.px-4.py-2
-  router-link.text-white.text-xl.py-1.mr-4(to="/")
+nav.nav-height.flex.flex-row.bg-dark-light.px-4.py-2
+  router-link.text-white.text-xl.py-1.mx-auto.sm-mr-4(to="/")
     img.inline-block(
       :src="require('@/assets/logo.png')"
-      alt="logo"
+      alt="RefMan logo"
       width="25"
       height="25"
     )
     span RefMan
-  .flex.flex-grow
+  .hidden.sm-flex.flex-grow
     c-navigation
       c-nav-item(:to="{ name: 'references' }") References
     c-dropdown-button.ml-auto(variant="purple")
       template(v-slot:button-content)
         img.inline-block.mr-1(
           src="https://api.adorable.io/avatars/285/username.png"
-          alt=""
+          alt="user avatar"
           width="21"
           height="21"
         )
@@ -55,3 +55,8 @@ export default {
   }
 };
 </script>
+
+<style lang="stylus">
+.nav-height
+  height: 56px
+</style>
