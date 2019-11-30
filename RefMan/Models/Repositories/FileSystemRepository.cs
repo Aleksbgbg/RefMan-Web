@@ -1,5 +1,6 @@
 ﻿namespace RefMan.Models.Repositories
 {
+    using System.Linq;
     using System.Threading.Tasks;
 
     using RefMan.Models.Database;
@@ -26,6 +27,11 @@
             user.RootFolderId = rootFolderId;
 
             await _appDbContext.SaveChangesAsync();
+        }
+
+        public Folder FindRootForUser(AppUser user)
+        {
+            return _appDbContext.Folders.First(folder => folder.Id == user.RootFolderId);
         }
     }
 }

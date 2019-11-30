@@ -5,5 +5,7 @@
     public interface IFileSystemRepository
     {
         Task GenerateRootFolderForUser(AppUser user);
+
+        Folder FindRootForUser(AppUser user);
     }
 }
