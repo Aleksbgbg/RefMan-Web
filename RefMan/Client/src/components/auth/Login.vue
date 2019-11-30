@@ -18,7 +18,7 @@ c-auth-form(title="Login" @submit="submit")
 
 <script>
 import PreventEntryWhenLoggedInMixin from "@/mixins/PreventEntryWhenLoggedIn";
-import { submitToVuexStore } from "@/mixins/FormSubmit";
+import { submitFormToVuexStore } from "@/mixins/SubmitFormToVuexStore";
 import { actionTypes } from "@/store/account/Types";
 import AuthFormComponent from "./AuthForm";
 import UsernameInputComponent from "./inputs/UsernameInput";
@@ -29,7 +29,7 @@ import { generateStub } from "@/utilities/FormDataStubGenerator";
 export default {
   mixins: [
     PreventEntryWhenLoggedInMixin,
-    submitToVuexStore(actionTypes.LOG_IN)
+    submitFormToVuexStore(actionTypes.LOG_IN)
   ],
   components: {
     "c-auth-form": AuthFormComponent,
