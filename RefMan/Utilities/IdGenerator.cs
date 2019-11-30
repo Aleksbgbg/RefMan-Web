@@ -6,12 +6,7 @@
     {
         private static readonly IdGeneratorLib Generator = new IdGeneratorLib(0);
 
-        public static long GenerateUserId()
-        {
-            return GenerateId();
-        }
-
-        private static long GenerateId()
+        public static long GenerateId()
         {
             return Generator.CreateId();
         }

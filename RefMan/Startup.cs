@@ -14,6 +14,7 @@ namespace RefMan
     using RefMan.Infrastructure;
     using RefMan.Models;
     using RefMan.Models.Database;
+    using RefMan.Models.Repositories;
 
     using WebMarkupMin.AspNetCore3;
 
@@ -43,6 +44,8 @@ namespace RefMan
 
             services.AddControllers(options => options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer())));
             services.AddSpaStaticFiles(configuration => configuration.RootPath = "Client/dist");
+
+            services.AddTransient<IFileSystemRepository, FileSystemRepository>();
 
             services.AddSwaggerGen(options => options.SwaggerDoc("v1",
                                                                  new OpenApiInfo

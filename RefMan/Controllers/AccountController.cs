@@ -9,6 +9,7 @@
     using RefMan.Attributes.Filters;
     using RefMan.Extensions;
     using RefMan.Models;
+    using RefMan.Models.Repositories;
     using RefMan.Utilities;
 
     using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
@@ -21,11 +22,15 @@
 
         private readonly SignInManager<AppUser> _signInManager;
 
+        private readonly IFileSystemRepository _fileSystemRepository;
+
         public AccountController(UserManager<AppUser> userManager,
-                                 SignInManager<AppUser> signInManager)
+                                 SignInManager<AppUser> signInManager,
+                                 IFileSystemRepository fileSystemRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _fileSystemRepository = fileSystemRepository;
         }
 
         [HttpGet]
@@ -48,9 +53,11 @@
             {
                 AppUser newUser = new AppUser
                 {
-                    Id = IdGenerator.GenerateUserId(),
+                    Id = IdGenerator.GenerateId(),
                     UserName = registration.Username
                 };
+
+                await _fileSystemRepository.GenerateRootFolderForUser(newUser);
 
                 IdentityResult createResult = await _userManager.CreateAsync(newUser, registration.Password);
 
