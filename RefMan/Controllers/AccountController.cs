@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
+    using RefMan.Attributes.Filters;
     using RefMan.Extensions;
     using RefMan.Models;
 
@@ -38,6 +39,7 @@
             };
         }
 
+        [EnsureAnonymous]
         [HttpPost]
         public async Task<IActionResult> Register(Registration registration)
         {
@@ -62,6 +64,7 @@
             return ValidationFailed();
         }
 
+        [EnsureAnonymous]
         [HttpPost]
         public async Task<IActionResult> Login(Login login)
         {
