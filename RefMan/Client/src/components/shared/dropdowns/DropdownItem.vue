@@ -5,7 +5,7 @@ div
       li.hover-bg-gray-200.px-5.py-1
         slot
   template(v-else)
-    li.hover-bg-gray-200.px-5.py-1
+    li.hover-bg-gray-200.px-5.py-1(@click="$emit('click')")
       slot
 </template>
 

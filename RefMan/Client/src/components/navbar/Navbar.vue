@@ -20,8 +20,11 @@ nav.flex.flex-row.bg-dark-light.px-4.py-2
           height="21"
         )
         span {{ username }}
-      c-dropdown-item(:to="{ name: 'login' }") Login
-      c-dropdown-item(:to="{ name: 'register' }") Register
+      template(v-if="isLoggedIn")
+        c-dropdown-item(@click="logout") Log Out
+      template(v-else)
+        c-dropdown-item(:to="{ name: 'login' }") Login
+        c-dropdown-item(:to="{ name: 'register' }") Register
 </template>
 
 <script>
@@ -29,7 +32,8 @@ import NavigationComponent from "./partials/Navigation";
 import NavItemComponent from "./partials/NavItem";
 import DropdownButtonComponent from "@/components/shared/dropdowns/DropdownButton";
 import DropdownItemComponent from "@/components/shared/dropdowns/DropdownItem";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
+import { actionTypes } from "@/store/account/Types";
 
 export default {
   components: {
@@ -40,7 +44,13 @@ export default {
   },
   computed: {
     ...mapState({
+      isLoggedIn: (state) => state.account.isLoggedIn,
       username: (state) => state.account.username
+    })
+  },
+  methods: {
+    ...mapActions({
+      logout: actionTypes.LOG_OUT
     })
   }
 };
