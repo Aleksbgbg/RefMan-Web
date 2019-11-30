@@ -9,7 +9,10 @@ export function submitFormToVuexStore(actionType) {
           await this.$store.dispatch(actionType, grabValues(this.form));
         } catch (error) {
           fillValidationErrors(this.form, error);
+          return;
         }
+
+        this.onSubmitSuccess();
       }
     }
   };
