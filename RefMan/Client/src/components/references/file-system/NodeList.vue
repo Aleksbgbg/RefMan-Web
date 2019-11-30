@@ -1,10 +1,9 @@
 <template lang="pug">
 div
-  <!-- TODO: UUID keys from database -->
   template(v-for="folder of model.folders")
-    c-folder(:key="folder.name" :model="folder")
+    c-folder(:key="folder.id" :model="folder")
   template(v-for="file of model.files")
-    c-file(:key="file.name" :model="file")
+    c-file(:key="file.id" :model="file")
 </template>
 
 <script>

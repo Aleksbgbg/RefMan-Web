@@ -1,16 +1,23 @@
 export abstract class Node {
+    private readonly _id: number;
+
     private _name: string;
 
     private _parent: Node | null = null;
 
     private _isEditing: boolean;
 
-    constructor(name: string = "", isEditing: boolean = false) {
+    constructor(id: number, name: string = "", isEditing: boolean = false) {
+      this._id = id;
       this._name = name;
       this._isEditing = isEditing;
     }
 
     public abstract get isLeaf(): boolean;
+
+    public get id(): number {
+      return this._id;
+    }
 
     public get name(): string {
       return this._name;
