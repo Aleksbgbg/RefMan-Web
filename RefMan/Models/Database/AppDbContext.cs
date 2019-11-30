@@ -8,5 +8,9 @@
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
+
+        public virtual DbSet<Folder> Folders { get; protected set; }
+
+        public virtual DbSet<File> Files { get; protected set; }
     }
 }
