@@ -2,7 +2,7 @@
 {
     using Microsoft.AspNetCore.Identity;
 
-    public class AppUser : IdentityUser<long>
+    public class AppRole : IdentityRole<long>
     {
     }
 }

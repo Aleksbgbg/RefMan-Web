@@ -9,6 +9,7 @@
     using RefMan.Attributes.Filters;
     using RefMan.Extensions;
     using RefMan.Models;
+    using RefMan.Utilities;
 
     using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
@@ -47,6 +48,7 @@
             {
                 AppUser newUser = new AppUser
                 {
+                    Id = IdGenerator.GenerateUserId(),
                     UserName = registration.Username
                 };
 
