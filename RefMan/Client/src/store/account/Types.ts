@@ -5,5 +5,6 @@ export const mutationTypes = {
 export const actionTypes = {
   CHECK_LOGIN: "account/check-login",
   REGISTER: "account/register",
-  LOG_IN: "account/login"
+  LOG_IN: "account/login",
+  LOG_OUT: "account/log-out"
 };
