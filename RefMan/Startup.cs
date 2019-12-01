@@ -15,6 +15,7 @@ namespace RefMan
     using RefMan.Models;
     using RefMan.Models.Database;
     using RefMan.Models.Repositories;
+    using RefMan.Models.User;
 
     using WebMarkupMin.AspNetCore3;
 

@@ -1,7 +1,6 @@
-﻿namespace RefMan.Models
+﻿namespace RefMan.Models.FileSystem
 {
     using System.Collections.Generic;
-
     using System.Text.Json.Serialization;
 
     public class Folder : FileSystemEntryBase

@@ -3,6 +3,9 @@
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
+    using RefMan.Models.FileSystem;
+    using RefMan.Models.User;
+
     public class AppDbContext : IdentityDbContext<AppUser, AppRole, long>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)

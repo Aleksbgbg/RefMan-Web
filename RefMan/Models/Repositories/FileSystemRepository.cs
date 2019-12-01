@@ -4,6 +4,8 @@
     using System.Threading.Tasks;
 
     using RefMan.Models.Database;
+    using RefMan.Models.FileSystem;
+    using RefMan.Models.User;
     using RefMan.Utilities;
 
     public class FileSystemRepository : IFileSystemRepository

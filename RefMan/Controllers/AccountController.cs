@@ -10,6 +10,7 @@
     using RefMan.Extensions;
     using RefMan.Models;
     using RefMan.Models.Repositories;
+    using RefMan.Models.User;
     using RefMan.Utilities;
 
     using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;

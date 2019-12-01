@@ -1,4 +1,4 @@
-﻿namespace RefMan.Models
+﻿namespace RefMan.Models.User
 {
     using Microsoft.AspNetCore.Identity;
 

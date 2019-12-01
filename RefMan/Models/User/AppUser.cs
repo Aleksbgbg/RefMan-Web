@@ -1,8 +1,10 @@
-﻿namespace RefMan.Models
+﻿namespace RefMan.Models.User
 {
     using System.ComponentModel.DataAnnotations.Schema;
 
     using Microsoft.AspNetCore.Identity;
+
+    using RefMan.Models.FileSystem;
 
     public class AppUser : IdentityUser<long>
     {
