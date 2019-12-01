@@ -1,10 +1,10 @@
 ﻿namespace RefMan.Attributes.Filters
 {
-    public class EnsureAnonymousAttribute : EnsureAuthenticationAttributeBase
+    public class EnsureAuthenticatedAttribute : EnsureAuthenticationAttributeBase
     {
         protected override bool IsAllowedAccess(bool isAuthenticated)
         {
-            return !isAuthenticated;
+            return isAuthenticated;
         }
     }
 }

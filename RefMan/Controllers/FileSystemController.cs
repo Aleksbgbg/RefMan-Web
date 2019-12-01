@@ -2,15 +2,15 @@
 {
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
+    using RefMan.Attributes.Filters;
     using RefMan.Extensions;
     using RefMan.Models;
     using RefMan.Models.Repositories;
 
-    [Authorize]
+    [EnsureAuthenticated]
     [ApiController]
     [Route("api/[Controller]/[Action]")]
     public class FileSystemController : ControllerBase

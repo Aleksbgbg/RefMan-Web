@@ -101,7 +101,7 @@
             return ValidationFailed();
         }
 
-        [Authorize]
+        [EnsureAuthenticated]
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
