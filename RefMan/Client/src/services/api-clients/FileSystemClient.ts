@@ -1,8 +1,8 @@
 import { ApiClientBase } from "./ApiClientBase";
-import { Folder } from "@/models/file-tree/Folder";
+import { RootFolderResult } from "@/models/file-system/RootFolderResult";
 
 class FileSystemClient extends ApiClientBase {
-  public root(): Promise<Folder> {
+  public root(): Promise<RootFolderResult> {
     return this.get("file-system/root");
   }
 }

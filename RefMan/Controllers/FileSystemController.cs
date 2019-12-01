@@ -7,8 +7,7 @@
 
     using RefMan.Attributes.Filters;
     using RefMan.Extensions;
-    using RefMan.Models;
-    using RefMan.Models.FileSystem;
+    using RefMan.Models.FileSystem.Results;
     using RefMan.Models.Repositories;
     using RefMan.Models.User;
 
@@ -29,11 +28,11 @@
         }
 
         [HttpGet]
-        public async Task<Folder> Root()
+        public async Task<RootFolderResult> Root()
         {
             AppUser user = await _userManager.FindByNameAsync(User.ReadUsername());
 
-            return _fileSystemRepository.FindRootForUser(user);
+            return new RootFolderResult(_fileSystemRepository.FindRootForUser(user));
         }
     }
 }

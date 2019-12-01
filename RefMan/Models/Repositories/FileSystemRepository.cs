@@ -3,6 +3,8 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
+
     using RefMan.Models.Database;
     using RefMan.Models.FileSystem;
     using RefMan.Models.User;
@@ -33,7 +35,10 @@
 
         public Folder FindRootForUser(AppUser user)
         {
-            return _appDbContext.Folders.First(folder => folder.Id == user.RootFolderId);
+            return _appDbContext.Folders
+                                .Include(folder => folder.Folders)
+                                .Include(folder => folder.Files)
+                                .First(folder => folder.Id == user.RootFolderId);
         }
     }
 }
