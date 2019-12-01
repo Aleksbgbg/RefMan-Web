@@ -49,8 +49,14 @@ export default {
     })
   },
   methods: {
+    async logout() {
+      await this.vuexLogout();
+      this.$router.push({
+        name: "login"
+      });
+    },
     ...mapActions({
-      logout: actionTypes.LOG_OUT
+      vuexLogout: actionTypes.LOG_OUT
     })
   }
 };
