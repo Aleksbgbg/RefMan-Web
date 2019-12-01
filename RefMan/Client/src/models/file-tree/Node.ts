@@ -5,12 +5,11 @@ export abstract class Node {
 
     private _parent: Node | null = null;
 
-    private _isEditing: boolean;
+    private _isEditing: boolean = false;
 
-    constructor(id: number, name: string = "", isEditing: boolean = false) {
+    constructor(id: number, name: string = "") {
       this._id = id;
       this._name = name;
-      this._isEditing = isEditing;
     }
 
     public abstract get isLeaf(): boolean;

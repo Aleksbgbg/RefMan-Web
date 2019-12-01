@@ -23,7 +23,7 @@
       tooltipText="Delete Selected"
       @click.native="deleteNode"
     )
-  c-node-list(:model="rootFolder")
+  c-node-list(v-if="rootFolder" :model="rootFolder")
 </template>
 
 <script>
@@ -32,18 +32,9 @@ import NodeListComponent from "./NodeList";
 import { Folder } from "@/models/file-tree/Folder";
 import { File } from "@/models/file-tree/File";
 import { createFocusTrackers } from "@/services/focus-tracking/FocusTrackingFactory";
+import { fileSystemClient } from "@/services/api-clients/FileSystemClient";
 
 const { focusManager, focusTracker } = createFocusTrackers();
-
-const rootFolder = new Folder();
-const assignmentFolder = new Folder("Assignments");
-const otherFolder = new Folder("Some Other Folder");
-
-rootFolder.addFolder(assignmentFolder);
-rootFolder.addFolder(otherFolder);
-
-assignmentFolder.addFile(new File("Part 1"));
-assignmentFolder.addFile(new File("Part 2"));
 
 export default {
   components: {
@@ -55,8 +46,12 @@ export default {
   },
   data() {
     return {
-      rootFolder
+      rootFolder: null
     };
+  },
+  async created() {
+    const rootFolderResult = await fileSystemClient.root();
+    this.rootFolder = Folder.fromRootFolderResult(rootFolderResult);
   },
   methods: {
     loseFocus() {
@@ -75,10 +70,14 @@ export default {
       currentFocal.node.isEditing = true;
     },
     newFile() {
-      this.findClosestFolderToFocus().addFile(new File("New File", true));
+      const file = new File(0, "New File");
+      file.isEditing = true;
+      this.findClosestFolderToFocus().addFile(file);
     },
     newFolder() {
-      this.findClosestFolderToFocus().addFolder(new Folder("New Folder", true));
+      const folder = new Folder(0, "New Folder", [], []);
+      folder.isEditing = true;
+      this.findClosestFolderToFocus().addFolder(folder);
     },
     findClosestFolderToFocus() {
       const currentFocal = focusTracker.getFocal();
