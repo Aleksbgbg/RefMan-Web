@@ -27,6 +27,12 @@
             {
                 Id = rootFolderId
             });
+            _appDbContext.Folders.Add(new Folder
+            {
+                Id = IdGenerator.GenerateId(),
+                Name = "Example Folder",
+                ParentId = rootFolderId
+            });
 
             user.RootFolderId = rootFolderId;
 
