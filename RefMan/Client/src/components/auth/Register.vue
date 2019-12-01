@@ -1,7 +1,8 @@
 <template lang="pug">
-c-auth-form(title="Register" @submit="submit")
+c-auth-form(title="Register" :isLoading="isLoading" @submit="submit")
   c-username-input(
     placeholder="Enter a username"
+    :readonly="isLoading"
     v-model="form.username.value"
     :validation-state="form.username.isValid"
     :invalid-state-message="form.username.invalidMessage"
@@ -9,11 +10,13 @@ c-auth-form(title="Register" @submit="submit")
   c-password-input(
     placeholder="Enter a password"
     description="Your password is not stored verbatim."
+    :readonly="isLoading"
     v-model="form.password.value"
     :validation-state="form.password.isValid"
     :invalid-state-message="form.password.invalidMessage"
   )
   c-repeat-password-input(
+    :readonly="isLoading"
     v-model="form.repeatPassword.value"
     :validation-state="form.repeatPassword.isValid"
     :invalid-state-message="form.repeatPassword.invalidMessage"
@@ -24,6 +27,7 @@ c-auth-form(title="Register" @submit="submit")
 
 <script>
 import PreventEntryWhenLoggedInMixin from "@/mixins/PreventEntryWhenLoggedIn";
+import LoadingIndicatorMixin from "@/mixins/LoadingIndicator";
 import { submitFormToVuexStore } from "@/mixins/SubmitFormToVuexStore";
 import { redirectOnSubmitSuccess } from "@/mixins/RedirectOnSubmitSuccess";
 import { actionTypes } from "@/store/account/Types";
@@ -37,6 +41,7 @@ import { generateStub } from "@/utilities/FormDataStubGenerator";
 export default {
   mixins: [
     PreventEntryWhenLoggedInMixin,
+    LoadingIndicatorMixin,
     submitFormToVuexStore(actionTypes.REGISTER),
     redirectOnSubmitSuccess("/")
   ],
@@ -49,6 +54,7 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       form: {
         username: generateStub(),
         password: generateStub(),

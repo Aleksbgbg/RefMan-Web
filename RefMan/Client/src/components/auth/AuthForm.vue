@@ -4,7 +4,11 @@
     h4.text-2xl {{ title }}
     c-form(@submit="$emit('submit')")
       slot
-      c-form-submit-button
+      c-form-submit-button(:disabled="isLoading")
+        .inline-block.align-middle.loading.rounded-full.border-2.border-solid.border-white.h-3.w-3.mr-1(
+          v-if="isLoading"
+        )
+        span Submit
 
       c-hr
 
@@ -25,7 +29,18 @@ export default {
     "c-hr": HorizontalRuleComponent
   },
   props: {
-    title: String
+    title: String,
+    isLoading: Boolean
   }
 };
 </script>
+
+<style lang="stylus">
+.loading
+  animation: spin 1s linear infinite
+  border-right-color: transparent
+
+  @keyframes spin
+    to
+      transform: rotate(360deg)
+</style>

@@ -1,6 +1,7 @@
 <template lang="pug">
 button.text-white.rounded.focus-outline-none.focus-shadow-outline.py-2.px-4(
-  :class="`bg-${variant}-500 hover-bg-${variant}-700`"
+  :class="[`bg-${variant}-${baseShade}`, disabled ? '' : `hover-bg-${variant}-${baseShade + 200}`]"
+  :disabled="disabled"
 )
   slot
 </template>
@@ -11,6 +12,12 @@ export default {
     variant: {
       type: String,
       default: "blue"
+    },
+    disabled: Boolean
+  },
+  computed: {
+    baseShade() {
+      return this.disabled ? 300 : 500;
     }
   }
 };

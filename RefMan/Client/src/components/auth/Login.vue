@@ -1,13 +1,15 @@
 <template lang="pug">
-c-auth-form(title="Login" @submit="submit")
+c-auth-form(title="Login" :isLoading="isLoading" @submit="submit")
   c-username-input(
     placeholder="Enter your username"
+    :readonly="isLoading"
     v-model="form.username.value"
     :validation-state="form.username.isValid"
     :invalid-state-message="form.username.invalidMessage"
   )
   c-password-input(
     placeholder="Enter your password"
+    :readonly="isLoading"
     v-model="form.password.value"
     :validation-state="form.password.isValid"
     :invalid-state-message="form.password.invalidMessage"
@@ -18,6 +20,7 @@ c-auth-form(title="Login" @submit="submit")
 
 <script>
 import PreventEntryWhenLoggedInMixin from "@/mixins/PreventEntryWhenLoggedIn";
+import LoadingIndicatorMixin from "@/mixins/LoadingIndicator";
 import { submitFormToVuexStore } from "@/mixins/SubmitFormToVuexStore";
 import { redirectOnSubmitSuccess } from "@/mixins/RedirectOnSubmitSuccess";
 import { actionTypes } from "@/store/account/Types";
@@ -30,6 +33,7 @@ import { generateStub } from "@/utilities/FormDataStubGenerator";
 export default {
   mixins: [
     PreventEntryWhenLoggedInMixin,
+    LoadingIndicatorMixin,
     submitFormToVuexStore(actionTypes.LOG_IN),
     redirectOnSubmitSuccess("/")
   ],
@@ -41,6 +45,7 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       form: {
         username: generateStub(),
         password: generateStub()
