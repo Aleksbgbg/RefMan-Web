@@ -1,6 +1,6 @@
 <template lang="pug">
-nav.nav-height.flex.flex-row.bg-dark-light.px-4.py-2
-  router-link.text-white.text-xl.py-1.mx-auto.sm-mr-4(to="/")
+nav.nav-height.flex.flex-row.flex-wrap.justify-between.bg-dark-light.px-4.py-2
+  router-link.text-white.text-xl.py-1.sm-mr-4(to="/")
     img.inline-block(
       src="/img/logo.png"
       alt="RefMan logo"
@@ -8,7 +8,16 @@ nav.nav-height.flex.flex-row.bg-dark-light.px-4.py-2
       height="25"
     )
     span RefMan
-  .hidden.sm-flex.flex-grow
+  button.sm-hidden.rounded.border.border-solid.border-gray-500.focus-outline-none.focus-shadow-outline.px-2(
+    @click="isExpanded = !isExpanded"
+  )
+    img(
+      src="/img/hamburger-menu.svg"
+      alt="hamburger menu"
+      width="30"
+      height="30"
+    )
+  .flex-grow.flex-100.sm-flex.sm-flex-auto(:class="{ hidden: !isExpanded }")
     c-navigation
       c-nav-item(:to="{ name: 'references' }") References
     c-dropdown-button.ml-auto(variant="purple")
@@ -42,6 +51,11 @@ export default {
     "c-dropdown-button": DropdownButtonComponent,
     "c-dropdown-item": DropdownItemComponent
   },
+  data() {
+    return {
+      isExpanded: false
+    };
+  },
   computed: {
     ...mapState({
       isLoggedIn: (state) => state.account.isLoggedIn,
@@ -63,6 +77,6 @@ export default {
 </script>
 
 <style lang="stylus">
-.nav-height
-  height: 56px
+.flex-100
+  flex-basis: 100%
 </style>

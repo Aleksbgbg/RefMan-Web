@@ -48,4 +48,5 @@ export default {
 
 .hang
   transform: translateY(.25rem)
+  z-index: 1
 </style>
