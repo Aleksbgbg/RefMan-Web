@@ -26,7 +26,7 @@ c-auth-form(title="Register" :isLoading="isLoading" @submit="submit")
 </template>
 
 <script>
-import PreventEntryWhenLoggedInMixin from "@/mixins/PreventEntryWhenLoggedIn";
+import PreventAccessWhenLoggedInMixin from "@/mixins/access-control/PreventAccessWhenLoggedIn";
 import LoadingIndicatorMixin from "@/mixins/LoadingIndicator";
 import { submitFormToVuexStore } from "@/mixins/SubmitFormToVuexStore";
 import { redirectOnSubmitSuccess } from "@/mixins/RedirectOnSubmitSuccess";
@@ -40,7 +40,7 @@ import { generateStub } from "@/utilities/FormDataStubGenerator";
 
 export default {
   mixins: [
-    PreventEntryWhenLoggedInMixin,
+    PreventAccessWhenLoggedInMixin,
     LoadingIndicatorMixin,
     submitFormToVuexStore(actionTypes.REGISTER),
     redirectOnSubmitSuccess("/")

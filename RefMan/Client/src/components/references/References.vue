@@ -3,12 +3,12 @@ c-file-tree
 </template>
 
 <script>
-import PreventEntryWhenNotLoggedInMixin from "@/mixins/PreventEntryWhenNotLoggedIn";
+import AllowAccessWhenLoggedInMixin from "@/mixins/access-control/AllowAccessWhenLoggedIn";
 import FileTreeComponent from "./file-system/FileTree";
 
 export default {
   mixins: [
-    PreventEntryWhenNotLoggedInMixin
+    AllowAccessWhenLoggedInMixin
   ],
   components: {
     "c-file-tree": FileTreeComponent
