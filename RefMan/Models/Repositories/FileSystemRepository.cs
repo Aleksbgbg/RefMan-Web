@@ -22,16 +22,19 @@
         public async Task GenerateRootFolderForUser(AppUser user)
         {
             long rootFolderId = IdGenerator.GenerateId();
+            long ownerId = user.Id;
 
             _appDbContext.Folders.Add(new Folder
             {
-                Id = rootFolderId
+                Id = rootFolderId,
+                OwnerId = ownerId
             });
             _appDbContext.Folders.Add(new Folder
             {
                 Id = IdGenerator.GenerateId(),
                 Name = "Example Folder",
-                ParentId = rootFolderId
+                ParentId = rootFolderId,
+                OwnerId = ownerId
             });
 
             user.RootFolderId = rootFolderId;
