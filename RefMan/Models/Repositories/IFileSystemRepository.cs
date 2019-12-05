@@ -10,5 +10,9 @@
         Task GenerateRootFolderForUser(AppUser user);
 
         Folder FindRootForUser(AppUser user);
+
+        Folder FindFolderOrDefault(long id);
+
+        Task<Folder> CreateFolder(long parentId, long ownerId, string name);
     }
 }

@@ -49,5 +49,26 @@
                                 .Include(folder => folder.Files)
                                 .Single(folder => folder.OwnerId == user.Id && folder.IsRoot);
         }
+
+        public Folder FindFolderOrDefault(long id)
+        {
+            return _appDbContext.Folders.SingleOrDefault(folder => folder.Id == id);
+        }
+
+        public async Task<Folder> CreateFolder(long parentId, long ownerId, string name)
+        {
+            Folder folder = new Folder
+            {
+                Id = IdGenerator.GenerateId(),
+                Name = name,
+                ParentId = parentId,
+                OwnerId = ownerId
+            };
+
+            _appDbContext.Folders.Add(folder);
+            await _appDbContext.SaveChangesAsync();
+
+            return folder;
+        }
     }
 }
