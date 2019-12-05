@@ -10,8 +10,11 @@
         [Key]
         public long Id { get; set; }
 
+        [Required]
         [MaxLength(256)]
         public string Name { get; set; }
+
+        public bool IsRoot { get; set; }
 
         [ForeignKey(nameof(Parent))]
         public long? ParentId { get; set; }
