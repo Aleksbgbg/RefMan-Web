@@ -2,13 +2,11 @@
 {
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
     using RefMan.Attributes.Filters;
     using RefMan.Extensions;
-    using RefMan.Models;
     using RefMan.Models.Repositories;
     using RefMan.Models.User;
     using RefMan.Utilities;
@@ -58,13 +56,14 @@
                     UserName = registration.Username
                 };
 
-                await _fileSystemRepository.GenerateRootFolderForUser(newUser);
-
                 IdentityResult createResult = await _userManager.CreateAsync(newUser, registration.Password);
 
                 if (createResult.Succeeded)
                 {
                     await _signInManager.SignInAsync(newUser, isPersistent: true);
+
+                    await _fileSystemRepository.GenerateRootFolderForUser(newUser);
+
                     return NoContent();
                 }
 

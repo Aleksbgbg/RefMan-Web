@@ -27,6 +27,8 @@
             _appDbContext.Folders.Add(new Folder
             {
                 Id = rootFolderId,
+                Name = string.Empty,
+                IsRoot = true,
                 OwnerId = ownerId
             });
             _appDbContext.Folders.Add(new Folder
@@ -37,8 +39,6 @@
                 OwnerId = ownerId
             });
 
-            user.RootFolderId = rootFolderId;
-
             await _appDbContext.SaveChangesAsync();
         }
 
@@ -47,7 +47,7 @@
             return _appDbContext.Folders
                                 .Include(folder => folder.Folders)
                                 .Include(folder => folder.Files)
-                                .First(folder => folder.Id == user.RootFolderId);
+                                .Single(folder => folder.OwnerId == user.Id && folder.IsRoot);
         }
     }
 }
