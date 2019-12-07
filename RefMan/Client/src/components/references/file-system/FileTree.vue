@@ -70,12 +70,12 @@ export default {
       currentFocal.node.isEditing = true;
     },
     newFile() {
-      const file = new File(0, "New File");
+      const file = File.new();
       file.isEditing = true;
       this.findClosestFolderToFocus().addFile(file);
     },
     newFolder() {
-      const folder = new Folder(0, "New Folder", [], []);
+      const folder = Folder.new();
       folder.isEditing = true;
       this.findClosestFolderToFocus().addFolder(folder);
     },

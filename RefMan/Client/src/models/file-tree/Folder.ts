@@ -27,6 +27,10 @@ export class Folder extends Node {
       }
     }
 
+    public static new(): Folder {
+      return new Folder("0", "", false, [], []);
+    }
+
     public static fromRootFolderResult(rootFolderResult: RootFolderResult): Folder {
       return new Folder(
         rootFolderResult.idString,
