@@ -5,16 +5,18 @@ div
     imageExpanded="/img/open-folder.svg"
     :canExpand="canExpand"
     :isExpanded="isExpanded"
-    :node="model"
+    :node="folder"
     @expand="expand"
   )
   .ml-5(v-if="canExpand" v-show="isExpanded")
-    c-node-list(:model="model")
+    c-node-list(:model="folder")
 </template>
 
 <script>
 import FileSystemEntryComponent from "./FileSystemEntry";
+import { File } from "@/models/file-tree/File";
 import { Folder } from "@/models/file-tree/Folder";
+import { fileSystemClient } from "@/services/api-clients/FileSystemClient";
 
 export default {
   components: {
@@ -26,17 +28,27 @@ export default {
   },
   data() {
     return {
-      isExpanded: true
+      isExpanded: false,
+      folder: this.model
     };
   },
   computed: {
     canExpand() {
-      return this.model.folders.length > 0 || this.model.files.length > 0;
+      return this.model.canExpand;
     }
   },
   methods: {
-    expand() {
+    async expand() {
       if (this.canExpand) {
+        if (!this.isExpanded && !this.hasBeenExpanded) {
+          this.hasBeenExpanded = true;
+
+          const expansion = await fileSystemClient.getFolderExpansion(this.folder.id);
+
+          this.folder.folders = expansion.folders.map(Folder.fromFolderResult);
+          this.folder.files = expansion.files.map(File.fromNodeResult);
+        }
+
         this.isExpanded = !this.isExpanded;
       }
     }
