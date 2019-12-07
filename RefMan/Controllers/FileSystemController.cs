@@ -33,30 +33,53 @@
         {
             AppUser user = await FindCurrentUser();
 
-            return new RootFolderResult(_fileSystemRepository.FindRootForUser(user));
+            Folder root = _fileSystemRepository.FindRootForUser(user);
+
+            foreach (Folder folder in root.Folders)
+            {
+                Folder queriedFolder = _fileSystemRepository.FindFolderOrDefault(folder.Id);
+                folder.Folders = queriedFolder.Folders;
+                folder.Files = queriedFolder.Files;
+            }
+
+            return new RootFolderResult(root);
         }
 
         [HttpGet("folder/{id}")]
-        public IActionResult GetFolder(long id)
+        public async Task<ActionResult<FolderResult>> GetFolder(long id)
         {
-            throw new System.NotImplementedException();
+            Folder folder = _fileSystemRepository.FindFolderOrDefault(id);
+
+            if (folder == null)
+            {
+                return NodeDoesNotExist(id);
+            }
+
+            AppUser user = await FindCurrentUser();
+
+            if (folder.OwnerId != user.Id)
+            {
+                return UserDoesNotOwn(folder);
+            }
+
+            return Ok(new FolderResult(folder));
         }
 
         [HttpPost("folder")]
-        public async Task<IActionResult> PostFolder([FromBody] EntryCreation entryCreation)
+        public async Task<ActionResult<CreatedNodeResult>> PostFolder([FromBody] EntryCreation entryCreation)
         {
             Folder parent = _fileSystemRepository.FindFolderOrDefault(entryCreation.ParentId);
 
             if (parent == null)
             {
-                return NotFound($"Parent folder with ID '{entryCreation.ParentId}' does not exist.");
+                return NodeDoesNotExist(entryCreation.ParentId);
             }
 
             AppUser user = await FindCurrentUser();
 
             if (parent.OwnerId != user.Id)
             {
-                return Forbid("Request initiator must own parent folder to create sub-entries.");
+                return UserDoesNotOwn(parent);
             }
 
             Folder createdFolder = await _fileSystemRepository.CreateFolder(parent.Id, user.Id, entryCreation.Name);
@@ -64,12 +87,22 @@
             var resourceParams = new { createdFolder.Id };
             string resourceUrl = Url.Action(nameof(GetFolder), resourceParams);
 
-            return Created(resourceUrl, new NodeResult(createdFolder));
+            return Created(resourceUrl, new CreatedNodeResult(createdFolder));
         }
 
         private Task<AppUser> FindCurrentUser()
         {
             return _userManager.FindByNameAsync(User.ReadUsername());
+        }
+
+        private NotFoundObjectResult NodeDoesNotExist(long id)
+        {
+            return NotFound($"File system entry with ID '{id}' does not exist.");
+        }
+
+        private ForbidResult UserDoesNotOwn(FileSystemEntryBase fileSystemEntry)
+        {
+            return Forbid($"Authenticated user is not the owner of file system entry '{fileSystemEntry.Id}'.");
         }
     }
 }

@@ -19,6 +19,11 @@
             _appDbContext = appDbContext;
         }
 
+        private IQueryable<Folder> FoldersExpanded =>
+                _appDbContext.Folders
+                             .Include(folder => folder.Folders)
+                             .Include(folder => folder.Files);
+
         public async Task GenerateRootFolderForUser(AppUser user)
         {
             long rootFolderId = IdGenerator.GenerateId();
@@ -44,15 +49,12 @@
 
         public Folder FindRootForUser(AppUser user)
         {
-            return _appDbContext.Folders
-                                .Include(folder => folder.Folders)
-                                .Include(folder => folder.Files)
-                                .Single(folder => folder.OwnerId == user.Id && folder.IsRoot);
+            return FoldersExpanded.Single(folder => folder.OwnerId == user.Id && folder.IsRoot);
         }
 
         public Folder FindFolderOrDefault(long id)
         {
-            return _appDbContext.Folders.SingleOrDefault(folder => folder.Id == id);
+            return FoldersExpanded.SingleOrDefault(folder => folder.Id == id);
         }
 
         public async Task<Folder> CreateFolder(long parentId, long ownerId, string name)

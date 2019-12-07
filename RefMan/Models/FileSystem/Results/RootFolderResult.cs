@@ -6,17 +6,12 @@
     {
         public RootFolderResult(Folder folder) : base(folder)
         {
-            Folders = folder.Folders.Select(ToNodeResult).ToArray();
-            Files = folder.Files.Select(ToNodeResult).ToArray();
+            Folders = folder.Folders.Select(folder => new FolderResult(folder)).ToArray();
+            Files = folder.Files.Select(file => new FileResult(file)).ToArray();
         }
 
-        public NodeResult[] Folders { get; }
+        public FolderResult[] Folders { get; }
 
-        public NodeResult[] Files { get; }
-
-        private static NodeResult ToNodeResult(FileSystemEntryBase node)
-        {
-            return new NodeResult(node);
-        }
+        public FileResult[] Files { get; }
     }
 }
