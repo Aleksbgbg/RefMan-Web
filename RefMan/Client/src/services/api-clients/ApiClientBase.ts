@@ -1,6 +1,12 @@
 import axios from "axios";
 
 export abstract class ApiClientBase {
+  private readonly _controllerName: string;
+
+  protected constructor(controllerName: string) {
+    this._controllerName = controllerName;
+  }
+
   protected async get<T>(url: string): Promise<T> {
     return (await axios.get<T>(this.formatUrl(url))).data;
   }
@@ -18,6 +24,6 @@ export abstract class ApiClientBase {
   }
 
   private formatUrl(url: string): string {
-    return `/api/${url}`;
+    return `/api/${this._controllerName}/${url}`;
   }
 }
