@@ -34,19 +34,13 @@
             AppUser user = await FindCurrentUser();
 
             Folder root = _fileSystemRepository.FindRootForUser(user);
-
-            foreach (Folder folder in root.Folders)
-            {
-                Folder queriedFolder = _fileSystemRepository.FindFolderOrDefault(folder.Id);
-                folder.Folders = queriedFolder.Folders;
-                folder.Files = queriedFolder.Files;
-            }
+            IncludeSubTree(root);
 
             return new RootFolderResult(root);
         }
 
-        [HttpGet("folder/{id}")]
-        public async Task<ActionResult<FolderResult>> GetFolder(long id)
+        [HttpGet("folder-expansion/{id}")]
+        public async Task<ActionResult<ExpandFolderResult>> GetFolderExpansion(long id)
         {
             Folder folder = _fileSystemRepository.FindFolderOrDefault(id);
 
@@ -62,7 +56,9 @@
                 return UserDoesNotOwn(folder);
             }
 
-            return Ok(new FolderResult(folder));
+            IncludeSubTree(folder);
+
+            return Ok(new ExpandFolderResult(folder));
         }
 
         [HttpPost("folder")]
@@ -85,7 +81,7 @@
             Folder createdFolder = await _fileSystemRepository.CreateFolder(parent.Id, user.Id, entryCreation.Name);
 
             var resourceParams = new { createdFolder.Id };
-            string resourceUrl = Url.Action(nameof(GetFolder), resourceParams);
+            string resourceUrl = Url.Action(nameof(GetFolderExpansion), resourceParams);
 
             return Created(resourceUrl, new CreatedNodeResult(createdFolder));
         }
@@ -103,6 +99,16 @@
         private ForbidResult UserDoesNotOwn(FileSystemEntryBase fileSystemEntry)
         {
             return Forbid($"Authenticated user is not the owner of file system entry '{fileSystemEntry.Id}'.");
+        }
+
+        private void IncludeSubTree(Folder root)
+        {
+            foreach (Folder folder in root.Folders)
+            {
+                Folder queriedFolder = _fileSystemRepository.FindFolderOrDefault(folder.Id);
+                folder.Folders = queriedFolder.Folders;
+                folder.Files = queriedFolder.Files;
+            }
         }
     }
 }

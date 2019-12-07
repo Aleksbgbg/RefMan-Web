@@ -1,5 +1,5 @@
 export abstract class Node {
-    private readonly _id: number;
+    private readonly _id: string;
 
     private _name: string;
 
@@ -7,14 +7,14 @@ export abstract class Node {
 
     private _isEditing: boolean = false;
 
-    constructor(id: number, name: string = "") {
+    constructor(id: string, name: string = "") {
       this._id = id;
       this._name = name;
     }
 
     public abstract get isLeaf(): boolean;
 
-    public get id(): number {
+    public get id(): string {
       return this._id;
     }
 

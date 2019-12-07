@@ -2,9 +2,9 @@
 {
     using RefMan.Utilities;
 
-    public class RootFolderResult : NodeResult
+    public class ExpandFolderResult
     {
-        public RootFolderResult(Folder folder) : base(folder)
+        public ExpandFolderResult(Folder folder)
         {
             Folders = ResultUtil.FolderResultsFrom(folder);
             Files = ResultUtil.FileResultsFrom(folder);

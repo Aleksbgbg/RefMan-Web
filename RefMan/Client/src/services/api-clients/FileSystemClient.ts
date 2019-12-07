@@ -1,14 +1,14 @@
 import { ApiClientBase } from "./ApiClientBase";
 import { RootFolderResult } from "@/models/file-system/RootFolderResult";
-import { FolderResult } from "@/models/file-system/FolderResult";
+import { ExpandFolderResult } from "@/models/file-system/ExpandFolderResult";
 
 class FileSystemClient extends ApiClientBase {
   public root(): Promise<RootFolderResult> {
     return this.get("file-system/root");
   }
 
-  public getFolder(id: string): Promise<FolderResult> {
-    return this.get(`file-system/folder/${id}`);
+  public getFolderExpansion(id: string): Promise<ExpandFolderResult> {
+    return this.get(`file-system/folder-expansion/${id}`);
   }
 }
 

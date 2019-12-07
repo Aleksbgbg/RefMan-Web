@@ -1,15 +1,19 @@
 import { Node } from "./Node";
 import { File } from "./File";
 import { RootFolderResult } from "@/models/file-system/RootFolderResult";
-import { NodeResult } from "@/models/file-system/NodeResult";
+import { FolderResult } from "@/models/file-system/FolderResult";
 
 export class Folder extends Node {
-    private readonly _folders: Folder[];
+    private _folders: Folder[];
 
-    private readonly _files: File[];
+    private _files: File[];
 
-    constructor(id: number, name: string, folders: Folder[], files: File[]) {
+    private _canExpand: boolean;
+
+    constructor(id: string, name: string, canExpand: boolean, folders: Folder[], files: File[]) {
       super(id, name);
+
+      this._canExpand = canExpand;
 
       this._folders = folders;
       this._files = files;
@@ -25,38 +29,73 @@ export class Folder extends Node {
 
     public static fromRootFolderResult(rootFolderResult: RootFolderResult): Folder {
       return new Folder(
-        rootFolderResult.id,
+        rootFolderResult.idString,
         rootFolderResult.name,
-        rootFolderResult.folders.map(Folder.fromNodeResult),
+        true,
+        rootFolderResult.folders.map(Folder.fromFolderResult),
         rootFolderResult.files.map(File.fromNodeResult)
       );
     }
 
-    public static fromNodeResult(nodeResult: NodeResult): Folder {
-      return new Folder(nodeResult.id, nodeResult.name, [], []);
+    public static fromFolderResult(folderResult: FolderResult): Folder {
+      return new Folder(
+        folderResult.idString,
+        folderResult.name,
+        folderResult.isExpandable,
+        [],
+        []
+      );
     }
 
     public get isLeaf(): boolean {
       return false;
     }
 
+    public get canExpand(): boolean {
+      return this._canExpand;
+    }
+
     public get folders(): Folder[] {
       return this._folders;
+    }
+
+    public set folders(value: Folder[]) {
+      this._folders = [];
+
+      if (value.length === 0) {
+        return;
+      }
+
+      for (const folder of value) {
+        this.addFolderNoSort(folder);
+      }
+      this.sortByName(this._folders);
     }
 
     public get files(): File[] {
       return this._files;
     }
 
+    public set files(value: File[]) {
+      this._files = [];
+
+      if (value.length === 0) {
+        return;
+      }
+
+      for (const file of value) {
+        this.addFileNoSort(file);
+      }
+      this.sortByName(this._files);
+    }
+
     public addFolder(folder: Folder): void {
-      this.setParent(folder);
-      this._folders.push(folder);
+      this.addFolderNoSort(folder);
       this.sortByName(this._folders);
     }
 
     public addFile(file: File): void {
-      this.setParent(file);
-      this._files.push(file);
+      this.addFileNoSort(file);
       this.sortByName(this._files);
     }
 
@@ -66,6 +105,16 @@ export class Folder extends Node {
       if (!removedFolder) {
         this.removeNodeFromArray(node, this._files);
       }
+    }
+
+    private addFolderNoSort(folder: Folder): void {
+      this.setParent(folder);
+      this._folders.push(folder);
+    }
+
+    private addFileNoSort(file: File): void {
+      this.setParent(file);
+      this._files.push(file);
     }
 
     private setParent(node: Node): void {
