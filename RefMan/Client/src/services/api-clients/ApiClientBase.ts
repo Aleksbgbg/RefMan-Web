@@ -8,15 +8,15 @@ export abstract class ApiClientBase {
   }
 
   protected async get<T>(url: string): Promise<T> {
-    return (await axios.get<T>(this.formatUrl(url))).data;
+    return (await axios.get(this.formatUrl(url))).data;
   }
 
-  protected async post<T>(url: string, data?: T): Promise<void> {
-    await axios.post(this.formatUrl(url), data);
+  protected async post<TData, TResponse>(url: string, data?: TData): Promise<TResponse> {
+    return (await axios.post(this.formatUrl(url), data)).data;
   }
 
   protected async put<TData, TResponse>(url: string, data: TData): Promise<TResponse> {
-    return (await axios.put<TResponse>(this.formatUrl(url), data)).data;
+    return (await axios.put(this.formatUrl(url), data)).data;
   }
 
   protected async delete(url: string): Promise<void> {
