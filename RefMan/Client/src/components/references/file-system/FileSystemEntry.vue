@@ -50,8 +50,12 @@ export default {
     }
   },
   watch: {
-    isEditing() {
+    isEditing(value) {
       this.beginEditIfEditing();
+
+      if (!value) {
+        this.$emit("finishedEditing");
+      }
     }
   },
   mounted() {

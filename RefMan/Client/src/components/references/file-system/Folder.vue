@@ -7,6 +7,7 @@ div
     :isExpanded="isExpanded"
     :node="folder"
     @expand="expand"
+    @finishedEditing="finishedEditing"
   )
   .ml-5(v-if="canExpand" v-show="isExpanded")
     c-node-list(:model="folder")
@@ -50,6 +51,19 @@ export default {
         }
 
         this.isExpanded = !this.isExpanded;
+      }
+    },
+    async finishedEditing() {
+      if (!this.model.existsInPersistentStore) {
+        const nodeResult = await fileSystemClient.createFolder({
+          parentIdString: this.model.parentId,
+          name: this.model.name
+        });
+
+        this.model.id = nodeResult.idString;
+        this.model.name = nodeResult.name;
+
+        this.model.parent.sortFolders();
       }
     }
   }

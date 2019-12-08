@@ -1,5 +1,5 @@
 export abstract class Node {
-    private readonly _id: string;
+    private _id: string;
 
     private _name: string;
 
@@ -14,8 +14,24 @@ export abstract class Node {
 
     public abstract get isLeaf(): boolean;
 
+    public get existsInPersistentStore(): boolean {
+      return this.id !== "0";
+    }
+
     public get id(): string {
       return this._id;
+    }
+
+    public set id(value: string) {
+      this._id = value;
+    }
+
+    public get parentId(): string | null {
+      if (this._parent) {
+        return this._parent.id;
+      }
+
+      return null;
     }
 
     public get name(): string {

@@ -93,14 +93,22 @@ export class Folder extends Node {
       this.sortByName(this._files);
     }
 
+    public sortFolders(): void {
+      this.sortByName(this._folders);
+    }
+
+    public sortFiles(): void {
+      this.sortByName(this._files);
+    }
+
     public addFolder(folder: Folder): void {
       this.addFolderNoSort(folder);
-      this.sortByName(this._folders);
+      this.sortFolders();
     }
 
     public addFile(file: File): void {
       this.addFileNoSort(file);
-      this.sortByName(this._files);
+      this.sortFiles();
     }
 
     public remove(node: Node): void {
