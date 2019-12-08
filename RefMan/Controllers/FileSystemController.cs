@@ -62,7 +62,7 @@
         }
 
         [HttpPost("folder")]
-        public async Task<ActionResult<CreatedNodeResult>> PostFolder([FromBody] EntryCreation entryCreation)
+        public async Task<ActionResult<NodeResult>> PostFolder([FromBody] EntryCreation entryCreation)
         {
             Folder parent = _fileSystemRepository.FindFolderOrDefault(entryCreation.ParentId);
 
@@ -83,7 +83,7 @@
             var resourceParams = new { createdFolder.Id };
             string resourceUrl = Url.Action(nameof(GetFolderExpansion), resourceParams);
 
-            return Created(resourceUrl, new CreatedNodeResult(createdFolder));
+            return Created(resourceUrl, new NodeResult(createdFolder));
         }
 
         private Task<AppUser> FindCurrentUser()

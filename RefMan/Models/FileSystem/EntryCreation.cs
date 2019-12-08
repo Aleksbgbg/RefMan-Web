@@ -8,6 +8,7 @@
 
         public string ParentIdString { get; set; }
 
+        [Required]
         [MaxLength(256)]
         public string Name { get; set; }
     }

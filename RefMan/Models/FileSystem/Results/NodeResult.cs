@@ -1,8 +1,8 @@
 ﻿namespace RefMan.Models.FileSystem.Results
 {
-    public abstract class NodeResult
+    public class NodeResult
     {
-        protected NodeResult(FileSystemEntryBase node)
+        public NodeResult(FileSystemEntryBase node)
         {
             Id = node.Id;
             Name = node.Name;
