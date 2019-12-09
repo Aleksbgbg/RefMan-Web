@@ -21,6 +21,7 @@
       ref="nameInput"
       type="text"
       v-model="node.name"
+      @keyup.enter="enterPressed"
     )
 </template>
 
@@ -62,6 +63,9 @@ export default {
     this.beginEditIfEditing();
   },
   methods: {
+    enterPressed() {
+      this.node.stopEditing();
+    },
     click() {
       this.focusSelf();
     },
