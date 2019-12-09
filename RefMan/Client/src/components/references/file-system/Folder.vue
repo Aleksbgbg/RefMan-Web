@@ -5,12 +5,12 @@ div
     imageExpanded="/img/open-folder.svg"
     :canExpand="canExpand"
     :isExpanded="isExpanded"
-    :node="folder"
-    @expand="expand"
+    :node="model"
+    @toggleExpansion="toggleExpansion"
     @finishedEditing="finishedEditing"
   )
   .ml-5(v-if="canExpand" v-show="isExpanded")
-    c-node-list(:model="folder")
+    c-node-list(:model="model")
 </template>
 
 <script>
@@ -27,31 +27,35 @@ export default {
   props: {
     model: Folder
   },
-  data() {
-    return {
-      isExpanded: false,
-      folder: this.model
-    };
-  },
   computed: {
     canExpand() {
       return this.model.canExpand;
+    },
+    isExpanded() {
+      return this.model.isExpanded;
+    }
+  },
+  watch: {
+    async isExpanded() {
+      await this.ensureChildrenPopulated();
     }
   },
   methods: {
-    async expand() {
-      if (this.canExpand) {
-        if (!this.isExpanded && !this.hasBeenExpanded) {
-          this.hasBeenExpanded = true;
-
-          const expansion = await fileSystemClient.getFolderExpansion(this.folder.id);
-
-          this.folder.folders = expansion.folders.map(Folder.fromFolderResult);
-          this.folder.files = expansion.files.map(File.fromNodeResult);
-        }
-
-        this.isExpanded = !this.isExpanded;
+    async toggleExpansion() {
+      await this.ensureChildrenPopulated();
+      this.model.toggleExpansion();
+    },
+    async ensureChildrenPopulated() {
+      if (!this.childrenPopulated) {
+        await this.populateChildren();
+        this.childrenPopulated = true;
       }
+    },
+    async populateChildren() {
+      const expansion = await fileSystemClient.getFolderExpansion(this.model.id);
+
+      this.model.addFolders(expansion.folders.map(Folder.fromFolderResult));
+      this.model.addFiles(expansion.files.map(File.fromNodeResult));
     },
     async finishedEditing() {
       if (!this.model.existsInPersistentStore) {

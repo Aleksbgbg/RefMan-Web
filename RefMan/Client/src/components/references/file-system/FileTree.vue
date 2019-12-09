@@ -70,14 +70,19 @@ export default {
       currentFocal.node.isEditing = true;
     },
     newFile() {
-      const file = File.new();
-      file.isEditing = true;
-      this.findClosestFolderToFocus().addFile(file);
+      this.addNewNode(File.new(), (folder) => folder.addFile.bind(folder));
     },
     newFolder() {
-      const folder = Folder.new();
-      folder.isEditing = true;
-      this.findClosestFolderToFocus().addFolder(folder);
+      this.addNewNode(Folder.new(), (folder) => folder.addFolder.bind(folder));
+    },
+    addNewNode(node, addFunction) {
+      node.isEditing = true;
+
+      const closestFolderToFocus = this.findClosestFolderToFocus();
+      closestFolderToFocus.allowExpansion();
+      closestFolderToFocus.expand();
+
+      addFunction(closestFolderToFocus)(node);
     },
     findClosestFolderToFocus() {
       const currentFocal = focusTracker.getFocal();

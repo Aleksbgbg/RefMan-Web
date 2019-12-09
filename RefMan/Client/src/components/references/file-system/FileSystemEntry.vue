@@ -1,13 +1,13 @@
 <template lang="pug">
 .inline-flex
-  .flex.flex-none.expander.px-1(@click="$emit('expand')")
+  .flex.flex-none.expander.px-1(@click="toggleExpansion")
     .self-center.bg-cover.expand-image(
       :class="[{ invisible: !canExpand }, isExpandedLocal ? 'expanded' : 'collapsed']"
     )
   .inline-flex.px-1(
     :class="isSelected ? 'bg-blue-300' : 'hover-bg-blue-200'"
     @click="click"
-    @dblclick="$emit('expand')"
+    @dblclick="toggleExpansion"
   )
     img.flex-none(
       :src="isExpandedLocal ? imageExpanded : image"
@@ -54,7 +54,7 @@ export default {
       this.beginEditIfEditing();
 
       if (!value) {
-        this.$emit("finishedEditing");
+        this.finishedEditing();
       }
     }
   },
@@ -92,6 +92,12 @@ export default {
           this.$refs.nameInput.setSelectionRange(0, this.node.name.length);
         });
       }
+    },
+    toggleExpansion() {
+      this.$emit("toggleExpansion");
+    },
+    finishedEditing() {
+      this.$emit("finishedEditing");
     }
   }
 };
