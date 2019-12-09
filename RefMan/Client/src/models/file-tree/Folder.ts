@@ -10,6 +10,8 @@ export class Folder extends Node {
 
     private _canExpand: boolean;
 
+    private _isExpanded: boolean = false;
+
     constructor(id: string, name: string, canExpand: boolean, folders: Folder[], files: File[]) {
       super(id, name);
 
@@ -59,6 +61,10 @@ export class Folder extends Node {
       return this._canExpand;
     }
 
+    public get isExpanded(): boolean {
+      return this._isExpanded;
+    }
+
     public get folders(): Folder[] {
       return this._folders;
     }
@@ -70,10 +76,7 @@ export class Folder extends Node {
         return;
       }
 
-      for (const folder of value) {
-        this.addFolderNoSort(folder);
-      }
-      this.sortByName(this._folders);
+      this.addFolders(value);
     }
 
     public get files(): File[] {
@@ -87,18 +90,35 @@ export class Folder extends Node {
         return;
       }
 
-      for (const file of value) {
+      this.addFiles(value);
+    }
+
+    public allowExpansion(): void {
+      this._canExpand = true;
+    }
+
+    public expand(): void {
+      this.checkCanExpand();
+      this._isExpanded = true;
+    }
+
+    public toggleExpansion(): void {
+      this.checkCanExpand();
+      this._isExpanded = !this._isExpanded;
+    }
+
+    public addFolders(folders: Folder[]): void {
+      for (const folder of folders) {
+        this.addFolderNoSort(folder);
+      }
+      this.sortFolders();
+    }
+
+    public addFiles(files: File[]): void {
+      for (const file of files) {
         this.addFileNoSort(file);
       }
-      this.sortByName(this._files);
-    }
-
-    public sortFolders(): void {
-      this.sortByName(this._folders);
-    }
-
-    public sortFiles(): void {
-      this.sortByName(this._files);
+      this.sortFiles();
     }
 
     public addFolder(folder: Folder): void {
@@ -111,11 +131,25 @@ export class Folder extends Node {
       this.sortFiles();
     }
 
+    public sortFolders(): void {
+      this.sortByName(this._folders);
+    }
+
+    public sortFiles(): void {
+      this.sortByName(this._files);
+    }
+
     public remove(node: Node): void {
       const removedFolder = this.removeNodeFromArray(node, this._folders);
 
       if (!removedFolder) {
         this.removeNodeFromArray(node, this._files);
+      }
+    }
+
+    private checkCanExpand(): void {
+      if (!this._canExpand) {
+        throw new Error("Folder is not expandable but is being expanded");
       }
     }
 
