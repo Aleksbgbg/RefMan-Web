@@ -67,7 +67,7 @@ export default {
     },
     renameNode() {
       const currentFocal = focusTracker.getFocal();
-      currentFocal.node.isEditing = true;
+      currentFocal.node.beginEditing();
     },
     newFile() {
       this.addNewNode(File.new(), (folder) => folder.addFile.bind(folder));
@@ -76,11 +76,11 @@ export default {
       this.addNewNode(Folder.new(), (folder) => folder.addFolder.bind(folder));
     },
     addNewNode(node, addFunction) {
-      node.isEditing = true;
-
       const closestFolderToFocus = this.findClosestFolderToFocus();
       closestFolderToFocus.allowExpansion();
       closestFolderToFocus.expand();
+
+      node.beginEditing();
 
       addFunction(closestFolderToFocus)(node);
     },

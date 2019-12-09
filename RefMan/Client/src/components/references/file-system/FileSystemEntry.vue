@@ -70,10 +70,10 @@ export default {
     },
     removeFocus() {
       this.isSelected = false;
-      this.node.isEditing = false;
+      this.node.stopEditing();
     },
     edit() {
-      this.node.isEditing = true;
+      this.node.beginEditing();
     },
     focusSelf() {
       if (!this.isSelected) {

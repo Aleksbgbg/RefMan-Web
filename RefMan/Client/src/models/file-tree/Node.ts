@@ -54,7 +54,11 @@ export abstract class Node {
       return this._isEditing;
     }
 
-    public set isEditing(value: boolean) {
-      this._isEditing = value;
+    public beginEditing(): void {
+      this._isEditing = true;
+    }
+
+    public stopEditing(): void {
+      this._isEditing = false;
     }
 }
