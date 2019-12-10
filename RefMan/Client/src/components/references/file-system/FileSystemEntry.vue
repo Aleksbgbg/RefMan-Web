@@ -76,14 +76,10 @@ export default {
       this.isSelected = false;
       this.node.stopEditing();
     },
-    edit() {
-      this.node.beginEditing();
-    },
     focusSelf() {
       if (!this.isSelected) {
         this.focusManager.focus({
           focusable: this,
-          editable: this,
           node: this.node
         });
       }
