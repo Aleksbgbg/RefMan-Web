@@ -1,3 +1,5 @@
+import { Focal } from "@/services/focus-tracking/Focal";
+
 export interface FocusRoot {
-  onFocusChanged(): void;
+  onFocusChanged(focal: Focal): void;
 }

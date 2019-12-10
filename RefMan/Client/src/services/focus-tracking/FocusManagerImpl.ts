@@ -1,19 +1,14 @@
 import { FocusManager } from "./FocusManager";
-import { FocusTracker } from "./FocusTracker";
 import { Focal } from "./Focal";
 import { FocusRoot } from "@/services/focus-tracking/FocusRoot";
 
-export class FocusManagerImpl implements FocusManager, FocusTracker {
+export class FocusManagerImpl implements FocusManager {
     private readonly _focusRoot: FocusRoot;
 
     private _currentFocal: Focal | null = null;
 
     constructor(focusRoot: FocusRoot) {
       this._focusRoot = focusRoot;
-    }
-
-    public getFocal(): Focal | null {
-      return this._currentFocal;
     }
 
     public focus(focal: Focal): void {
@@ -24,7 +19,7 @@ export class FocusManagerImpl implements FocusManager, FocusTracker {
       this._currentFocal = focal;
       this._currentFocal.focusable.focus();
 
-      this._focusRoot.onFocusChanged();
+      this._focusRoot.onFocusChanged(focal);
     }
 
     public removeFocus(): void {

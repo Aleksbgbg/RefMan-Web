@@ -33,7 +33,7 @@ import ImageButtonComponent from "@/components/shared/buttons/ImageButton";
 import NodeListComponent from "./NodeList";
 import { Folder } from "@/models/file-tree/Folder";
 import { File } from "@/models/file-tree/File";
-import { createFocusTrackers } from "@/services/focus-tracking/FocusTrackingFactory";
+import { createFocusManager } from "@/services/focus-tracking/FocusTrackingFactory";
 import { fileSystemClient } from "@/services/api-clients/FileSystemClient";
 
 export default {
@@ -58,18 +58,15 @@ export default {
     }
   },
   beforeCreate() {
-    const focusTrackers = createFocusTrackers(this);
-
-    this.focusManager = focusTrackers.focusManager;
-    this.focusTracker = focusTrackers.focusTracker;
+    this.focusManager = createFocusManager(this);
   },
   async created() {
     const rootFolderResult = await fileSystemClient.root();
     this.rootFolder = Folder.fromRootFolderResult(rootFolderResult);
   },
   methods: {
-    onFocusChanged() {
-      this.focal = this.focusTracker.getFocal();
+    onFocusChanged(focal) {
+      this.focal = focal;
     },
     loseFocus() {
       this.focusManager.removeFocus();
