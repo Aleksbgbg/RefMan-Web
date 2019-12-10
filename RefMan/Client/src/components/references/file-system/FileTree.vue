@@ -6,22 +6,24 @@
     c-image-button(
       src="/img/new-file.png"
       tooltipText="New File"
-      @click.native="newFile"
+      :disabled="!focalAcceptsChildren"
+      @click="newFile"
     )
     c-image-button(
       src="/img/new-folder.png"
       tooltipText="New Folder"
-      @click.native="newFolder"
+      :disabled="!focalAcceptsChildren"
+      @click="newFolder"
     )
     c-image-button(
       src="/img/rename.png"
       tooltipText="Rename Selected"
-      @click.native="renameNode"
+      @click="renameNode"
     )
     c-image-button(
       src="/img/delete.png"
       tooltipText="Delete Selected"
-      @click.native="deleteNode"
+      @click="deleteNode"
     )
   c-node-list(v-if="rootFolder" :model="rootFolder")
 </template>
@@ -46,8 +48,14 @@ export default {
   },
   data() {
     return {
+      focal: null,
       rootFolder: null
     };
+  },
+  computed: {
+    focalAcceptsChildren() {
+      return !this.focal || this.focal.node.existsInPersistentStore;
+    }
   },
   beforeCreate() {
     const focusTrackers = createFocusTrackers(this);
@@ -61,21 +69,19 @@ export default {
   },
   methods: {
     onFocusChanged() {
+      this.focal = this.focusTracker.getFocal();
     },
     loseFocus() {
       this.focusManager.removeFocus();
     },
     deleteNode() {
-      const currentFocal = this.focusTracker.getFocal();
-
-      const currentNode = currentFocal.node;
+      const currentNode = this.focal.node;
       const currentNodeParent = currentNode.parent;
 
       currentNodeParent.remove(currentNode);
     },
     renameNode() {
-      const currentFocal = this.focusTracker.getFocal();
-      currentFocal.node.beginEditing();
+      this.focal.node.beginEditing();
     },
     newFile() {
       this.addNewNode(File.new(), (folder) => folder.addFile.bind(folder));
@@ -93,7 +99,7 @@ export default {
       addFunction(closestFolderToFocus)(node);
     },
     findClosestFolderToFocus() {
-      const currentFocal = this.focusTracker.getFocal();
+      const currentFocal = this.focal;
 
       if (currentFocal === null) {
         return this.rootFolder;
