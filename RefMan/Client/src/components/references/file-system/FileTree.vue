@@ -34,31 +34,39 @@ import { File } from "@/models/file-tree/File";
 import { createFocusTrackers } from "@/services/focus-tracking/FocusTrackingFactory";
 import { fileSystemClient } from "@/services/api-clients/FileSystemClient";
 
-const { focusManager, focusTracker } = createFocusTrackers();
-
 export default {
   components: {
     "c-image-button": ImageButtonComponent,
     "c-node-list": NodeListComponent
   },
-  provide: {
-    focusManager
+  provide() {
+    return {
+      focusManager: this.focusManager
+    };
   },
   data() {
     return {
       rootFolder: null
     };
   },
+  beforeCreate() {
+    const focusTrackers = createFocusTrackers(this);
+
+    this.focusManager = focusTrackers.focusManager;
+    this.focusTracker = focusTrackers.focusTracker;
+  },
   async created() {
     const rootFolderResult = await fileSystemClient.root();
     this.rootFolder = Folder.fromRootFolderResult(rootFolderResult);
   },
   methods: {
+    onFocusChanged() {
+    },
     loseFocus() {
-      focusManager.removeFocus();
+      this.focusManager.removeFocus();
     },
     deleteNode() {
-      const currentFocal = focusTracker.getFocal();
+      const currentFocal = this.focusTracker.getFocal();
 
       const currentNode = currentFocal.node;
       const currentNodeParent = currentNode.parent;
@@ -66,7 +74,7 @@ export default {
       currentNodeParent.remove(currentNode);
     },
     renameNode() {
-      const currentFocal = focusTracker.getFocal();
+      const currentFocal = this.focusTracker.getFocal();
       currentFocal.node.beginEditing();
     },
     newFile() {
@@ -85,7 +93,7 @@ export default {
       addFunction(closestFolderToFocus)(node);
     },
     findClosestFolderToFocus() {
-      const currentFocal = focusTracker.getFocal();
+      const currentFocal = this.focusTracker.getFocal();
 
       if (currentFocal === null) {
         return this.rootFolder;
