@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import ImageButtonComponent from "@/components/shared/buttons/ImageButton";
+import ImageButtonComponent from "@/components/references/file-system/ImageButton";
 import NodeListComponent from "./NodeList";
 import { Folder } from "@/models/file-tree/Folder";
 import { File } from "@/models/file-tree/File";
