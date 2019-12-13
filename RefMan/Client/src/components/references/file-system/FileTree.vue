@@ -6,23 +6,25 @@
     c-image-button(
       src="/img/new-file.png"
       tooltipText="New File"
-      :disabled="!focalAcceptsChildren"
+      :disabled="!canCreateFile"
       @click="newFile"
     )
     c-image-button(
       src="/img/new-folder.png"
       tooltipText="New Folder"
-      :disabled="!focalAcceptsChildren"
+      :disabled="!canCreateFolder"
       @click="newFolder"
     )
     c-image-button(
       src="/img/rename.png"
       tooltipText="Rename Selected"
+      :disabled="!canEdit"
       @click="renameNode"
     )
     c-image-button(
       src="/img/delete.png"
       tooltipText="Delete Selected"
+      :disabled="!canDelete"
       @click="deleteNode"
     )
   c-node-list(v-if="rootFolder" :model="rootFolder")
@@ -53,6 +55,18 @@ export default {
     };
   },
   computed: {
+    canCreateFile() {
+      return this.focalAcceptsChildren;
+    },
+    canCreateFolder() {
+      return this.focalAcceptsChildren;
+    },
+    canEdit() {
+      return this.focal && !this.focal.node.isEditing;
+    },
+    canDelete() {
+      return this.focal;
+    },
     focalAcceptsChildren() {
       return !this.focal || this.focal.node.existsInPersistentStore;
     }
@@ -71,20 +85,22 @@ export default {
     loseFocus() {
       this.focusManager.removeFocus();
     },
-    deleteNode() {
-      const currentNode = this.focal.node;
-      const currentNodeParent = currentNode.parent;
-
-      currentNodeParent.remove(currentNode);
-    },
-    renameNode() {
-      this.focal.node.beginEditing();
-    },
     newFile() {
       this.addNewNode(File.new(), (folder) => folder.addFile.bind(folder));
     },
     newFolder() {
       this.addNewNode(Folder.new(), (folder) => folder.addFolder.bind(folder));
+    },
+    renameNode() {
+      this.focal.node.beginEditing();
+    },
+    deleteNode() {
+      const currentNode = this.focal.node;
+      const currentNodeParent = currentNode.parent;
+
+      currentNodeParent.remove(currentNode);
+
+      this.loseFocus();
     },
     addNewNode(node, addFunction) {
       const closestFolderToFocus = this.findClosestFolderToFocus();

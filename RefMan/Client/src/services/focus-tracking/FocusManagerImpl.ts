@@ -19,7 +19,7 @@ export class FocusManagerImpl implements FocusManager {
       this._currentFocal = focal;
       this._currentFocal.focusable.focus();
 
-      this._focusRoot.onFocusChanged(focal);
+      this.emitFocusChanged();
     }
 
     public removeFocus(): void {
@@ -28,5 +28,11 @@ export class FocusManagerImpl implements FocusManager {
       }
 
       this._currentFocal = null;
+
+      this.emitFocusChanged();
+    }
+
+    private emitFocusChanged(): void {
+      this._focusRoot.onFocusChanged(this._currentFocal);
     }
 }
