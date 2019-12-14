@@ -18,8 +18,10 @@ import FileSystemEntryComponent from "./FileSystemEntry";
 import { File } from "@/models/file-tree/File";
 import { Folder } from "@/models/file-tree/Folder";
 import { fileSystemClient } from "@/services/api-clients/FileSystemClient";
+import FolderPersistMixin from "@/mixins/node-persistence/FolderPersist";
 
 export default {
+  mixins: [FolderPersistMixin],
   components: {
     "c-file-system-entry": FileSystemEntryComponent,
     "c-node-list": () => import("./NodeList")
@@ -56,19 +58,6 @@ export default {
 
       this.model.addFolders(expansion.folders.map(Folder.fromFolderResult));
       this.model.addFiles(expansion.files.map(File.fromNodeResult));
-    },
-    async finishedEditing() {
-      if (!this.model.existsInPersistentStore) {
-        const nodeResult = await fileSystemClient.createFolder({
-          parentIdString: this.model.parentId,
-          name: this.model.name
-        });
-
-        this.model.id = nodeResult.idString;
-        this.model.name = nodeResult.name;
-
-        this.model.parent.sortFolders();
-      }
     }
   }
 };
