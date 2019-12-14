@@ -103,7 +103,9 @@ export default {
       const currentNodeParent = currentNode.parent;
       currentNodeParent.remove(currentNode);
 
-      await focal.deletable.delete();
+      if (currentNode.existsInPersistentStore) {
+        await focal.deletable.delete();
+      }
     },
     addNewNode(node, addFunction) {
       const closestFolderToFocus = this.findClosestFolderToFocus();
