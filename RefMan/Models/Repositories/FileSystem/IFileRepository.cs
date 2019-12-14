@@ -1,4 +1,4 @@
-﻿namespace RefMan.Models.Repositories
+﻿namespace RefMan.Models.Repositories.FileSystem
 {
     public interface IFileRepository : IFileSystemRepository
     {
