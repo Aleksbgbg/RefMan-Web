@@ -25,21 +25,14 @@
 
         protected async Task<ActionResult<NodeResult>> GetNode(IFileSystemRepository repository, long id)
         {
-            Node node = repository.FindNodeOrDefault(id);
+            NodeOrResponse nodeOrResponse = await EnsureNodeExistsAndOwnedByCurrentUser(repository, id);
 
-            if (node == null)
+            if (nodeOrResponse.HasNode)
             {
-                return NodeDoesNotExist(id);
+                return Ok(new NodeResult(nodeOrResponse.Node));
             }
 
-            AppUser user = await FindCurrentUser();
-
-            if (node.OwnerId != user.Id)
-            {
-                return UserDoesNotOwn(node);
-            }
-
-            return Ok(new NodeResult(node));
+            return nodeOrResponse.Response;
         }
 
         protected async Task<ActionResult<NodeResult>> CreateNode(
@@ -48,47 +41,53 @@
                 string getHandlerName
         )
         {
-            Node parent = _folderRepository.FindNodeOrDefault(entryCreation.ParentId);
+            NodeOrResponse parentNodeOrResponse = await EnsureNodeExistsAndOwnedByCurrentUser(_folderRepository, entryCreation.ParentId);
 
-            if (parent == null)
+            if (parentNodeOrResponse.HasNode)
             {
-                return NodeDoesNotExist(entryCreation.ParentId);
+                Node parent = parentNodeOrResponse.Node;
+
+                Node createdNode = await repository.CreateNode(parent.Id, parent.OwnerId, entryCreation.Name);
+
+                var resourceParams = new { createdNode.Id };
+                string resourceUrl = Url.Action(getHandlerName, resourceParams);
+
+                return Created(resourceUrl, new NodeResult(createdNode));
             }
 
-            AppUser user = await FindCurrentUser();
-
-            if (parent.OwnerId != user.Id)
-            {
-                return UserDoesNotOwn(parent);
-            }
-
-            Node createdNode = await repository.CreateNode(parent.Id, user.Id, entryCreation.Name);
-
-            var resourceParams = new { createdNode.Id };
-            string resourceUrl = Url.Action(getHandlerName, resourceParams);
-
-            return Created(resourceUrl, new NodeResult(createdNode));
+            return parentNodeOrResponse.Response;
         }
 
         protected async Task<IActionResult> DeleteNode(IFileSystemRepository repository, long id)
+        {
+            NodeOrResponse nodeOrResponse = await EnsureNodeExistsAndOwnedByCurrentUser(repository, id);
+
+            if (nodeOrResponse.HasNode)
+            {
+                await repository.DeleteNode(nodeOrResponse.Node);
+                return NoContent();
+            }
+
+            return nodeOrResponse.Response;
+        }
+
+        protected async Task<NodeOrResponse> EnsureNodeExistsAndOwnedByCurrentUser(IFileSystemRepository repository, long id)
         {
             Node node = repository.FindNodeOrDefault(id);
 
             if (node == null)
             {
-                return NodeDoesNotExist(id);
+                return new NodeOrResponse(NodeDoesNotExist(id));
             }
 
-            AppUser user = await FindCurrentUser();
+            AppUser currentUser = await FindCurrentUser();
 
-            if (node.OwnerId != user.Id)
+            if (currentUser.Id != node.OwnerId)
             {
-                return UserDoesNotOwn(node);
+                return new NodeOrResponse(UserDoesNotOwn(node));
             }
 
-            await repository.DeleteNode(node);
-
-            return NoContent();
+            return new NodeOrResponse(node);
         }
 
         protected Task<AppUser> FindCurrentUser()
@@ -96,12 +95,12 @@
             return _userManager.FindByNameAsync(User.ReadUsername());
         }
 
-        protected NotFoundObjectResult NodeDoesNotExist(long id)
+        private NotFoundObjectResult NodeDoesNotExist(long id)
         {
-            return NotFound($"File system entry with ID '{id}' does not exist.");
+            return NotFound($"File system entry '{id}' does not exist.");
         }
 
-        protected ForbidResult UserDoesNotOwn(Node fileSystemEntry)
+        private ForbidResult UserDoesNotOwn(Node fileSystemEntry)
         {
             return Forbid($"Authenticated user is not the owner of file system entry '{fileSystemEntry.Id}'.");
         }

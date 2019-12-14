@@ -40,23 +40,17 @@
         [HttpGet("expansion/{id}")]
         public async Task<ActionResult<ExpandFolderResult>> GetFolderExpansion(long id)
         {
-            Folder folder = _folderRepository.FindFolderOrDefault(id);
+            NodeOrResponse nodeOrResponse = await EnsureNodeExistsAndOwnedByCurrentUser(_folderRepository, id);
 
-            if (folder == null)
+            if (nodeOrResponse.HasNode)
             {
-                return NodeDoesNotExist(id);
+                Folder folder = _folderRepository.FindFolderOrDefault(id);
+                IncludeSubTree(folder);
+
+                return Ok(new ExpandFolderResult(folder));
             }
 
-            AppUser user = await FindCurrentUser();
-
-            if (folder.OwnerId != user.Id)
-            {
-                return UserDoesNotOwn(folder);
-            }
-
-            IncludeSubTree(folder);
-
-            return Ok(new ExpandFolderResult(folder));
+            return nodeOrResponse.Response;
         }
 
         [HttpGet("{id}")]
