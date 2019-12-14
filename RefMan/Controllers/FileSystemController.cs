@@ -121,7 +121,7 @@
                 string getHandlerName
         )
         {
-            Node parent = repository.FindNodeOrDefault(entryCreation.ParentId);
+            Node parent = _folderRepository.FindNodeOrDefault(entryCreation.ParentId);
 
             if (parent == null)
             {
