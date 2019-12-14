@@ -10,7 +10,7 @@
     using RefMan.Models.User;
     using RefMan.Utilities;
 
-    public class FolderRepository : FileSystemRepositoryBase, IFolderRepository
+    public class FolderRepository : FileSystemRepositoryBase, IFolderRepository, IRootFolderRepository
     {
         private readonly AppDbContext _appDbContext;
 

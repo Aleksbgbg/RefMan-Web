@@ -21,15 +21,15 @@
 
         private readonly SignInManager<AppUser> _signInManager;
 
-        private readonly IFolderRepository _folderRepository;
+        private readonly IRootFolderRepository _rootFolderRepository;
 
         public AccountController(UserManager<AppUser> userManager,
                                  SignInManager<AppUser> signInManager,
-                                 IFolderRepository folderRepository)
+                                 IRootFolderRepository rootFolderRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _folderRepository = folderRepository;
+            _rootFolderRepository = rootFolderRepository;
         }
 
         [HttpGet]
@@ -62,7 +62,7 @@
                 {
                     await _signInManager.SignInAsync(newUser, isPersistent: true);
 
-                    await _folderRepository.GenerateRootFolderForUser(newUser);
+                    await _rootFolderRepository.GenerateRootFolderForUser(newUser);
 
                     return NoContent();
                 }
