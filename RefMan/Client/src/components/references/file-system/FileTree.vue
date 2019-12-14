@@ -1,6 +1,6 @@
 <template lang="pug">
 .select-none.h-screen.inline-block.border-2.border-orange-500(
-  @click.self="loseFocus"
+  @click.self="removeFocus"
 )
   .bg-gray-200
     c-image-button(
@@ -82,7 +82,7 @@ export default {
     onFocusChanged(focal) {
       this.focal = focal;
     },
-    loseFocus() {
+    removeFocus() {
       this.focusManager.removeFocus();
     },
     newFile() {
@@ -94,13 +94,16 @@ export default {
     renameNode() {
       this.focal.node.beginEditing();
     },
-    deleteNode() {
-      const currentNode = this.focal.node;
-      const currentNodeParent = currentNode.parent;
+    async deleteNode() {
+      const focal = this.focal;
 
+      this.removeFocus();
+
+      const currentNode = focal.node;
+      const currentNodeParent = currentNode.parent;
       currentNodeParent.remove(currentNode);
 
-      this.loseFocus();
+      await focal.deletable.delete();
     },
     addNewNode(node, addFunction) {
       const closestFolderToFocus = this.findClosestFolderToFocus();
