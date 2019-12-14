@@ -29,7 +29,10 @@
 import { Node } from "@/models/file-tree/Node";
 
 export default {
-  inject: ["focusManager"],
+  inject: [
+    "focusManager",
+    "parent"
+  ],
   props: {
     image: String,
     imageExpanded: String,
@@ -80,6 +83,7 @@ export default {
       if (!this.isSelected) {
         this.focusManager.focus({
           focusable: this,
+          deletable: this.parent,
           node: this.node
         });
       }

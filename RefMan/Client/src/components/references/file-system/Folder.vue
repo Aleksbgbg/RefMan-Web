@@ -26,6 +26,11 @@ export default {
     "c-file-system-entry": FileSystemEntryComponent,
     "c-node-list": () => import("./NodeList")
   },
+  provide() {
+    return {
+      parent: this
+    };
+  },
   props: {
     model: Folder
   },
@@ -58,6 +63,9 @@ export default {
 
       this.model.addFolders(expansion.folders.map(Folder.fromFolderResult));
       this.model.addFiles(expansion.files.map(File.fromNodeResult));
+    },
+    async delete() {
+      await folderClient.deleteFolder(this.model.id);
     }
   }
 };
