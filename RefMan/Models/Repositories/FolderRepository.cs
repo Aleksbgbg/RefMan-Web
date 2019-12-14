@@ -10,11 +10,11 @@
     using RefMan.Models.User;
     using RefMan.Utilities;
 
-    public class FolderRepository : IFolderRepository
+    public class FolderRepository : FileSystemRepositoryBase, IFolderRepository
     {
         private readonly AppDbContext _appDbContext;
 
-        public FolderRepository(AppDbContext appDbContext)
+        public FolderRepository(AppDbContext appDbContext) : base(appDbContext)
         {
             _appDbContext = appDbContext;
         }
@@ -58,12 +58,12 @@
             return FoldersExpanded.SingleOrDefault(folder => folder.Id == id);
         }
 
-        public FileSystemEntryBase FindNodeOrDefault(long id)
+        public override FileSystemEntryBase FindNodeOrDefault(long id)
         {
             return FindFolderOrDefault(id);
         }
 
-        public async Task<FileSystemEntryBase> CreateNode(long parentId, long ownerId, string name)
+        public override async Task<FileSystemEntryBase> CreateNode(long parentId, long ownerId, string name)
         {
             Folder folder = new Folder
             {
