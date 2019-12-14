@@ -24,6 +24,10 @@ class FolderClient extends ApiClientBase {
   public createFolder(entryCreation: EntryCreation): Promise<NodeResult> {
     return this.post("", entryCreation);
   }
+
+  public deleteFolder(id: string): Promise<void> {
+    return this.delete(id);
+  }
 }
 
 export const folderClient = new FolderClient();

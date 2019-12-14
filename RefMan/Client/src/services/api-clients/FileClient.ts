@@ -14,6 +14,10 @@ class FileClient extends ApiClientBase {
   public createFile(entryCreation: EntryCreation): Promise<NodeResult> {
     return this.post("", entryCreation);
   }
+
+  public deleteFile(id: string): Promise<void> {
+    return this.delete(id);
+  }
 }
 
 export const fileClient = new FileClient();
