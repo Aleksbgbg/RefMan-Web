@@ -20,13 +20,19 @@
     {
         private readonly UserManager<AppUser> _userManager;
 
-        private readonly IFileSystemRepository _fileSystemRepository;
+        private readonly IFolderRepository _folderRepository;
 
-        public FileSystemController(UserManager<AppUser> userManager,
-                                    IFileSystemRepository fileSystemRepository)
+        private readonly IFileRepository _fileRepository;
+
+        public FileSystemController(
+                UserManager<AppUser> userManager,
+                IFolderRepository folderRepository,
+                IFileRepository fileRepository
+        )
         {
             _userManager = userManager;
-            _fileSystemRepository = fileSystemRepository;
+            _folderRepository = folderRepository;
+            _fileRepository = fileRepository;
         }
 
         [HttpGet("[Action]")]
@@ -34,28 +40,16 @@
         {
             AppUser user = await FindCurrentUser();
 
-            Folder root = _fileSystemRepository.FindRootForUser(user);
+            Folder root = _folderRepository.FindRootForUser(user);
             IncludeSubTree(root);
 
             return new RootFolderResult(root);
         }
 
-        [HttpGet("folder/{id}")]
-        public ActionResult<NodeResult> GetFolder(long id)
-        {
-            return GetNode(_fileSystemRepository.FindFolderOrDefault, id);
-        }
-
-        [HttpGet("file/{id}")]
-        public ActionResult<NodeResult> GetFile(long id)
-        {
-            return GetNode(_fileSystemRepository.FindFileOrDefault, id);
-        }
-
         [HttpGet("folder-expansion/{id}")]
         public async Task<ActionResult<ExpandFolderResult>> GetFolderExpansion(long id)
         {
-            Folder folder = _fileSystemRepository.FindFolderOrDefault(id);
+            Folder folder = _folderRepository.FindFolderOrDefault(id);
 
             if (folder == null)
             {
@@ -74,22 +68,33 @@
             return Ok(new ExpandFolderResult(folder));
         }
 
+        [HttpGet("folder/{id}")]
+        public ActionResult<NodeResult> GetFolder(long id)
+        {
+            return GetNode(_folderRepository, id);
+        }
+
+        [HttpGet("file/{id}")]
+        public ActionResult<NodeResult> GetFile(long id)
+        {
+            return GetNode(_fileRepository, id);
+        }
+
         [HttpPost("folder")]
         public Task<ActionResult<NodeResult>> PostFolder([FromBody] EntryCreation entryCreation)
         {
-            return CreateNode(entryCreation, _fileSystemRepository.CreateFolder, nameof(GetFolder));
+            return CreateNode(_folderRepository, entryCreation, nameof(GetFolder));
         }
 
         [HttpPost("file")]
         public Task<ActionResult<NodeResult>> PostFile([FromBody] EntryCreation entryCreation)
         {
-            return CreateNode(entryCreation, _fileSystemRepository.CreateFile, nameof(GetFile));
+            return CreateNode(_fileRepository, entryCreation, nameof(GetFile));
         }
 
-        private ActionResult<NodeResult> GetNode<T>(Func<long, T> findNodeOrDefault, long id)
-                where T : FileSystemEntryBase
+        private ActionResult<NodeResult> GetNode(IFileSystemRepository repository, long id)
         {
-            T node = findNodeOrDefault(id);
+            FileSystemEntryBase node = repository.FindNodeOrDefault(id);
 
             if (node == null)
             {
@@ -99,13 +104,13 @@
             return Ok(new NodeResult(node));
         }
 
-        private async Task<ActionResult<NodeResult>> CreateNode<T>(
+        private async Task<ActionResult<NodeResult>> CreateNode(
+                IFileSystemRepository repository,
                 EntryCreation entryCreation,
-                Func<long, long, string, Task<T>> createNode,
                 string getHandlerName
-        ) where T : FileSystemEntryBase
+        )
         {
-            Folder parent = _fileSystemRepository.FindFolderOrDefault(entryCreation.ParentId);
+            FileSystemEntryBase parent = repository.FindNodeOrDefault(entryCreation.ParentId);
 
             if (parent == null)
             {
@@ -119,7 +124,7 @@
                 return UserDoesNotOwn(parent);
             }
 
-            T createdNode = await createNode(parent.Id, user.Id, entryCreation.Name);
+            FileSystemEntryBase createdNode = await repository.CreateNode(parent.Id, user.Id, entryCreation.Name);
 
             var resourceParams = new { createdNode.Id };
             string resourceUrl = Url.Action(getHandlerName, resourceParams);
@@ -146,7 +151,7 @@
         {
             foreach (Folder folder in root.Folders)
             {
-                Folder queriedFolder = _fileSystemRepository.FindFolderOrDefault(folder.Id);
+                Folder queriedFolder = _folderRepository.FindFolderOrDefault(folder.Id);
                 folder.Folders = queriedFolder.Folders;
                 folder.Files = queriedFolder.Files;
             }

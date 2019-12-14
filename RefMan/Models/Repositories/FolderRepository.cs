@@ -10,11 +10,11 @@
     using RefMan.Models.User;
     using RefMan.Utilities;
 
-    public class FileSystemRepository : IFileSystemRepository
+    public class FolderRepository : IFolderRepository
     {
         private readonly AppDbContext _appDbContext;
 
-        public FileSystemRepository(AppDbContext appDbContext)
+        public FolderRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
@@ -23,6 +23,7 @@
                 _appDbContext.Folders
                              .Include(folder => folder.Folders)
                              .Include(folder => folder.Files);
+
 
         public async Task GenerateRootFolderForUser(AppUser user)
         {
@@ -57,12 +58,12 @@
             return FoldersExpanded.SingleOrDefault(folder => folder.Id == id);
         }
 
-        public File FindFileOrDefault(long id)
+        public FileSystemEntryBase FindNodeOrDefault(long id)
         {
-            return _appDbContext.Files.SingleOrDefault(file => file.Id == id);
+            return FindFolderOrDefault(id);
         }
 
-        public async Task<Folder> CreateFolder(long parentId, long ownerId, string name)
+        public async Task<FileSystemEntryBase> CreateNode(long parentId, long ownerId, string name)
         {
             Folder folder = new Folder
             {
@@ -76,22 +77,6 @@
             await _appDbContext.SaveChangesAsync();
 
             return folder;
-        }
-
-        public async Task<File> CreateFile(long parentId, long ownerId, string name)
-        {
-            File file = new File
-            {
-                Id = IdGenerator.GenerateId(),
-                Name = name,
-                ParentId = parentId,
-                OwnerId = ownerId
-            };
-
-            _appDbContext.Files.Add(file);
-            await _appDbContext.SaveChangesAsync();
-
-            return file;
         }
     }
 }

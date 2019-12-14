@@ -46,7 +46,8 @@ namespace RefMan
             services.AddControllers(options => options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer())));
             services.AddSpaStaticFiles(configuration => configuration.RootPath = "Client/dist");
 
-            services.AddTransient<IFileSystemRepository, FileSystemRepository>();
+            services.AddTransient<IFolderRepository, FolderRepository>();
+            services.AddTransient<IFileRepository, FileRepository>();
 
             services.AddSwaggerGen(options => options.SwaggerDoc("v1",
                                                                  new OpenApiInfo
