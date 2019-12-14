@@ -68,13 +68,13 @@
         }
 
         [HttpGet("folder/{id}")]
-        public ActionResult<NodeResult> GetFolder(long id)
+        public Task<ActionResult<NodeResult>> GetFolder(long id)
         {
             return GetNode(_folderRepository, id);
         }
 
         [HttpGet("file/{id}")]
-        public ActionResult<NodeResult> GetFile(long id)
+        public Task<ActionResult<NodeResult>> GetFile(long id)
         {
             return GetNode(_fileRepository, id);
         }
@@ -103,13 +103,20 @@
             return DeleteNode(_fileRepository, id);
         }
 
-        private ActionResult<NodeResult> GetNode(IFileSystemRepository repository, long id)
+        private async Task<ActionResult<NodeResult>> GetNode(IFileSystemRepository repository, long id)
         {
             Node node = repository.FindNodeOrDefault(id);
 
             if (node == null)
             {
                 return NodeDoesNotExist(id);
+            }
+
+            AppUser user = await FindCurrentUser();
+
+            if (node.OwnerId != user.Id)
+            {
+                return UserDoesNotOwn(node);
             }
 
             return Ok(new NodeResult(node));
