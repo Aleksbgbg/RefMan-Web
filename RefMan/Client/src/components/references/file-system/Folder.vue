@@ -14,11 +14,11 @@ div
 </template>
 
 <script>
+import FolderPersistMixin from "@/mixins/node-persistence/FolderPersist";
 import FileSystemEntryComponent from "./FileSystemEntry";
 import { File } from "@/models/file-tree/File";
 import { Folder } from "@/models/file-tree/Folder";
-import { fileSystemClient } from "@/services/api-clients/FileSystemClient";
-import FolderPersistMixin from "@/mixins/node-persistence/FolderPersist";
+import { folderClient } from "@/services/api-clients/FolderClient";
 
 export default {
   mixins: [FolderPersistMixin],
@@ -54,7 +54,7 @@ export default {
       }
     },
     async populateChildren() {
-      const expansion = await fileSystemClient.getFolderExpansion(this.model.id);
+      const expansion = await folderClient.getFolderExpansion(this.model.id);
 
       this.model.addFolders(expansion.folders.map(Folder.fromFolderResult));
       this.model.addFiles(expansion.files.map(File.fromNodeResult));

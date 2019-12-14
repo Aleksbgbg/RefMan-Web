@@ -36,7 +36,7 @@ import NodeListComponent from "./NodeList";
 import { Folder } from "@/models/file-tree/Folder";
 import { File } from "@/models/file-tree/File";
 import { createFocusManager } from "@/services/focus-tracking/FocusTrackingFactory";
-import { fileSystemClient } from "@/services/api-clients/FileSystemClient";
+import { folderClient } from "@/services/api-clients/FolderClient";
 
 export default {
   components: {
@@ -75,7 +75,7 @@ export default {
     this.focusManager = createFocusManager(this);
   },
   async created() {
-    const rootFolderResult = await fileSystemClient.root();
+    const rootFolderResult = await folderClient.getRoot();
     this.rootFolder = Folder.fromRootFolderResult(rootFolderResult);
   },
   methods: {

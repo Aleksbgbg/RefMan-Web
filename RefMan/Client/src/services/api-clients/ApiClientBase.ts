@@ -24,6 +24,10 @@ export abstract class ApiClientBase {
   }
 
   private formatUrl(url: string): string {
+    if (url === "") {
+      return `/api/${this._controllerName}`;
+    }
+
     return `/api/${this._controllerName}/${url}`;
   }
 }

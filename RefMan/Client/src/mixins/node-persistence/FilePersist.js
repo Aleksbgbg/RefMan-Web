@@ -1,7 +1,7 @@
 import { createNodePersist } from "@/mixins/node-persistence/NodePersist";
-import { fileSystemClient } from "@/services/api-clients/FileSystemClient";
+import { fileClient } from "@/services/api-clients/FileClient";
 
 export default createNodePersist(
-  fileSystemClient.createFile.bind(fileSystemClient),
+  fileClient.createFile.bind(fileClient),
   (parent) => parent.sortFiles.bind(parent)
 );
