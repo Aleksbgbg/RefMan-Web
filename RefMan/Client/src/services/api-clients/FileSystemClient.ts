@@ -13,12 +13,24 @@ class FileSystemClient extends ApiClientBase {
     return this.get("root");
   }
 
+  public getFolder(id: string): Promise<NodeResult> {
+    return this.get(`folder/${id}`);
+  }
+
+  public getFile(id: string): Promise<NodeResult> {
+    return this.get(`file/${id}`);
+  }
+
   public getFolderExpansion(id: string): Promise<ExpandFolderResult> {
     return this.get(`folder-expansion/${id}`);
   }
 
   public createFolder(entryCreation: EntryCreation): Promise<NodeResult> {
     return this.post("folder", entryCreation);
+  }
+
+  public createFile(entryCreation: EntryCreation): Promise<NodeResult> {
+    return this.post("file", entryCreation);
   }
 }
 

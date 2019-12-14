@@ -1,5 +1,6 @@
 ﻿namespace RefMan.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
@@ -39,6 +40,18 @@
             return new RootFolderResult(root);
         }
 
+        [HttpGet("folder/{id}")]
+        public ActionResult<NodeResult> GetFolder(long id)
+        {
+            return GetNode(_fileSystemRepository.FindFolderOrDefault, id);
+        }
+
+        [HttpGet("file/{id}")]
+        public ActionResult<NodeResult> GetFile(long id)
+        {
+            return GetNode(_fileSystemRepository.FindFileOrDefault, id);
+        }
+
         [HttpGet("folder-expansion/{id}")]
         public async Task<ActionResult<ExpandFolderResult>> GetFolderExpansion(long id)
         {
@@ -62,7 +75,35 @@
         }
 
         [HttpPost("folder")]
-        public async Task<ActionResult<NodeResult>> PostFolder([FromBody] EntryCreation entryCreation)
+        public Task<ActionResult<NodeResult>> PostFolder([FromBody] EntryCreation entryCreation)
+        {
+            return CreateNode(entryCreation, _fileSystemRepository.CreateFolder, nameof(GetFolder));
+        }
+
+        [HttpPost("file")]
+        public Task<ActionResult<NodeResult>> PostFile([FromBody] EntryCreation entryCreation)
+        {
+            return CreateNode(entryCreation, _fileSystemRepository.CreateFile, nameof(GetFile));
+        }
+
+        private ActionResult<NodeResult> GetNode<T>(Func<long, T> findNodeOrDefault, long id)
+                where T : FileSystemEntryBase
+        {
+            T node = findNodeOrDefault(id);
+
+            if (node == null)
+            {
+                return NodeDoesNotExist(id);
+            }
+
+            return Ok(new NodeResult(node));
+        }
+
+        private async Task<ActionResult<NodeResult>> CreateNode<T>(
+                EntryCreation entryCreation,
+                Func<long, long, string, Task<T>> createNode,
+                string getHandlerName
+        ) where T : FileSystemEntryBase
         {
             Folder parent = _fileSystemRepository.FindFolderOrDefault(entryCreation.ParentId);
 
@@ -78,12 +119,12 @@
                 return UserDoesNotOwn(parent);
             }
 
-            Folder createdFolder = await _fileSystemRepository.CreateFolder(parent.Id, user.Id, entryCreation.Name);
+            T createdNode = await createNode(parent.Id, user.Id, entryCreation.Name);
 
-            var resourceParams = new { createdFolder.Id };
-            string resourceUrl = Url.Action(nameof(GetFolderExpansion), resourceParams);
+            var resourceParams = new { createdNode.Id };
+            string resourceUrl = Url.Action(getHandlerName, resourceParams);
 
-            return Created(resourceUrl, new NodeResult(createdFolder));
+            return Created(resourceUrl, new NodeResult(createdNode));
         }
 
         private Task<AppUser> FindCurrentUser()

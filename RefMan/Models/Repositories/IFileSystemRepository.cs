@@ -13,6 +13,10 @@
 
         Folder FindFolderOrDefault(long id);
 
+        File FindFileOrDefault(long id);
+
         Task<Folder> CreateFolder(long parentId, long ownerId, string name);
+
+        Task<File> CreateFile(long parentId, long ownerId, string name);
     }
 }

@@ -57,6 +57,11 @@
             return FoldersExpanded.SingleOrDefault(folder => folder.Id == id);
         }
 
+        public File FindFileOrDefault(long id)
+        {
+            return _appDbContext.Files.SingleOrDefault(file => file.Id == id);
+        }
+
         public async Task<Folder> CreateFolder(long parentId, long ownerId, string name)
         {
             Folder folder = new Folder
@@ -71,6 +76,22 @@
             await _appDbContext.SaveChangesAsync();
 
             return folder;
+        }
+
+        public async Task<File> CreateFile(long parentId, long ownerId, string name)
+        {
+            File file = new File
+            {
+                Id = IdGenerator.GenerateId(),
+                Name = name,
+                ParentId = parentId,
+                OwnerId = ownerId
+            };
+
+            _appDbContext.Files.Add(file);
+            await _appDbContext.SaveChangesAsync();
+
+            return file;
         }
     }
 }
