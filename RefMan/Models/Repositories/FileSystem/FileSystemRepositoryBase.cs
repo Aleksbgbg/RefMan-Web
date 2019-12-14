@@ -16,13 +16,13 @@
             _appDbContext = appDbContext;
         }
 
-        public abstract FileSystemEntryBase FindNodeOrDefault(long id);
+        public abstract Node FindNodeOrDefault(long id);
 
-        public abstract Task<FileSystemEntryBase> CreateNode(long parentId, long ownerId, string name);
+        public abstract Task<Node> CreateNode(long parentId, long ownerId, string name);
 
-        public async Task DeleteNode(FileSystemEntryBase fileSystemEntryBase)
+        public async Task DeleteNode(Node node)
         {
-            _appDbContext.Entry(fileSystemEntryBase).State = EntityState.Deleted;
+            _appDbContext.Entry(node).State = EntityState.Deleted;
             await _appDbContext.SaveChangesAsync();
         }
     }

@@ -5,7 +5,7 @@
 
     using RefMan.Models.User;
 
-    public class FileSystemEntryBase
+    public class Node
     {
         [Key]
         public long Id { get; set; }

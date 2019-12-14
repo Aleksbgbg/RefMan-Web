@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public class Folder : FileSystemEntryBase
+    public class Folder : Node
     {
         public ICollection<Folder> Folders { get; set; }
 

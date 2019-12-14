@@ -1,6 +1,6 @@
 ﻿namespace RefMan.Models.FileSystem
 {
-    public class File : FileSystemEntryBase
+    public class File : Node
     {
     }
 }

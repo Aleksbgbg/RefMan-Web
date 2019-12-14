@@ -16,12 +16,12 @@
             _appDbContext = appDbContext;
         }
 
-        public override FileSystemEntryBase FindNodeOrDefault(long id)
+        public override Node FindNodeOrDefault(long id)
         {
             return _appDbContext.Files.SingleOrDefault(file => file.Id == id);
         }
 
-        public override async Task<FileSystemEntryBase> CreateNode(long parentId, long ownerId, string name)
+        public override async Task<Node> CreateNode(long parentId, long ownerId, string name)
         {
             File file = new File
             {

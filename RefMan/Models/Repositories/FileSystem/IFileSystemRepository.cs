@@ -6,10 +6,10 @@
 
     public interface IFileSystemRepository
     {
-        FileSystemEntryBase FindNodeOrDefault(long id);
+        Node FindNodeOrDefault(long id);
 
-        Task<FileSystemEntryBase> CreateNode(long parentId, long ownerId, string name);
+        Task<Node> CreateNode(long parentId, long ownerId, string name);
 
-        Task DeleteNode(FileSystemEntryBase node);
+        Task DeleteNode(Node node);
     }
 }

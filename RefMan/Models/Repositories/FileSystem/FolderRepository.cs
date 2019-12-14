@@ -58,12 +58,12 @@
             return FoldersExpanded.SingleOrDefault(folder => folder.Id == id);
         }
 
-        public override FileSystemEntryBase FindNodeOrDefault(long id)
+        public override Node FindNodeOrDefault(long id)
         {
             return FindFolderOrDefault(id);
         }
 
-        public override async Task<FileSystemEntryBase> CreateNode(long parentId, long ownerId, string name)
+        public override async Task<Node> CreateNode(long parentId, long ownerId, string name)
         {
             Folder folder = new Folder
             {

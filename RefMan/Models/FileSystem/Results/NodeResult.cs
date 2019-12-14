@@ -2,7 +2,7 @@
 {
     public class NodeResult
     {
-        public NodeResult(FileSystemEntryBase node)
+        public NodeResult(Node node)
         {
             Id = node.Id;
             Name = node.Name;

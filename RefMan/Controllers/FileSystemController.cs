@@ -105,7 +105,7 @@
 
         private ActionResult<NodeResult> GetNode(IFileSystemRepository repository, long id)
         {
-            FileSystemEntryBase node = repository.FindNodeOrDefault(id);
+            Node node = repository.FindNodeOrDefault(id);
 
             if (node == null)
             {
@@ -121,7 +121,7 @@
                 string getHandlerName
         )
         {
-            FileSystemEntryBase parent = repository.FindNodeOrDefault(entryCreation.ParentId);
+            Node parent = repository.FindNodeOrDefault(entryCreation.ParentId);
 
             if (parent == null)
             {
@@ -135,7 +135,7 @@
                 return UserDoesNotOwn(parent);
             }
 
-            FileSystemEntryBase createdNode = await repository.CreateNode(parent.Id, user.Id, entryCreation.Name);
+            Node createdNode = await repository.CreateNode(parent.Id, user.Id, entryCreation.Name);
 
             var resourceParams = new { createdNode.Id };
             string resourceUrl = Url.Action(getHandlerName, resourceParams);
@@ -145,7 +145,7 @@
 
         private async Task<IActionResult> DeleteNode(IFileSystemRepository repository, long id)
         {
-            FileSystemEntryBase node = repository.FindNodeOrDefault(id);
+            Node node = repository.FindNodeOrDefault(id);
 
             if (node == null)
             {
@@ -174,7 +174,7 @@
             return NotFound($"File system entry with ID '{id}' does not exist.");
         }
 
-        private ForbidResult UserDoesNotOwn(FileSystemEntryBase fileSystemEntry)
+        private ForbidResult UserDoesNotOwn(Node fileSystemEntry)
         {
             return Forbid($"Authenticated user is not the owner of file system entry '{fileSystemEntry.Id}'.");
         }
