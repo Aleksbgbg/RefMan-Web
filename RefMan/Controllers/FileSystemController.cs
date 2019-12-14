@@ -1,6 +1,5 @@
 ﻿namespace RefMan.Controllers
 {
-    using System;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
@@ -92,6 +91,18 @@
             return CreateNode(_fileRepository, entryCreation, nameof(GetFile));
         }
 
+        [HttpDelete("folder/{id}")]
+        public Task<IActionResult> DeleteFolder(long id)
+        {
+            return DeleteNode(_folderRepository, id);
+        }
+
+        [HttpDelete("file/{id}")]
+        public Task<IActionResult> DeleteFile(long id)
+        {
+            return DeleteNode(_fileRepository, id);
+        }
+
         private ActionResult<NodeResult> GetNode(IFileSystemRepository repository, long id)
         {
             FileSystemEntryBase node = repository.FindNodeOrDefault(id);
@@ -130,6 +141,27 @@
             string resourceUrl = Url.Action(getHandlerName, resourceParams);
 
             return Created(resourceUrl, new NodeResult(createdNode));
+        }
+
+        private async Task<IActionResult> DeleteNode(IFileSystemRepository repository, long id)
+        {
+            FileSystemEntryBase node = repository.FindNodeOrDefault(id);
+
+            if (node == null)
+            {
+                return NodeDoesNotExist(id);
+            }
+
+            AppUser user = await FindCurrentUser();
+
+            if (node.OwnerId != user.Id)
+            {
+                return UserDoesNotOwn(node);
+            }
+
+            await repository.DeleteNode(node);
+
+            return NoContent();
         }
 
         private Task<AppUser> FindCurrentUser()
