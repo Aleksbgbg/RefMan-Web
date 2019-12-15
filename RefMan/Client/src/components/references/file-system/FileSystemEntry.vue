@@ -65,6 +65,11 @@ export default {
   mounted() {
     this.beginEditIfEditing();
   },
+  beforeDestroy() {
+    if (this.isSelected) {
+      this.focusManager.removeFocus();
+    }
+  },
   methods: {
     enterPressed() {
       this.node.stopEditing();
