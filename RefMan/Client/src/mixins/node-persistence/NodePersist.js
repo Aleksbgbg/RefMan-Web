@@ -1,5 +1,6 @@
 export function createNodePersist(
   createNode,
+  updateNode,
   getSortNodesFunc
 ) {
   return {
@@ -10,6 +11,10 @@ export function createNodePersist(
         };
 
         if (this.model.existsInPersistentStore) {
+          const nodeResult = await updateNode(this.model.id, this.model.name);
+
+          this.model.name = nodeResult.name;
+
           sort();
         } else if (this.model.name === "") {
           this.model.parent.remove(this.model);
