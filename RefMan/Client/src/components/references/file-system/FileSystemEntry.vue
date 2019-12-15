@@ -21,7 +21,8 @@
       ref="nameInput"
       type="text"
       v-model="node.name"
-      @keyup.enter="enterPressed"
+      @keyup.enter="stopEditing"
+      @keyup.esc="stopEditing"
     )
 </template>
 
@@ -71,7 +72,7 @@ export default {
     }
   },
   methods: {
-    enterPressed() {
+    stopEditing() {
       this.node.stopEditing();
     },
     click() {
