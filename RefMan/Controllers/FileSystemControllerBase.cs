@@ -58,6 +58,23 @@
             return parentNodeOrResponse.Response;
         }
 
+        protected async Task<ActionResult<NodeResult>> UpdateNode(IFileSystemRepository repository, long id, EntryEdit entryEdit)
+        {
+            NodeOrResponse nodeOrResponse = await EnsureNodeExistsAndOwnedByCurrentUser(repository, id);
+
+            if (nodeOrResponse.HasNode)
+            {
+                Node node = nodeOrResponse.Node;
+                node.Name = entryEdit.Name;
+
+                await repository.UpdateNode(node);
+
+                return Ok(new NodeResult(node));
+            }
+
+            return nodeOrResponse.Response;
+        }
+
         protected async Task<IActionResult> DeleteNode(IFileSystemRepository repository, long id)
         {
             NodeOrResponse nodeOrResponse = await EnsureNodeExistsAndOwnedByCurrentUser(repository, id);

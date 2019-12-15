@@ -65,6 +65,12 @@
             return CreateNode(_folderRepository, entryCreation, nameof(GetFolder));
         }
 
+        [HttpPut("{id}")]
+        public Task<ActionResult<NodeResult>> PutFolder(long id, [FromBody] EntryEdit entryEdit)
+        {
+            return UpdateNode(_folderRepository, id, entryEdit);
+        }
+
         [HttpDelete("{id}")]
         public Task<IActionResult> DeleteFolder(long id)
         {

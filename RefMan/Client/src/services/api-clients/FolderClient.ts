@@ -25,6 +25,12 @@ class FolderClient extends ApiClientBase {
     return this.post("", entryCreation);
   }
 
+  public updateFolder(id: string, newName: string): Promise<NodeResult> {
+    return this.put(id, {
+      name: newName
+    });
+  }
+
   public deleteFolder(id: string): Promise<void> {
     return this.delete(id);
   }
