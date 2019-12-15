@@ -145,6 +145,11 @@ export class Folder extends Node {
       if (!removedFolder) {
         this.removeNodeFromArray(node, this._files);
       }
+
+      if (this._files.length === 0 &&
+          this._folders.length === 0) {
+        this._canExpand = false;
+      }
     }
 
     private checkCanExpand(): void {

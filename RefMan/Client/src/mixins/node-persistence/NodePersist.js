@@ -5,7 +5,14 @@ export function createNodePersist(
   return {
     methods: {
       async finishedEditing() {
+        const sort = () => {
+          getSortNodesFunc(this.model.parent)();
+        };
+
         if (this.model.existsInPersistentStore) {
+          sort();
+        } else if (this.model.name === "") {
+          this.model.parent.remove(this.model);
         } else {
           const nodeResult = await createNode({
             parentIdString: this.model.parentId,
@@ -14,9 +21,9 @@ export function createNodePersist(
 
           this.model.id = nodeResult.idString;
           this.model.name = nodeResult.name;
-        }
 
-        getSortNodesFunc(this.model.parent)();
+          sort();
+        }
       }
     }
   };
