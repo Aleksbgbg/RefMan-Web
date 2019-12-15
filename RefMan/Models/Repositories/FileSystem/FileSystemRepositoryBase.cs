@@ -20,6 +20,12 @@
 
         public abstract Task<Node> CreateNode(long parentId, long ownerId, string name);
 
+        public async Task UpdateNode(Node node)
+        {
+            _appDbContext.Entry(node).State = EntityState.Modified;
+            await _appDbContext.SaveChangesAsync();
+        }
+
         public async Task DeleteNode(Node node)
         {
             _appDbContext.Entry(node).State = EntityState.Deleted;

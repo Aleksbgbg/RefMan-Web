@@ -10,6 +10,8 @@
 
         Task<Node> CreateNode(long parentId, long ownerId, string name);
 
+        Task UpdateNode(Node node);
+
         Task DeleteNode(Node node);
     }
 }
