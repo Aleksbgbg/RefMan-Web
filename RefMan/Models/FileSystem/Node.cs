@@ -5,14 +5,10 @@
 
     using RefMan.Models.User;
 
-    public class Node
+    public class Node : EntryName
     {
         [Key]
         public long Id { get; set; }
-
-        [Required]
-        [MaxLength(256)]
-        public string Name { get; set; }
 
         public bool IsRoot { get; set; }
 
