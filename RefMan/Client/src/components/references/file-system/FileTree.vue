@@ -25,12 +25,25 @@
       src="/img/delete.png"
       tooltipText="Delete Selected"
       :disabled="!canDelete"
-      @click="deleteNode"
+      @click="showDeleteDialog"
     )
   c-node-list(v-if="rootFolder" :model="rootFolder")
+  c-dialog(
+    v-if="deleteDialogOpen"
+    title="Are you sure?"
+    :isOpen="deleteDialogOpen"
+    @ok="deleteNode"
+    @cancel="deleteDialogOpen = false"
+  )
+    p
+      | Delete folder
+      |
+      span.font-semibold {{ focal.node.name }}
+      | ?
 </template>
 
 <script>
+import DialogComponent from "@/components/shared/Dialog";
 import ImageButtonComponent from "@/components/references/file-system/ImageButton";
 import NodeListComponent from "./NodeList";
 import { Folder } from "@/models/file-tree/Folder";
@@ -40,6 +53,7 @@ import { folderClient } from "@/services/api-clients/FolderClient";
 
 export default {
   components: {
+    "c-dialog": DialogComponent,
     "c-image-button": ImageButtonComponent,
     "c-node-list": NodeListComponent
   },
@@ -51,7 +65,8 @@ export default {
   data() {
     return {
       focal: null,
-      rootFolder: null
+      rootFolder: null,
+      deleteDialogOpen: false
     };
   },
   computed: {
@@ -94,7 +109,12 @@ export default {
     renameNode() {
       this.focal.node.beginEditing();
     },
+    showDeleteDialog() {
+      this.deleteDialogOpen = true;
+    },
     async deleteNode() {
+      this.deleteDialogOpen = false;
+
       const focal = this.focal;
 
       this.removeFocus();
