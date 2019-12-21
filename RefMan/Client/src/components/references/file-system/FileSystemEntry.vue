@@ -4,7 +4,7 @@
     .self-center.bg-cover.expand-image(
       :class="[{ invisible: !canExpand }, isExpandedLocal ? 'expanded' : 'collapsed']"
     )
-  .inline-flex.px-1(
+  .flex.px-1(
     :class="isSelected ? 'bg-blue-300' : 'hover-bg-blue-200'"
     @click="click"
     @dblclick="onToggleExpansion"
@@ -15,8 +15,8 @@
       height="25"
       width="25"
     )
-    .ml-1.flex-1
-      p(v-show="!isEditing") {{ node.name }}
+    .ml-1
+      span(v-show="!isEditing") {{ node.name }}
       input.outline-none.bg-transparent.border.border-solid.border-black(
         v-if="isEditing"
         ref="nameInput"

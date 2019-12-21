@@ -2,32 +2,34 @@
 .inline-block.select-none.w-full.h-full(
   @click.self="removeFocus"
 )
-  .bg-gray-200
-    c-image-button(
-      src="/img/new-file.png"
-      tooltipText="New File"
-      :disabled="!canCreateFile"
-      @click="newFile"
-    )
-    c-image-button(
-      src="/img/new-folder.png"
-      tooltipText="New Folder"
-      :disabled="!canCreateFolder"
-      @click="newFolder"
-    )
-    c-image-button(
-      src="/img/rename.png"
-      tooltipText="Rename Selected"
-      :disabled="!canEdit"
-      @click="renameNode"
-    )
-    c-image-button(
-      src="/img/delete.png"
-      tooltipText="Delete Selected"
-      :disabled="!canDelete"
-      @click="showDeleteDialog"
-    )
-  c-node-list(v-if="rootFolder" :model="rootFolder")
+  .grid.h-full
+    .bg-gray-200
+      c-image-button(
+        src="/img/new-file.png"
+        tooltipText="New File"
+        :disabled="!canCreateFile"
+        @click="newFile"
+      )
+      c-image-button(
+        src="/img/new-folder.png"
+        tooltipText="New Folder"
+        :disabled="!canCreateFolder"
+        @click="newFolder"
+      )
+      c-image-button(
+        src="/img/rename.png"
+        tooltipText="Rename Selected"
+        :disabled="!canEdit"
+        @click="renameNode"
+      )
+      c-image-button(
+        src="/img/delete.png"
+        tooltipText="Delete Selected"
+        :disabled="!canDelete"
+        @click="showDeleteDialog"
+      )
+    .overflow-auto.whitespace-no-wrap
+      c-node-list(v-if="rootFolder" :model="rootFolder")
   c-dialog(
     v-if="deleteDialogOpen"
     title="Are you sure?"
@@ -154,3 +156,9 @@ export default {
   }
 };
 </script>
+
+<style lang="stylus" scoped>
+.grid
+  display: grid
+  grid-template-rows: auto 1fr
+</style>
