@@ -15,7 +15,7 @@
       height="25"
       width="25"
     )
-    .ml-1
+    .ml-1.flex-1
       p(v-show="!isEditing") {{ node.name }}
       input.outline-none.bg-transparent.border.border-solid.border-black(
         v-if="isEditing"
@@ -58,11 +58,11 @@ export default {
   },
   watch: {
     isEditing() {
-      this.beginEditIfEditing();
+      this.focusNameInputIfEditing();
     }
   },
   mounted() {
-    this.beginEditIfEditing();
+    this.focusNameInputIfEditing();
   },
   beforeDestroy() {
     if (this.isSelected) {
@@ -70,7 +70,7 @@ export default {
     }
   },
   methods: {
-    beginEditIfEditing() {
+    focusNameInputIfEditing() {
       if (this.isEditing) {
         this.focusSelf();
         this.$nextTick(() => {
