@@ -1,6 +1,6 @@
 <template lang="pug">
-button.relative.focus-outline-none.mx-1(
-  :class="[disabled ? 'cursor-not-allowed' : 'group']"
+button.group.relative.focus-outline-none.mx-1(
+  :class="{ 'cursor-not-allowed': disabled }"
   @click="emitClick"
 )
   img(
