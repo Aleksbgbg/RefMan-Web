@@ -1,19 +1,17 @@
 <template lang="pug">
-div
-  c-file-system-entry(
-    image="/img/file.svg"
-    :canExpand="false"
-    :node="model"
-    @submitEdit="submitEdit"
-    @cancelEdit="cancelEdit"
-  )
+c-file-system-entry(
+  image="/img/file.svg"
+  :canExpand="false"
+  :node="model"
+  @submitEdit="submitEdit"
+  @cancelEdit="cancelEdit"
+)
 </template>
 
 <script>
 import FilePersistMixin from "@/mixins/node-persistence/FilePersist";
 import FileSystemEntryComponent from "./FileSystemEntry";
 import { File } from "@/models/file-tree/File";
-import { fileClient } from "@/services/api-clients/FileClient";
 
 export default {
   mixins: [FilePersistMixin],
@@ -36,7 +34,7 @@ export default {
       this.cancelNodeEdit(this.model);
     },
     async delete() {
-      await fileClient.deleteFile(this.model.id);
+      await this.deleteNode(this.model);
     }
   }
 };

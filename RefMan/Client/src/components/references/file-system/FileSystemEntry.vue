@@ -1,5 +1,5 @@
 <template lang="pug">
-.inline-flex
+.flex
   .flex.flex-none.expander.px-1(@click="onToggleExpansion")
     .self-center.bg-cover.expand-image(
       :class="[{ invisible: !canExpand }, isExpandedLocal ? 'expanded' : 'collapsed']"

@@ -67,7 +67,7 @@ export default {
       this.cancelNodeEdit(this.model);
     },
     async delete() {
-      await folderClient.deleteFolder(this.model.id);
+      await this.deleteNode(this.model);
     }
   }
 };
