@@ -1,11 +1,12 @@
 <template lang="pug">
-c-file-system-entry(
-  image="/img/file.svg"
-  :canExpand="false"
-  :node="model"
-  @submitEdit="submitEdit"
-  @cancelEdit="cancelEdit"
-)
+li
+  c-file-system-entry(
+    image="/img/file.svg"
+    :canExpand="false"
+    :node="model"
+    @submitEdit="submitEdit"
+    @cancelEdit="cancelEdit"
+  )
 </template>
 
 <script>

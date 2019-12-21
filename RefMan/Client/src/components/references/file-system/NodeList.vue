@@ -1,5 +1,5 @@
 <template lang="pug">
-div
+ol
   template(v-for="folder of model.folders")
     c-folder(:key="folder.id" :model="folder")
   template(v-for="file of model.files")

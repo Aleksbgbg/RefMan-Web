@@ -15,15 +15,16 @@
       height="25"
       width="25"
     )
-    p.flex-1(v-show="!isEditing") {{ node.name }}
-    input.flex-1.outline-none.bg-transparent.border.border-solid.border-black(
-      v-if="isEditing"
-      ref="nameInput"
-      type="text"
-      v-model="nodeLocalName"
-      @keyup.enter="submitEdit"
-      @keyup.esc="cancelEdit"
-    )
+    .ml-1
+      p(v-show="!isEditing") {{ node.name }}
+      input.outline-none.bg-transparent.border.border-solid.border-black(
+        v-if="isEditing"
+        ref="nameInput"
+        type="text"
+        v-model="nodeLocalName"
+        @keyup.enter="submitEdit"
+        @keyup.esc="cancelEdit"
+      )
 </template>
 
 <script>

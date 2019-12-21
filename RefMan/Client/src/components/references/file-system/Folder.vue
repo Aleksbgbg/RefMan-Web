@@ -1,5 +1,5 @@
 <template lang="pug">
-div
+li
   c-file-system-entry(
     image="/img/folder.svg"
     imageExpanded="/img/open-folder.svg"
@@ -10,8 +10,7 @@ div
     @submitEdit="submitEdit"
     @cancelEdit="cancelEdit"
   )
-  .ml-5(v-if="canExpand" v-show="isExpanded")
-    c-node-list(:model="model")
+  c-node-list.ml-5(v-if="canExpand" v-show="isExpanded" :model="model")
 </template>
 
 <script>
