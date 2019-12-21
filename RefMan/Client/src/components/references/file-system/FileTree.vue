@@ -112,7 +112,11 @@ export default {
       this.focal.node.beginEditing();
     },
     showDeleteDialog() {
-      this.deleteDialogOpen = true;
+      if (this.focal.node.existsInPersistentStore) {
+        this.deleteDialogOpen = true;
+      } else {
+        this.deleteNode();
+      }
     },
     async deleteNode() {
       this.deleteDialogOpen = false;
