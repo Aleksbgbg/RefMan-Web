@@ -1,5 +1,5 @@
 <template lang="pug">
-.select-none.h-screen.inline-block.border-2.border-orange-500(
+.inline-block.select-none.w-full.h-full(
   @click.self="removeFocus"
 )
   .bg-gray-200

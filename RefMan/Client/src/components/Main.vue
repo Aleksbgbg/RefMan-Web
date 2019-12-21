@@ -1,5 +1,5 @@
 <template lang="pug">
-div
+.grid.h-full
   header
     c-navbar
   main
@@ -15,3 +15,9 @@ export default {
   }
 };
 </script>
+
+<style lang="stylus" scoped>
+.grid
+  display: grid
+  grid-template-rows: auto 1fr
+</style>
