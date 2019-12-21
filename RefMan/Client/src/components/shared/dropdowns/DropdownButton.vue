@@ -3,7 +3,7 @@
   gc-button.dropdown-btn(
     v-bind="$attrs"
     v-external-click="hide"
-    @click.native="isOpen = !isOpen"
+    @click="isOpen = !isOpen"
   )
     slot(name="button-content")
   ul.hang.absolute.rounded.bg-white.shadow.py-3(v-show="isOpen")

@@ -2,6 +2,7 @@
 button.text-white.rounded.focus-outline-none.focus-shadow-outline.py-2.px-4(
   :class="[`bg-${variant}-${baseShade}`, disabled ? '' : `hover-bg-${variant}-${baseShade + 200}`]"
   :disabled="disabled"
+  @click="$emit('click')"
 )
   slot
 </template>
