@@ -2,7 +2,7 @@
 .fixed.top-0.left-0.w-screen.h-screen.z-50(
   v-show="isOpen"
 )
-  .absolute.w-full.h-full.bg-gray-900.opacity-50
+  .absolute.w-full.h-full.bg-gray-900.opacity-50(@click.self="onCancel")
   .absolute.w-full
     .shadow-md.border.border-gray-500.rounded.w-px-400.bg-white.mx-auto.my-10
       header.p-3
