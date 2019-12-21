@@ -4,7 +4,8 @@ div
     image="/img/file.svg"
     :canExpand="false"
     :node="model"
-    @finishedEditing="finishedEditing"
+    @submitEdit="submitEdit"
+    @cancelEdit="cancelEdit"
   )
 </template>
 
@@ -28,6 +29,12 @@ export default {
     model: File
   },
   methods: {
+    async submitEdit(newName) {
+      await this.submitNodeEdit(this.model, newName);
+    },
+    cancelEdit() {
+      this.cancelNodeEdit(this.model);
+    },
     async delete() {
       await fileClient.deleteFile(this.model.id);
     }

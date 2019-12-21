@@ -7,7 +7,8 @@ div
     :isExpanded="isExpanded"
     :node="model"
     @toggleExpansion="toggleExpansion"
-    @finishedEditing="finishedEditing"
+    @submitEdit="submitEdit"
+    @cancelEdit="cancelEdit"
   )
   .ml-5(v-if="canExpand" v-show="isExpanded")
     c-node-list(:model="model")
@@ -42,18 +43,13 @@ export default {
       return this.model.isExpanded;
     }
   },
-  watch: {
-    async isExpanded() {
-      await this.ensureChildrenPopulated();
-    }
-  },
   methods: {
     async toggleExpansion() {
       await this.ensureChildrenPopulated();
       this.model.toggleExpansion();
     },
     async ensureChildrenPopulated() {
-      if (!this.childrenPopulated) {
+      if (this.canExpand && !this.childrenPopulated) {
         await this.populateChildren();
         this.childrenPopulated = true;
       }
@@ -63,6 +59,12 @@ export default {
 
       this.model.addFolders(expansion.folders.map(Folder.fromFolderResult));
       this.model.addFiles(expansion.files.map(File.fromNodeResult));
+    },
+    async submitEdit(newName) {
+      await this.submitNodeEdit(this.model, newName);
+    },
+    cancelEdit() {
+      this.cancelNodeEdit(this.model);
     },
     async delete() {
       await folderClient.deleteFolder(this.model.id);

@@ -1,13 +1,13 @@
 <template lang="pug">
 .inline-flex
-  .flex.flex-none.expander.px-1(@click="toggleExpansion")
+  .flex.flex-none.expander.px-1(@click="onToggleExpansion")
     .self-center.bg-cover.expand-image(
       :class="[{ invisible: !canExpand }, isExpandedLocal ? 'expanded' : 'collapsed']"
     )
   .inline-flex.px-1(
     :class="isSelected ? 'bg-blue-300' : 'hover-bg-blue-200'"
     @click="click"
-    @dblclick="toggleExpansion"
+    @dblclick="onToggleExpansion"
   )
     img.flex-none(
       :src="isExpandedLocal ? imageExpanded : image"
@@ -17,12 +17,12 @@
     )
     p.flex-1(v-show="!isEditing") {{ node.name }}
     input.flex-1.outline-none.bg-transparent.border.border-solid.border-black(
-      v-show="isEditing"
+      v-if="isEditing"
       ref="nameInput"
       type="text"
-      v-model="node.name"
-      @keyup.enter="stopEditing"
-      @keyup.esc="stopEditing"
+      v-model="nodeLocalName"
+      @keyup.enter="submitEdit"
+      @keyup.esc="cancelEdit"
     )
 </template>
 
@@ -43,7 +43,8 @@ export default {
   },
   data() {
     return {
-      isSelected: false
+      isSelected: false,
+      nodeLocalName: this.node.name
     };
   },
   computed: {
@@ -55,12 +56,8 @@ export default {
     }
   },
   watch: {
-    isEditing(value) {
+    isEditing() {
       this.beginEditIfEditing();
-
-      if (!value) {
-        this.finishedEditing();
-      }
     }
   },
   mounted() {
@@ -72,18 +69,17 @@ export default {
     }
   },
   methods: {
-    stopEditing() {
-      this.node.stopEditing();
+    beginEditIfEditing() {
+      if (this.isEditing) {
+        this.focusSelf();
+        this.$nextTick(() => {
+          this.$refs.nameInput.focus();
+          this.$refs.nameInput.setSelectionRange(0, this.node.name.length);
+        });
+      }
     },
     click() {
       this.focusSelf();
-    },
-    focus() {
-      this.isSelected = true;
-    },
-    removeFocus() {
-      this.isSelected = false;
-      this.node.stopEditing();
     },
     focusSelf() {
       if (!this.isSelected) {
@@ -94,20 +90,32 @@ export default {
         });
       }
     },
-    beginEditIfEditing() {
+    focus() {
+      this.isSelected = true;
+    },
+    removeFocus() {
+      this.isSelected = false;
       if (this.isEditing) {
-        this.focusSelf();
-        this.$nextTick(() => {
-          this.$refs.nameInput.focus();
-          this.$refs.nameInput.setSelectionRange(0, this.node.name.length);
-        });
+        this.submitEdit();
       }
     },
-    toggleExpansion() {
+    submitEdit() {
+      this.node.stopEditing();
+      this.onSubmitEdit();
+    },
+    cancelEdit() {
+      this.node.stopEditing();
+      this.nodeLocalName = this.node.name;
+      this.onCancelEdit();
+    },
+    onToggleExpansion() {
       this.$emit("toggleExpansion");
     },
-    finishedEditing() {
-      this.$emit("finishedEditing");
+    onSubmitEdit() {
+      this.$emit("submitEdit", this.nodeLocalName);
+    },
+    onCancelEdit() {
+      this.$emit("cancelEdit");
     }
   }
 };

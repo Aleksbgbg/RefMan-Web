@@ -1,33 +1,58 @@
 export function createNodePersist(
-  createNode,
-  updateNode,
+  persistCreateNode,
+  persistUpdateNode,
   getSortNodesFunc
 ) {
+  function cancelNodeCreation(node) {
+    node.parent.remove(node);
+  }
+
+  async function createNode(node, name) {
+    const nodeResult = await persistCreateNode({
+      parentIdString: node.parentId,
+      name
+    });
+
+    node.id = nodeResult.idString;
+    node.name = nodeResult.name;
+
+    sortSubnodesByName(node.parent);
+  }
+
+  async function renameNode(node, newName) {
+    const nodeResult = await persistUpdateNode(node.id, newName);
+
+    node.name = nodeResult.name;
+
+    sortSubnodesByName(node.parent);
+  }
+
+  function sortSubnodesByName(node) {
+    getSortNodesFunc(node)();
+  }
+
+  function isValidNewName(newName) {
+    return newName !== "";
+  }
+
   return {
     methods: {
-      async finishedEditing() {
-        const sort = () => {
-          getSortNodesFunc(this.model.parent)();
-        };
-
-        if (this.model.existsInPersistentStore) {
-          const nodeResult = await updateNode(this.model.id, this.model.name);
-
-          this.model.name = nodeResult.name;
-
-          sort();
-        } else if (this.model.name === "") {
-          this.model.parent.remove(this.model);
+      async submitNodeEdit(node, newName) {
+        if (node.existsInPersistentStore) {
+          if (isValidNewName(newName)) {
+            await renameNode(node, newName);
+          }
         } else {
-          const nodeResult = await createNode({
-            parentIdString: this.model.parentId,
-            name: this.model.name
-          });
-
-          this.model.id = nodeResult.idString;
-          this.model.name = nodeResult.name;
-
-          sort();
+          if (isValidNewName(newName)) {
+            await createNode(node, newName);
+          } else {
+            cancelNodeCreation(node);
+          }
+        }
+      },
+      cancelNodeEdit(node) {
+        if (!node.existsInPersistentStore) {
+          cancelNodeCreation(node);
         }
       }
     }
