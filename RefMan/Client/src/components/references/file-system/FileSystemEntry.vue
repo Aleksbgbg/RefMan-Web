@@ -1,7 +1,7 @@
 <template lang="pug">
 .flex
-  .flex.flex-none.expander.px-1(@click="onToggleExpansion")
-    .self-center.bg-cover.expand-image(
+  .flex.items-center.expander.px-1(@click="onToggleExpansion")
+    .bg-cover.expand-image(
       :class="[{ invisible: !canExpand }, isExpandedLocal ? 'expanded' : 'collapsed']"
     )
   .flex.px-1(
@@ -9,12 +9,13 @@
     @click="click"
     @dblclick="onToggleExpansion"
   )
-    img.flex-none(
-      :src="isExpandedLocal ? imageExpanded : image"
-      alt=""
-      height="25"
-      width="25"
-    )
+    .w-px-25
+      img(
+        :src="isExpandedLocal ? imageExpanded : image"
+        alt=""
+        height="25"
+        width="25"
+      )
     .ml-1
       span(v-show="!isEditing") {{ node.name }}
       input.outline-none.bg-transparent.border.border-solid.border-black(
@@ -123,6 +124,9 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.w-px-25
+  width: 25px
+
 .expander
   .expand-image
     width: 8px

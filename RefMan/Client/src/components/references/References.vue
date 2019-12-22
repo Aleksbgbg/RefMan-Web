@@ -1,9 +1,9 @@
 <template lang="pug">
 .h-full <!-- Placeholder div to separate Main.vue .grid class from this .grid class -->
   .grid.h-full
-    section
+    section.min-h-0
       c-file-tree
-    section
+    section.min-h-0
       c-referencer
 </template>
 
@@ -26,5 +26,5 @@ export default {
 <style lang="stylus" scoped>
 .grid
   display: grid
-  grid-template-columns: 300px 1fr
+  grid-template-columns: 1fr 3fr
 </style>
