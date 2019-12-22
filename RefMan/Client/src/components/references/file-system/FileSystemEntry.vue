@@ -111,7 +111,9 @@ export default {
       this.onCancelEdit();
     },
     onToggleExpansion() {
-      this.$emit("toggleExpansion");
+      if (this.node.canExpand) {
+        this.$emit("toggleExpansion");
+      }
     },
     onSubmitEdit() {
       this.$emit("submitEdit", this.nodeLocalName);
