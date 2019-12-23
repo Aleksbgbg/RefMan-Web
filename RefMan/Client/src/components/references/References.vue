@@ -1,5 +1,5 @@
 <template lang="pug">
-.h-full <!-- Placeholder div to separate Main.vue .grid class from this .grid class -->
+.select-none.h-full <!-- Placeholder div to separate Main.vue .grid class from this .grid class -->
   .grid.h-full
     section.min-h-0
       c-file-tree

@@ -1,5 +1,5 @@
 <template lang="pug">
-.select-none.h-full(
+.h-full(
   @click.self="removeFocus"
 )
   .grid.h-full
