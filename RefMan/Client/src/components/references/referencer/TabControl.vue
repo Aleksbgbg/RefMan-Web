@@ -28,7 +28,7 @@ export default {
   },
   data() {
     return {
-      selectedItem: this.items[0]
+      selectedItem: this.items[0] || null
     };
   },
   watch: {
