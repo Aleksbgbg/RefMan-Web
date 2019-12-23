@@ -28,7 +28,7 @@ export default {
   },
   data() {
     return {
-      selectedItem: this.items[0] || null
+      selectedItem: this.findNextItemToSelect()
     };
   },
   watch: {
@@ -45,8 +45,11 @@ export default {
       if (this.items.length === 0) {
         this.selectedItem = null;
       } else if (item === this.selectedItem) {
-        this.selectedItem = this.items[0];
+        this.selectedItem = this.findNextItemToSelect();
       }
+    },
+    findNextItemToSelect() {
+      return this.items[0] || null;
     }
   }
 };
