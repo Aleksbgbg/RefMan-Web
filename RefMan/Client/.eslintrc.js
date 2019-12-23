@@ -14,7 +14,8 @@ module.exports = {
     "eol-last": ["error", "never"],
     quotes: ["error", "double", { "avoidEscape": true }],
     semi: ["error", "always"],
-    "space-before-function-paren": ["error", "never"]
+    "space-before-function-paren": ["error", "never"],
+    "no-extend-native": "off"
   },
   parserOptions: {
     parser: "@typescript-eslint/parser"
