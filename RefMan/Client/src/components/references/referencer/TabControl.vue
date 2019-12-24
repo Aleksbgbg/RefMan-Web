@@ -1,19 +1,21 @@
 <template lang="pug">
-.flex.border-b-2
-  template(v-for="item of items")
-    c-tab-item(
-      :key="item.id"
-      :item="item"
-      :isSelected="item.id === selectedItem.id"
-      v-slot="{ isSelected }"
-      @selected="selectedItem = item"
-      @close="onClose"
-    )
-      slot(
-        name="header"
+div
+  .flex.border-b-2
+    template(v-for="item of items")
+      c-tab-item(
+        :key="item.id"
         :item="item"
-        :isSelected="isSelected"
+        :isSelected="item.id === selectedItem.id"
+        v-slot="{ isSelected }"
+        @selected="selectedItem = item"
+        @close="onClose"
       )
+        slot(
+          name="header"
+          :item="item"
+          :isSelected="isSelected"
+        )
+  slot(:item="selectedItem")
 </template>
 
 <script>
