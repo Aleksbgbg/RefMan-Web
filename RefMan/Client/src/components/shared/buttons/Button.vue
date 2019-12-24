@@ -1,25 +1,15 @@
 <template lang="pug">
-button.text-white.rounded.focus-outline-none.focus-shadow-outline.py-2.px-4(
-  :class="[`bg-${variant}-${baseShade}`, disabled ? '' : `hover-bg-${variant}-${baseShade + 200}`]"
-  :disabled="disabled"
-  @click="$emit('click')"
-)
+c-button-no-padding.py-2.px-4(v-bind="$attrs" @click="$emit('click')")
   slot
 </template>
 
 <script>
+import ButtonNoPaddingComponent from "@/components/shared/buttons/ButtonNoPadding";
+
 export default {
-  props: {
-    variant: {
-      type: String,
-      default: "blue"
-    },
-    disabled: Boolean
-  },
-  computed: {
-    baseShade() {
-      return this.disabled ? 300 : 500;
-    }
+  inheritAttrs: false,
+  components: {
+    "c-button-no-padding": ButtonNoPaddingComponent
   }
 };
 </script>
