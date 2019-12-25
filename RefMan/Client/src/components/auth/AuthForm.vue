@@ -9,9 +9,7 @@
           v-if="isLoading"
         )
         span Submit
-
-      c-hr
-
+      hr.my-3
       slot(name="footer")
 </template>
 
@@ -19,14 +17,12 @@
 import CardComponent from "@/components/shared/cards/Card";
 import FormComponent from "@/components/shared/forms/Form";
 import FormSubmitButtonComponent from "@/components/shared/forms/FormSubmitButton";
-import HorizontalRuleComponent from "@/components/shared/HorizontalRule";
 
 export default {
   components: {
     "c-card": CardComponent,
     "c-form": FormComponent,
-    "c-form-submit-button": FormSubmitButtonComponent,
-    "c-hr": HorizontalRuleComponent
+    "c-form-submit-button": FormSubmitButtonComponent
   },
   props: {
     title: String,
