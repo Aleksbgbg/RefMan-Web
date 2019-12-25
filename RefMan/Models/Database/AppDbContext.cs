@@ -4,6 +4,7 @@
     using Microsoft.EntityFrameworkCore;
 
     using RefMan.Models.FileSystem;
+    using RefMan.Models.Referencing;
     using RefMan.Models.User;
 
     public class AppDbContext : IdentityDbContext<AppUser, AppRole, long>
@@ -15,5 +16,9 @@
         public virtual DbSet<Folder> Folders { get; protected set; }
 
         public virtual DbSet<File> Files { get; protected set; }
+
+        public virtual DbSet<Document> Documents { get; protected set; }
+
+        public virtual DbSet<Reference> References { get; protected set; }
     }
 }
