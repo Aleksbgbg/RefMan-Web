@@ -7,7 +7,7 @@
   .flex.px-1(
     :class="isSelected ? 'bg-blue-300' : 'hover-bg-blue-200'"
     @click="click"
-    @dblclick="onToggleExpansion"
+    @dblclick="onDoubleClickNode"
   )
     .w-px-25
       img(
@@ -109,6 +109,10 @@ export default {
       this.node.stopEditing();
       this.nodeLocalName = this.node.name;
       this.onCancelEdit();
+    },
+    onDoubleClickNode() {
+      this.$emit("doubleClick");
+      this.onToggleExpansion();
     },
     onToggleExpansion() {
       if (this.node.canExpand) {
