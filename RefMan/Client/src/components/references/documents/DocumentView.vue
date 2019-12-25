@@ -1,5 +1,6 @@
 <template lang="pug">
 c-tab-control(
+  ref="tabControl"
   :items="documents"
   @close="close"
 )
@@ -20,6 +21,7 @@ c-tab-control(
 <script>
 import TabControlComponent from "@/components/shared/tab-control/TabControl";
 import DocumentComponent from "@/components/references/documents/Document";
+import { createTabPropagator } from "@/services/tab-propagation/TabPropagatorFactory";
 
 export default {
   components: {
@@ -31,9 +33,24 @@ export default {
       documents: []
     };
   },
+  created() {
+    createTabPropagator(this);
+  },
   methods: {
+    open(tab) {
+      const document = tab.document;
+
+      if (!this.documents.includes(document)) {
+        this.documents.push(document);
+      }
+
+      this.selectTab(document);
+    },
     close(document) {
       this.documents.remove(document);
+    },
+    selectTab(document) {
+      this.$refs.tabControl.select(document);
     }
   }
 };
