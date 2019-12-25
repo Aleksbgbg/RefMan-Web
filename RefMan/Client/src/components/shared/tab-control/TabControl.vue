@@ -42,6 +42,9 @@ export default {
     }
   },
   methods: {
+    select(item) {
+      this.selectedItem = item;
+    },
     onClose(item) {
       this.$emit("close", item);
 
