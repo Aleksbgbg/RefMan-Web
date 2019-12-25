@@ -19,7 +19,7 @@ div
 </template>
 
 <script>
-import TabItemComponent from "@/components/references/referencer/TabItem";
+import TabItemComponent from "@/components/shared/tab-control/TabItem";
 
 export default {
   components: {

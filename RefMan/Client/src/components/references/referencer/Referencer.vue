@@ -18,7 +18,7 @@ c-tab-control(
 </template>
 
 <script>
-import TabControlComponent from "@/components/references/referencer/TabControl";
+import TabControlComponent from "@/components/shared/tab-control/TabControl";
 import DocumentComponent from "@/components/references/referencer/Document";
 
 export default {
