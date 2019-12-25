@@ -15,7 +15,8 @@ div
           :item="item"
           :isSelected="isSelected"
         )
-  slot(:item="selectedItem")
+  template(v-if="selectedItem !== null")
+    slot(:item="selectedItem")
 </template>
 
 <script>
