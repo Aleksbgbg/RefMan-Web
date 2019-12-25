@@ -13,12 +13,17 @@
       hr
       footer.p-3
         .flex.justify-end
-          gc-button.mx-1(variant="red" @click="onCancel") {{ cancelText }}
-          gc-button.mx-1(@click="onOk") {{ okText }}
+          c-button.mx-1(variant="red" @click="onCancel") {{ cancelText }}
+          c-button.mx-1(@click="onOk") {{ okText }}
 </template>
 
 <script>
+import ButtonComponent from "@/components/shared/buttons/Button";
+
 export default {
+  components: {
+    "c-button": ButtonComponent
+  },
   props: {
     isOpen: Boolean,
     title: String,
