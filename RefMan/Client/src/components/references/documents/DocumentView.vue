@@ -1,6 +1,6 @@
 <template lang="pug">
 c-tab-control(
-  :items="files"
+  :items="documents"
   @close="close"
 )
   template(#header="{ item, isSelected }")
@@ -14,7 +14,7 @@ c-tab-control(
       :class="{ 'text-blue-500': isSelected }"
     ) {{ item.name }}
   template(v-slot="{ item }")
-    c-document(:file="item")
+    c-document(:document="item")
 </template>
 
 <script>
@@ -28,12 +28,12 @@ export default {
   },
   data() {
     return {
-      files: []
+      documents: []
     };
   },
   methods: {
-    close(file) {
-      this.files.remove(file);
+    close(document) {
+      this.documents.remove(document);
     }
   }
 };

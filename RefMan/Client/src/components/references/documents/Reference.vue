@@ -8,15 +8,15 @@
   article.flex.flex-col.items-center.text-sm
     figure
       img(
-        :src="reference.icon"
+        :src="reference.iconUrl"
         alt=""
         height="25"
         width="25"
       )
-    h2 {{ reference.pageTitle }}
+    h2 {{ reference.webpageTitle }}
     div
       c-citation(title="In-text:")
-        | ({{ reference.pageTitle }}, {{ publishYear }})
+        | ({{ reference.webpageTitle }}, {{ publishYear }})
       c-citation(title="Bibliography:")
         | {{ reference.websiteName }}.
         | ({{ publishYear }}).
@@ -31,6 +31,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faEdit, faTimes, faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import FontAwesomeButtonComponent from "@/components/shared/buttons/FontAwesomeButton";
 import CitationComponent from "@/components/references/documents/Citation";
+import { Reference } from "@/models/referencing/Reference";
 
 library.add(faEdit);
 library.add(faTimes);
@@ -42,7 +43,7 @@ export default {
     "c-citation": CitationComponent
   },
   props: {
-    reference: Object
+    reference: Reference
   },
   computed: {
     publishYear() {
