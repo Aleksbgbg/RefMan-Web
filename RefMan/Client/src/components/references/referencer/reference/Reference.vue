@@ -5,7 +5,7 @@
     c-font-awesome-button.my-1(icon="times" @click="deleteReference")
     a(:href="reference.url" target="_blank")
       c-font-awesome-button.my-1(icon="external-link-alt")
-  .flex.flex-col.items-center.text-sm
+  article.flex.flex-col.items-center.text-sm
     figure
       img(
         :src="reference.icon"
