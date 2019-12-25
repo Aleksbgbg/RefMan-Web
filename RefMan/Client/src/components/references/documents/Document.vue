@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import SearchComponent from "@/components/references/referencer/Search";
-import ReferenceComponent from "@/components/references/referencer/reference/Reference";
+import SearchComponent from "@/components/references/documents/Search";
+import ReferenceComponent from "@/components/references/documents/Reference";
 
 export default {
   components: {

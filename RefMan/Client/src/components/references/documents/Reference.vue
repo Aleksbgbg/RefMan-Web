@@ -30,7 +30,7 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faEdit, faTimes, faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import FontAwesomeButtonComponent from "@/components/shared/buttons/FontAwesomeButton";
-import CitationComponent from "@/components/references/referencer/reference/Citation";
+import CitationComponent from "@/components/references/documents/Citation";
 
 library.add(faEdit);
 library.add(faTimes);

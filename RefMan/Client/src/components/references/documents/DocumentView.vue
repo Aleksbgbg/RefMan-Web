@@ -19,7 +19,7 @@ c-tab-control(
 
 <script>
 import TabControlComponent from "@/components/shared/tab-control/TabControl";
-import DocumentComponent from "@/components/references/referencer/Document";
+import DocumentComponent from "@/components/references/documents/Document";
 
 export default {
   components: {

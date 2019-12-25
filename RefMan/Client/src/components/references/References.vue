@@ -4,13 +4,13 @@
     section.min-h-0
       c-file-tree
     section.min-h-0
-      c-referencer
+      c-document-view
 </template>
 
 <script>
 import AllowAccessWhenLoggedInMixin from "@/mixins/access-control/AllowAccessWhenLoggedIn";
 import FileTreeComponent from "./file-system/FileTree";
-import ReferencerComponent from "./referencer/Referencer";
+import DocumentViewComponent from "./documents/DocumentView";
 
 export default {
   mixins: [
@@ -18,7 +18,7 @@ export default {
   ],
   components: {
     "c-file-tree": FileTreeComponent,
-    "c-referencer": ReferencerComponent
+    "c-document-view": DocumentViewComponent
   }
 };
 </script>
