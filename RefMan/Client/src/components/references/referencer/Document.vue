@@ -1,6 +1,6 @@
 <template lang="pug">
 .p-2
-  c-search(@search="search")
+  c-search(placeholder="Enter a URL to reference" @search="search")
   .my-5
     template(v-for="reference of references")
       c-reference(:reference="reference")
