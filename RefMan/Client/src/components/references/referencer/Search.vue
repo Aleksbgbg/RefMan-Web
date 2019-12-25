@@ -5,25 +5,19 @@
     v-model="query"
   )
   .flex.items-center.absolute.inset-y-0.right-0.mr-2
-    c-button-no-padding.group.px-2.py-1(
-      variant="gray"
-      @click="onSearch"
-    )
-      c-font-awesome-icon.text-gray-600.group-hover-text-gray-300(icon="search")
+    c-font-awesome-button(icon="search" @click="onSearch")
 </template>
 
 <script>
-import ButtonNoPaddingComponent from "@/components/shared/buttons/ButtonNoPadding";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import FontAwesomeButtonComponent from "@/components/shared/buttons/FontAwesomeButton";
 
 library.add(faSearch);
 
 export default {
   components: {
-    "c-button-no-padding": ButtonNoPaddingComponent,
-    "c-font-awesome-icon": FontAwesomeIcon
+    "c-font-awesome-button": FontAwesomeButtonComponent
   },
   data() {
     return {
