@@ -1,10 +1,15 @@
 <template lang="pug">
-gc-button(type="submit" v-bind="$attrs")
+c-button(type="submit" v-bind="$attrs")
   slot
 </template>
 
 <script>
+import ButtonComponent from "@/components/shared/buttons/Button";
+
 export default {
-  inheritAttrs: false
+  inheritAttrs: false,
+  components: {
+    "c-button": ButtonComponent
+  }
 };
 </script>

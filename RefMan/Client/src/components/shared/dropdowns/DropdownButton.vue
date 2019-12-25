@@ -1,6 +1,6 @@
 <template lang="pug">
 .relative
-  gc-button.dropdown-btn(
+  c-button.dropdown-btn(
     v-bind="$attrs"
     v-external-click="hide"
     @click="isOpen = !isOpen"
@@ -11,10 +11,14 @@
 </template>
 
 <script>
+import ButtonComponent from "@/components/shared/buttons/Button";
 import ExternalClickDirective from "@/directives/ExternalClick";
 
 export default {
   inheritAttrs: false,
+  components: {
+    "c-button": ButtonComponent
+  },
   directives: {
     "external-click": ExternalClickDirective
   },

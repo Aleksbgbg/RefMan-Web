@@ -1,9 +1,7 @@
-import { setupStore } from "@/setup/Store";
+import { setupStore } from "@/setup/SetupStore";
 import { extendArray } from "@/setup/ExtendArray";
-import { registerGlobalComponents } from "@/setup/RegisterGlobalComponents";
 
 export async function performSetup() {
   extendArray();
-  registerGlobalComponents();
   await setupStore();
 }
