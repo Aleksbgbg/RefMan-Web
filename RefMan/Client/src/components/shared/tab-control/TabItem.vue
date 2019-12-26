@@ -1,6 +1,6 @@
 <template lang="pug">
 .flex.items-center.border-b-4.hover-bg-gray-200.px-2(
-  :class="isSelected ? 'border-blue-400' : 'border-transparent'"
+  :class="isSelected ? 'border-blue-400' : 'border-transparent hover-border-gray-600'"
   @click="onSelect"
 )
   slot(:isSelected="isSelected")
