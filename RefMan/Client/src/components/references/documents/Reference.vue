@@ -1,5 +1,5 @@
 <template lang="pug">
-.flex
+.flex.my-5
   .flex.flex-col.justify-end.mr-3
     c-font-awesome-button.my-1(icon="edit" @click="toggleEdit")
     c-font-awesome-button.my-1(icon="times" @click="deleteReference")
@@ -20,7 +20,7 @@
       c-citation(title="Bibliography:")
         | {{ reference.websiteName }}.
         | ({{ publishYear }}).
-        | {{ reference.pageTitle }}.
+        | {{ reference.webpageTitle }}.
         | [online]
         | Available at: {{ reference.url }}
         | [Accessed {{ accessDateReferenceFormat }}].

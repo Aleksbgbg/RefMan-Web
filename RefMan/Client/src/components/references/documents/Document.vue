@@ -1,9 +1,8 @@
 <template lang="pug">
 .p-2
   c-search(placeholder="Enter a URL to reference" @search="search")
-  .my-5
-    template(v-for="reference of document.references")
-      c-reference(:key="reference.id" :reference="reference")
+  template(v-for="reference of document.references")
+    c-reference(:key="reference.id" :reference="reference")
 </template>
 
 <script>
