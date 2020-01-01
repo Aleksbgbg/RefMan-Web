@@ -1,18 +1,16 @@
 <template lang="pug">
-li
-  c-file-system-entry(
-    image="/img/file.svg"
-    :canExpand="false"
-    :node="model"
-    @doubleClick="openTab"
-    @submitEdit="submitEdit"
-    @cancelEdit="cancelEdit"
-  )
+c-file-system-entry(
+  image="/img/file.svg"
+  :fileSystemEntry="file"
+  @submitEdit="submitEdit"
+  @cancelEdit="cancelEdit"
+  @doubleClick="openTab"
+)
 </template>
 
 <script>
 import FilePersistMixin from "@/mixins/node-persistence/FilePersist";
-import FileSystemEntryComponent from "./FileSystemEntry";
+import FileSystemEntryComponent from "@/components/references/file-system/FileSystemEntry";
 import { File } from "@/models/file-tree/File";
 import { acquireTabPropagator } from "@/services/tab-propagation/TabPropagatorFactory";
 
@@ -21,19 +19,14 @@ export default {
   components: {
     "c-file-system-entry": FileSystemEntryComponent
   },
-  provide() {
-    return {
-      parent: this
-    };
-  },
   props: {
-    model: File
+    file: File
   },
   data() {
     return {
       document: {
-        id: this.model.id,
-        name: this.model.name
+        id: this.file.id,
+        name: this.file.name
       }
     };
   },
@@ -47,13 +40,13 @@ export default {
       });
     },
     async submitEdit(newName) {
-      await this.submitNodeEdit(this.model, newName);
+      await this.submitNodeEdit(this.file, newName);
     },
     cancelEdit() {
-      this.cancelNodeEdit(this.model);
+      this.cancelNodeEdit(this.file);
     },
     async delete() {
-      await this.deleteNode(this.model);
+      await this.deleteNode(this.file);
     }
   }
 };

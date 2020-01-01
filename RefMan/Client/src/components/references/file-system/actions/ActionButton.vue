@@ -1,11 +1,12 @@
 <template lang="pug">
 button.group.relative.focus-outline-none.mx-1(
+  :disabled="disabled"
   :class="{ 'cursor-not-allowed': disabled }"
   @click="emitClick"
 )
   img(
     :class="{ 'opacity-50': disabled }"
-    :src="src"
+    :src="image"
     alt=""
     width="25"
     height="25"
@@ -16,7 +17,7 @@ button.group.relative.focus-outline-none.mx-1(
 <script>
 export default {
   props: {
-    src: String,
+    image: String,
     tooltipText: String,
     disabled: Boolean
   },

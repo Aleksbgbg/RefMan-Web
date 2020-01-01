@@ -1,7 +1,7 @@
-import { Focal } from "./Focal";
+import { Focal } from "@/services/focus-tracking/Focal";
 
 export interface FocusManager {
-    focus(focal: Focal): void;
+  focus(focal: Focal): void;
 
-    removeFocus(): void;
+  removeFocus(): void;
 }

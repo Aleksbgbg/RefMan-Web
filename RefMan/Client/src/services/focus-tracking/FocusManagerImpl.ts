@@ -1,38 +1,41 @@
-import { FocusManager } from "./FocusManager";
-import { Focal } from "./Focal";
+import { FocusManager } from "@/services/focus-tracking/FocusManager";
 import { FocusRoot } from "@/services/focus-tracking/FocusRoot";
+import { Optional } from "@/types/Optional";
+import { Focal } from "@/services/focus-tracking/Focal";
 
 export class FocusManagerImpl implements FocusManager {
-    private readonly _focusRoot: FocusRoot;
+  private readonly _focusRoot: FocusRoot;
 
-    private _currentFocal: Focal | null = null;
+  private _currentFocal: Optional<Focal> = null;
 
-    constructor(focusRoot: FocusRoot) {
-      this._focusRoot = focusRoot;
+  constructor(focusRoot: FocusRoot) {
+    this._focusRoot = focusRoot;
+  }
+
+  public focus(focal: Focal): void {
+    this.removeFocusFromCurrentFocal();
+
+    this._currentFocal = focal;
+    this._currentFocal.focusable.focus();
+
+    this.emitFocusChanged();
+  }
+
+  public removeFocus(): void {
+    this.removeFocusFromCurrentFocal();
+
+    this._currentFocal = null;
+
+    this.emitFocusChanged();
+  }
+
+  private removeFocusFromCurrentFocal(): void {
+    if (this._currentFocal) {
+      this._currentFocal.focusable.removeFocus();
     }
+  }
 
-    public focus(focal: Focal): void {
-      if (this._currentFocal) {
-        this._currentFocal.focusable.removeFocus();
-      }
-
-      this._currentFocal = focal;
-      this._currentFocal.focusable.focus();
-
-      this.emitFocusChanged();
-    }
-
-    public removeFocus(): void {
-      if (this._currentFocal) {
-        this._currentFocal.focusable.removeFocus();
-      }
-
-      this._currentFocal = null;
-
-      this.emitFocusChanged();
-    }
-
-    private emitFocusChanged(): void {
-      this._focusRoot.onFocusChanged(this._currentFocal);
-    }
+  private emitFocusChanged(): void {
+    this._focusRoot.onFocusChanged(this._currentFocal);
+  }
 }

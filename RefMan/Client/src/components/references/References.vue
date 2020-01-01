@@ -2,22 +2,22 @@
 .select-none.h-full <!-- Placeholder div to separate Main.vue .grid class from this .grid class -->
   .grid.h-full
     section.min-h-0
-      c-file-tree
+      c-file-system
     section.min-h-0
       c-document-view
 </template>
 
 <script>
 import AllowAccessWhenLoggedInMixin from "@/mixins/access-control/AllowAccessWhenLoggedIn";
-import FileTreeComponent from "./file-system/FileTree";
-import DocumentViewComponent from "./documents/DocumentView";
+import FileSystemComponent from "@/components/references/file-system/FileSystem";
+import DocumentViewComponent from "@/components/references/documents/DocumentView";
 
 export default {
   mixins: [
     AllowAccessWhenLoggedInMixin
   ],
   components: {
-    "c-file-tree": FileTreeComponent,
+    "c-file-system": FileSystemComponent,
     "c-document-view": DocumentViewComponent
   }
 };

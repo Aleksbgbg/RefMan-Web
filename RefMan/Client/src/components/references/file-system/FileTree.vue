@@ -1,168 +1,39 @@
 <template lang="pug">
-.h-full(
-  @click.self="removeFocus"
+c-tree(
+  v-if="rootFolder"
+  :rootBranch="rootFolder"
+  @focusChanged="onFocusChanged"
 )
-  .grid.h-full
-    .bg-gray-200
-      c-image-button(
-        src="/img/new-file.png"
-        tooltipText="New File"
-        :disabled="!canCreateFile"
-        @click="newFile"
-      )
-      c-image-button(
-        src="/img/new-folder.png"
-        tooltipText="New Folder"
-        :disabled="!canCreateFolder"
-        @click="newFolder"
-      )
-      c-image-button(
-        src="/img/rename.png"
-        tooltipText="Rename Selected"
-        :disabled="!canEdit"
-        @click="renameNode"
-      )
-      c-image-button(
-        src="/img/delete.png"
-        tooltipText="Delete Selected"
-        :disabled="!canDelete"
-        @click="showDeleteDialog"
-      )
-    .overflow-auto.whitespace-no-wrap
-      c-node-list(v-if="rootFolder" :model="rootFolder")
-  c-dialog(
-    v-if="deleteDialogOpen"
-    title="Are you sure?"
-    :isOpen="deleteDialogOpen"
-    @ok="deleteNode"
-    @cancel="deleteDialogOpen = false"
-  )
-    p
-      | Delete folder
-      |
-      span.font-semibold {{ focal.node.name }}
-      | ?
+  template(#branch="{ branch, isExpanded }")
+    c-folder(
+      :isExpanded="isExpanded"
+      :folder="branch"
+    )
+  template(#leaf="{ leaf }")
+    c-file(
+      :file="leaf"
+    )
 </template>
 
 <script>
-import DialogComponent from "@/components/shared/Dialog";
-import ImageButtonComponent from "@/components/references/file-system/ImageButton";
-import NodeListComponent from "./NodeList";
+import TreeComponent from "@/components/shared/tree/Tree";
+import FolderComponent from "@/components/references/file-system/Folder";
+import FileComponent from "@/components/references/file-system/File";
 import { Folder } from "@/models/file-tree/Folder";
-import { File } from "@/models/file-tree/File";
-import { createFocusManager } from "@/services/focus-tracking/FocusTrackingFactory";
-import { folderClient } from "@/services/api-clients/FolderClient";
 
 export default {
   components: {
-    "c-dialog": DialogComponent,
-    "c-image-button": ImageButtonComponent,
-    "c-node-list": NodeListComponent
+    "c-tree": TreeComponent,
+    "c-folder": FolderComponent,
+    "c-file": FileComponent
   },
-  provide() {
-    return {
-      focusManager: this.focusManager
-    };
-  },
-  data() {
-    return {
-      focal: null,
-      rootFolder: null,
-      deleteDialogOpen: false
-    };
-  },
-  computed: {
-    canCreateFile() {
-      return this.focalAcceptsChildren;
-    },
-    canCreateFolder() {
-      return this.focalAcceptsChildren;
-    },
-    canEdit() {
-      return this.focal && !this.focal.node.isEditing;
-    },
-    canDelete() {
-      return this.focal;
-    },
-    focalAcceptsChildren() {
-      return !this.focal || this.focal.node.existsInPersistentStore;
-    }
-  },
-  beforeCreate() {
-    this.focusManager = createFocusManager(this);
-  },
-  async created() {
-    const rootFolderResult = await folderClient.getRoot();
-    this.rootFolder = Folder.fromRootFolderResult(rootFolderResult);
+  props: {
+    rootFolder: Folder
   },
   methods: {
-    onFocusChanged(focal) {
-      this.focal = focal;
-    },
-    removeFocus() {
-      this.focusManager.removeFocus();
-    },
-    newFile() {
-      this.addNewNode(File.new(), (folder) => folder.addFile.bind(folder));
-    },
-    newFolder() {
-      this.addNewNode(Folder.new(), (folder) => folder.addFolder.bind(folder));
-    },
-    renameNode() {
-      this.focal.node.beginEditing();
-    },
-    showDeleteDialog() {
-      if (this.focal.node.existsInPersistentStore) {
-        this.deleteDialogOpen = true;
-      } else {
-        this.deleteNode();
-      }
-    },
-    async deleteNode() {
-      this.deleteDialogOpen = false;
-
-      const focal = this.focal;
-
-      this.removeFocus();
-
-      const currentNode = focal.node;
-      const currentNodeParent = currentNode.parent;
-      currentNodeParent.remove(currentNode);
-
-      if (currentNode.existsInPersistentStore) {
-        await focal.deletable.delete();
-      }
-    },
-    addNewNode(node, addFunction) {
-      const closestFolderToFocus = this.findClosestFolderToFocus();
-      closestFolderToFocus.allowExpansion();
-      closestFolderToFocus.expand();
-
-      node.beginEditing();
-
-      addFunction(closestFolderToFocus)(node);
-    },
-    findClosestFolderToFocus() {
-      const currentFocal = this.focal;
-
-      if (currentFocal === null) {
-        return this.rootFolder;
-      } else {
-        const currentNode = currentFocal.node;
-
-        if (currentNode.isLeaf) {
-          return currentNode.parent;
-        } else {
-          return currentNode;
-        }
-      }
+    onFocusChanged(fileSystemEntry) {
+      this.$emit("focusChanged", fileSystemEntry);
     }
   }
 };
 </script>
-
-<style lang="stylus" scoped>
-.grid
-  display: grid
-  grid-template-rows: auto 1fr
-</style>

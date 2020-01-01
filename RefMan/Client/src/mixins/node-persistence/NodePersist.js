@@ -1,37 +1,35 @@
 export function createNodePersist(
   nodeClient,
-  getSortNodesFunc
+  nodeFactory
 ) {
-  function cancelNodeCreation(node) {
-    node.parent.remove(node);
-  }
-
   async function createNode(node, name) {
-    const nodeResult = await nodeClient.createNode({
+    if (!node.parentId) {
+      throw new Error("Trying to create a root node (not allowed as these are pre-populated).");
+    }
+
+    const createdNode = await nodeClient.createNode({
       parentIdString: node.parentId,
       name
     });
 
-    node.id = nodeResult.idString;
-    node.name = nodeResult.name;
+    const nodeParent = node.parent;
+    const newNode = nodeFactory.createNodeFromIdAndName(createdNode.idString, createdNode.name);
 
-    sortSubnodesByName(node.parent);
+    nodeParent.remove(node);
+    nodeParent.add(newNode);
   }
 
   async function renameNode(node, newName) {
     const nodeResult = await nodeClient.updateNode(node.id, newName);
-
     node.name = nodeResult.name;
-
-    sortSubnodesByName(node.parent);
-  }
-
-  function sortSubnodesByName(node) {
-    getSortNodesFunc(node)();
   }
 
   function isValidNewName(newName) {
     return newName !== "";
+  }
+
+  function cancelNodeCreation(node) {
+    node.parent.remove(node);
   }
 
   return {

@@ -1,11 +1,8 @@
-import { Focusable } from "./Focusable";
-import { Deletable } from "@/services/focus-tracking/Deletable";
-import { Node } from "@/models/file-tree/Node";
+import { Focusable } from "@/services/focus-tracking/Focusable";
+import { Node } from "@/models/tree/Node";
 
 export interface Focal {
-    focusable: Focusable;
+  focusable: Focusable;
 
-    deletable: Deletable;
-
-    node: Node;
+  node: Node;
 }

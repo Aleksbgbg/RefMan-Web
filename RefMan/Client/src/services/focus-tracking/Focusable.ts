@@ -1,5 +1,5 @@
 export interface Focusable {
-    focus(): void;
+  focus(): void;
 
-    removeFocus(): void;
+  removeFocus(): void;
 }

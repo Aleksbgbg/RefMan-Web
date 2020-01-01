@@ -1,7 +1,5 @@
 import { createNodePersist } from "@/mixins/node-persistence/NodePersist";
 import { folderClient } from "@/services/api-clients/FolderClient";
+import { folderFactory } from "@/services/FolderFactory";
 
-export default createNodePersist(
-  folderClient,
-  (parent) => parent.sortFolders.bind(parent)
-);
+export default createNodePersist(folderClient, folderFactory);

@@ -11,7 +11,7 @@
     using RefMan.Models.Repositories.FileSystem;
     using RefMan.Models.User;
 
-    public class FileSystemControllerBase : ControllerBase
+    public class FileSystemControllerBase : ControllerBaseWrapper
     {
         private readonly UserManager<AppUser> _userManager;
 
@@ -41,38 +41,51 @@
                 string getHandlerName
         )
         {
-            NodeOrResponse parentNodeOrResponse = await EnsureNodeExistsAndOwnedByCurrentUser(_folderRepository, entryCreation.ParentId);
-
-            if (parentNodeOrResponse.HasNode)
+            if (ModelState.IsValid)
             {
-                Node parent = parentNodeOrResponse.Node;
+                NodeOrResponse parentNodeOrResponse = await EnsureNodeExistsAndOwnedByCurrentUser(_folderRepository, entryCreation.ParentId);
 
-                Node createdNode = await repository.CreateNode(parent.Id, parent.OwnerId, entryCreation.Name);
+                if (parentNodeOrResponse.HasNode)
+                {
+                    Node parent = parentNodeOrResponse.Node;
 
-                var resourceParams = new { createdNode.Id };
-                string resourceUrl = Url.Action(getHandlerName, resourceParams);
+                    Node createdNode = await repository.CreateNode(parent.Id, parent.OwnerId, entryCreation.Name);
 
-                return Created(resourceUrl, new NodeResult(createdNode));
+                    var resourceParams = new
+                    {
+                        createdNode.Id
+                    };
+                    string resourceUrl = Url.Action(getHandlerName, resourceParams);
+
+                    return Created(resourceUrl, new NodeResult(createdNode));
+                }
+
+                return parentNodeOrResponse.Response;
             }
 
-            return parentNodeOrResponse.Response;
+            return ValidationFailed();
         }
 
         protected async Task<ActionResult<NodeResult>> UpdateNode(IFileSystemRepository repository, long id, EntryEdit entryEdit)
         {
-            NodeOrResponse nodeOrResponse = await EnsureNodeExistsAndOwnedByCurrentUser(repository, id);
-
-            if (nodeOrResponse.HasNode)
+            if (ModelState.IsValid)
             {
-                Node node = nodeOrResponse.Node;
-                node.Name = entryEdit.Name;
+                NodeOrResponse nodeOrResponse = await EnsureNodeExistsAndOwnedByCurrentUser(repository, id);
 
-                await repository.UpdateNode(node);
+                if (nodeOrResponse.HasNode)
+                {
+                    Node node = nodeOrResponse.Node;
+                    node.Name = entryEdit.Name;
 
-                return Ok(new NodeResult(node));
+                    await repository.UpdateNode(node);
+
+                    return Ok(new NodeResult(node));
+                }
+
+                return nodeOrResponse.Response;
             }
 
-            return nodeOrResponse.Response;
+            return ValidationFailed();
         }
 
         protected async Task<IActionResult> DeleteNode(IFileSystemRepository repository, long id)

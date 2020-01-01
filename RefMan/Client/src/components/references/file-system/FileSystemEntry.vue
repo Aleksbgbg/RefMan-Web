@@ -1,129 +1,80 @@
 <template lang="pug">
-.flex
-  .flex.items-center.expander.px-1(@click="onToggleExpansion")
-    .bg-cover.expand-image(
-      :class="[{ invisible: !canExpand }, isExpandedLocal ? 'expanded' : 'collapsed']"
+.flex(@dblclick="onDoubleClick")
+  .w-px-25
+    img(
+      :src="image"
+      alt=""
+      height="25"
+      width="25"
     )
-  .flex.px-1(
-    :class="isSelected ? 'bg-blue-300' : 'hover-bg-blue-200'"
-    @click="click"
-    @dblclick="onDoubleClickNode"
-  )
-    .w-px-25
-      img(
-        :src="isExpandedLocal ? imageExpanded : image"
-        alt=""
-        height="25"
-        width="25"
-      )
-    .ml-1
-      span(v-show="!isEditing") {{ node.name }}
-      input.outline-none.bg-transparent.border.border-solid.border-black(
-        v-if="isEditing"
-        ref="nameInput"
-        type="text"
-        v-model="nodeLocalName"
-        @keyup.enter="submitEdit"
-        @keyup.esc="cancelEdit"
-      )
+  .ml-1
+    span(v-show="!isEditing") {{ fileSystemEntry.name }}
+    input.outline-none.bg-transparent.border.border-solid.border-black(
+      v-if="isEditing"
+      ref="nameInput"
+      type="text"
+      v-model="localName"
+      @keyup.enter="onSubmitEdit"
+      @keyup.esc="onCancelEdit"
+    )
 </template>
 
 <script>
-import { Node } from "@/models/file-tree/Node";
+import { FileSystemEntry } from "@/models/file-tree/FileSystemEntry";
 
 export default {
-  inject: [
-    "focusManager",
-    "parent"
-  ],
+  inject: ["treeNode"],
   props: {
     image: String,
-    imageExpanded: String,
-    canExpand: Boolean,
-    isExpanded: Boolean,
-    node: Node
+    fileSystemEntry: FileSystemEntry
   },
   data() {
     return {
-      isSelected: false,
-      nodeLocalName: this.node.name
+      localName: this.fileSystemEntry.name
     };
   },
   computed: {
-    isExpandedLocal() {
-      return this.canExpand && this.isExpanded;
-    },
     isEditing() {
-      return this.node.isEditing;
+      return this.fileSystemEntry.isEditing;
+    },
+    isFocused() {
+      return this.treeNode.isFocused;
     }
   },
   watch: {
     isEditing() {
       this.focusNameInputIfEditing();
+    },
+    isFocused() {
+      if (this.isEditing && !this.isFocused) {
+        this.onSubmitEdit();
+      }
     }
   },
   mounted() {
     this.focusNameInputIfEditing();
   },
-  beforeDestroy() {
-    if (this.isSelected) {
-      this.focusManager.removeFocus();
-    }
-  },
   methods: {
     focusNameInputIfEditing() {
       if (this.isEditing) {
-        this.focusSelf();
+        this.treeNode.focusSelf();
         this.$nextTick(() => {
-          this.$refs.nameInput.focus();
-          this.$refs.nameInput.setSelectionRange(0, this.node.name.length);
+          const nameInput = this.$refs.nameInput;
+
+          nameInput.focus();
+          nameInput.setSelectionRange(0, this.localName.length);
         });
-      }
-    },
-    click() {
-      this.focusSelf();
-    },
-    focusSelf() {
-      if (!this.isSelected) {
-        this.focusManager.focus({
-          focusable: this,
-          deletable: this.parent,
-          node: this.node
-        });
-      }
-    },
-    focus() {
-      this.isSelected = true;
-    },
-    removeFocus() {
-      this.isSelected = false;
-      if (this.isEditing) {
-        this.submitEdit();
-      }
-    },
-    submitEdit() {
-      this.node.stopEditing();
-      this.onSubmitEdit();
-    },
-    cancelEdit() {
-      this.node.stopEditing();
-      this.nodeLocalName = this.node.name;
-      this.onCancelEdit();
-    },
-    onDoubleClickNode() {
-      this.$emit("doubleClick");
-      this.onToggleExpansion();
-    },
-    onToggleExpansion() {
-      if (this.node.canExpand) {
-        this.$emit("toggleExpansion");
       }
     },
     onSubmitEdit() {
-      this.$emit("submitEdit", this.nodeLocalName);
+      this.$emit("submitEdit", this.localName);
     },
     onCancelEdit() {
+      this.localName = this.fileSystemEntry.name;
       this.$emit("cancelEdit");
+    },
+    onDoubleClick() {
+      this.$emit("doubleClick");
     }
   }
 };
@@ -132,23 +83,4 @@ export default {
 <style lang="stylus" scoped>
 .w-px-25
   width: 25px
-
-.expander
-  .expand-image
-    width: 8px
-    height: 12px
-
-    &.collapsed
-      background-image: url("/img/expand.svg")
-
-    &.expanded
-      background-image: url("/img/expanded.svg")
-
-  &:hover
-    .expand-image
-      &.collapsed
-        background-image: url("/img/expand-select.svg")
-
-      &.expanded
-        background-image: url("/img/expanded-select.svg")
 </style>
