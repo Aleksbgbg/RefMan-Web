@@ -11,6 +11,7 @@ namespace RefMan
     using Microsoft.Extensions.Hosting;
     using Microsoft.OpenApi.Models;
 
+    using RefMan.Controllers.Crud;
     using RefMan.Infrastructure;
     using RefMan.Infrastructure.ServiceCollectionExtensions;
     using RefMan.Models.Database;
@@ -50,7 +51,10 @@ namespace RefMan
             services.AddTransient<IFolderRepository>(serviceProvider => serviceProvider.GetService<FolderRepository>());
             services.AddTransient<IRootFolderRepository>(serviceProvider => serviceProvider.GetService<FolderRepository>());
             services.AddTransient<IFileRepository, FileRepository>();
+
             services.AddReferencingService();
+
+            services.AddTransient<ICrudControllerFactory, CrudControllerFactory>();
 
             services.AddSwaggerGen(options => options.SwaggerDoc("v1",
                                                                  new OpenApiInfo
