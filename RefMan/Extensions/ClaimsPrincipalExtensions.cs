@@ -11,7 +11,13 @@
 
         public static string ReadUsername(this ClaimsPrincipal claimsPrincipal)
         {
-            return claimsPrincipal.FindFirst(ClaimTypes.Name).Value;
+            return claimsPrincipal.FindFirst(ClaimTypes.Name)
+                                  .Value;
+        }
+
+        public static long ReadId(this ClaimsPrincipal claimsPrincipal)
+        {
+            return long.Parse(claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier).Value);
         }
     }
 }
