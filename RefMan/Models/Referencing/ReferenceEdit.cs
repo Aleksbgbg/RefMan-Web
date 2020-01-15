@@ -1,6 +1,6 @@
 ﻿namespace RefMan.Models.Referencing
 {
-    public class ReferenceEdit : ReferenceInfoBase
+    public class ReferenceEdit : BasicReferenceInfoBase
     {
     }
 }
