@@ -12,6 +12,7 @@ namespace RefMan
     using Microsoft.OpenApi.Models;
 
     using RefMan.Infrastructure;
+    using RefMan.Infrastructure.ServiceCollectionExtensions;
     using RefMan.Models.Database;
     using RefMan.Models.Repositories.FileSystem;
     using RefMan.Models.User;
@@ -49,6 +50,7 @@ namespace RefMan
             services.AddTransient<IFolderRepository>(serviceProvider => serviceProvider.GetService<FolderRepository>());
             services.AddTransient<IRootFolderRepository>(serviceProvider => serviceProvider.GetService<FolderRepository>());
             services.AddTransient<IFileRepository, FileRepository>();
+            services.AddReferencingService();
 
             services.AddSwaggerGen(options => options.SwaggerDoc("v1",
                                                                  new OpenApiInfo
