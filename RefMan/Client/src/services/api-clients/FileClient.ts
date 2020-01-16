@@ -2,6 +2,7 @@ import { ApiClientBase } from "./ApiClientBase";
 import { NodeClient } from "@/services/api-clients/NodeClient";
 import { EntryCreation } from "@/models/file-system/EntryCreation";
 import { NodeResult } from "@/models/file-system/NodeResult";
+import { DocumentResult } from "@/models/referencing/DocumentResult";
 
 class FileClient extends ApiClientBase implements NodeClient {
   constructor() {
@@ -22,6 +23,10 @@ class FileClient extends ApiClientBase implements NodeClient {
 
   public deleteNode(id: string): Promise<void> {
     return this.deleteFile(id);
+  }
+
+  public getFileDocument(id: string): Promise<DocumentResult> {
+    return this.get(`${id}/document`);
   }
 
   public getFile(id: string): Promise<NodeResult> {

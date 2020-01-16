@@ -8,5 +8,7 @@
         }
 
         public long Id { get; }
+        
+        public string IdString => Id.ToString();
     }
 }
