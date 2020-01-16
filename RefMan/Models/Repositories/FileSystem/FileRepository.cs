@@ -3,6 +3,8 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
+
     using RefMan.Models.Database;
     using RefMan.Models.FileSystem;
     using RefMan.Models.Referencing;
@@ -44,6 +46,14 @@
             await _appDbContext.SaveChangesAsync();
 
             return file;
+        }
+
+        public Document GetDocumentForFileId(long id)
+        {
+            return _appDbContext.Files
+                                .Include(file => file.Document)
+                                .Single(file => file.Id == id)
+                                .Document;
         }
     }
 }
