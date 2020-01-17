@@ -46,6 +46,11 @@ namespace RefMan.Controllers.Crud
 
         public async Task<ActionResult<T>> Post()
         {
+            if (!_crudCompatible.ResourceExists())
+            {
+                return NotFound();
+            }
+
             if (!_crudCompatible.UserHasAccess())
             {
                 return Forbid();
