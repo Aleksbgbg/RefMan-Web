@@ -111,7 +111,11 @@ namespace RefMan.Controllers
             await _documentRepository.CreateReference(reference);
 
             return new CreationResult<Reference>(
-                Url.Action(nameof(GetReference), values: new { referenceId = _referenceId }),
+                Url.Action(nameof(GetReference), values: new
+                {
+                    documentId = _documentId,
+                    referenceId = reference.Id
+                }),
                 reference
             );
         }
