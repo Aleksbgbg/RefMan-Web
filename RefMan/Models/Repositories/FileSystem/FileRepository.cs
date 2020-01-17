@@ -52,6 +52,7 @@
         {
             return _appDbContext.Files
                                 .Include(file => file.Document)
+                                .ThenInclude(document => document.References)
                                 .Single(file => file.Id == id)
                                 .Document;
         }
