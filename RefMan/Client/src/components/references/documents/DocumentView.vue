@@ -19,9 +19,13 @@ c-tab-control(
 </template>
 
 <script>
+import { FileDocumentGraph } from "@/data-structures/FileDocumentGraph";
 import TabControlComponent from "@/components/shared/tab-control/TabControl";
 import DocumentComponent from "@/components/references/documents/Document";
 import { createTabPropagator } from "@/services/tab-propagation/TabPropagatorFactory";
+import { fileDocumentExpander } from "@/services/FileDocumentExpander";
+
+const fileDocumentGraph = new FileDocumentGraph();
 
 export default {
   components: {
@@ -37,16 +41,23 @@ export default {
     createTabPropagator(this);
   },
   methods: {
-    open(tab) {
-      const document = tab.document;
+    async open(tab) {
+      const file = tab.file;
+      let document;
 
-      if (!this.documents.includes(document)) {
+      if (fileDocumentGraph.containsFile(file)) {
+        document = fileDocumentGraph.getDocument(file);
+      } else {
+        document = await fileDocumentExpander.getDocumentFor(file);
+
+        fileDocumentGraph.add({ file, document });
         this.documents.push(document);
       }
 
       this.selectTab(document);
     },
     close(document) {
+      fileDocumentGraph.removeDocument(document);
       this.documents.remove(document);
     },
     selectTab(document) {
