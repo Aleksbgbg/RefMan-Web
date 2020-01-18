@@ -31,7 +31,7 @@
                 Url = url,
                 IconUrl = EnsureUrlRootedTo(pageSearcher.FindWebsiteIconUrl(), url),
                 WebpageTitle = pageSearcher.FindWebpageTitle(),
-                WebsiteName = pageSearcher.FindWebsiteName() ?? url
+                WebsiteName = pageSearcher.FindWebsiteName() ?? new Uri(url).Authority
             };
         }
 
@@ -44,7 +44,7 @@
 
             Uri rootUri = new Uri(rootUrl);
 
-            return $"{rootUri.Scheme}://{rootUri.Authority}/{url}";
+            return $"{rootUri.Scheme}://{rootUri.Authority}{url}";
         }
 
         private static bool IsAbsoluteUrl(string url)
