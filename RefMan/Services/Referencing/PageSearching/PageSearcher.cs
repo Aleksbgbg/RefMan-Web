@@ -37,6 +37,7 @@
                     contentExtractionStrategyFactory.ExtractAttributeByName("href");
 
             _websiteIconUrlSearch = PageSearch.NewBuilder()
+                                              .AddSearchCriteria("/html/head/link[@rel='icon']", extractHrefAttribute)
                                               .AddSearchCriteria("/html/head/link[@rel='shortcut icon']", extractHrefAttribute)
                                               .SetDefault("/favicon.ico")
                                               .Build();
