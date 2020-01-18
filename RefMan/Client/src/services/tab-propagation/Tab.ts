@@ -1,5 +1,5 @@
-import { Document } from "@/models/referencing/Document";
+import { File } from "@/models/file-tree/File";
 
 export interface Tab {
-  document: Document
+  file: File
 }

@@ -22,22 +22,12 @@ export default {
   props: {
     file: File
   },
-  data() {
-    return {
-      document: {
-        id: this.file.id,
-        name: this.file.name
-      }
-    };
-  },
   created() {
     this.tabPropagator = acquireTabPropagator();
   },
   methods: {
     openTab() {
-      this.tabPropagator.openTab({
-        document: this.document
-      });
+      this.tabPropagator.openTab({ file: this.file });
     },
     async submitEdit(newName) {
       await this.submitNodeEdit(this.file, newName);
