@@ -1,9 +1,11 @@
+import { Optional } from "@/types/Optional";
+
 export interface Reference {
   id: string;
 
   accessDate: Date;
 
-  publishYear: null | Number;
+  publishYear: Optional<Number>;
 
   websiteName: string;
 
