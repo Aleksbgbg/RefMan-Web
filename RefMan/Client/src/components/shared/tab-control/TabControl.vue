@@ -1,5 +1,5 @@
 <template lang="pug">
-div
+.tab-control-grid
   .flex.border-b-2
     template(v-for="item of items")
       c-tab-item(
@@ -60,3 +60,9 @@ export default {
   }
 };
 </script>
+
+<style lang="stylus" scoped>
+.tab-control-grid
+  display: grid
+  grid-template-rows: auto minmax(0, 1fr)
+</style>

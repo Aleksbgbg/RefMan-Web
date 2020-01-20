@@ -1,8 +1,9 @@
 <template lang="pug">
-.p-2
+.grid.h-full.px-2.pt-2
   c-search(placeholder="Enter a URL to reference" @search="search")
-  template(v-for="reference of document.references")
-    c-reference(:key="reference.id" :reference="reference")
+  .overflow-y-scroll.mt-2
+    template(v-for="reference of document.references")
+      c-reference(:key="reference.id" :reference="reference")
 </template>
 
 <script>
@@ -26,3 +27,9 @@ export default {
   }
 };
 </script>
+
+<style lang="stylus" scoped>
+.grid
+  display: grid
+  grid-template-rows: auto 1fr
+</style>

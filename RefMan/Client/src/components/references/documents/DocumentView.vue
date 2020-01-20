@@ -1,5 +1,5 @@
 <template lang="pug">
-c-tab-control(
+c-tab-control.h-full(
   ref="tabControl"
   :items="documents"
   @close="close"
