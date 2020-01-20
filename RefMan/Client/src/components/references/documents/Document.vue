@@ -9,6 +9,7 @@
 import SearchComponent from "@/components/shared/Search";
 import ReferenceComponent from "@/components/references/documents/Reference";
 import { Document } from "@/models/referencing/Document";
+import { referencer } from "@/services/Referencer";
 
 export default {
   components: {
@@ -19,7 +20,8 @@ export default {
     document: Document
   },
   methods: {
-    search(query) {
+    async search(query) {
+      await referencer.addReference(this.document, query);
     }
   }
 };
