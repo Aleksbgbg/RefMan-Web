@@ -34,6 +34,7 @@ li
 <script>
 import FocusableNodeComponent from "@/components/shared/tree/FocusableNode";
 import { Branch } from "@/models/tree/Branch";
+import { treeCache } from "@/services/TreeCache";
 
 export default {
   components: {
@@ -51,6 +52,11 @@ export default {
       return this.branch.isExpanded;
     }
   },
+  mounted() {
+    if (treeCache.isToggled(this.branch.id)) {
+      this.branch.expand();
+    }
+  },
   methods: {
     toggleExpansion() {
       if (this.canExpand) {
@@ -59,6 +65,7 @@ export default {
         } else {
           this.branch.expand();
         }
+        treeCache.toggle(this.branch.id);
       }
     }
   }
