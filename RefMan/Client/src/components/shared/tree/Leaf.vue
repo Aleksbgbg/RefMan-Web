@@ -1,7 +1,7 @@
 <template lang="pug">
 li
   .flex
-    .context-box.w-px-8.px-1
+    .content-box.w-px-8.px-1
     c-focusable-node(:node="leaf")
       slot(:leaf="leaf")
 </template>
