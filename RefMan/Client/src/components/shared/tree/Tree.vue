@@ -1,16 +1,17 @@
 <template lang="pug">
-c-node-list(:branch="rootBranch")
-  template(#branch="{ branch, isExpanded }")
-    slot(
-      name="branch"
-      :branch="branch"
-      :isExpanded="isExpanded"
-    )
-  template(#leaf="{ leaf }")
-    slot(
-      name="leaf"
-      :leaf="leaf"
-    )
+.overflow-auto.whitespace-no-wrap
+  c-node-list(:branch="rootBranch")
+    template(#branch="{ branch, isExpanded }")
+      slot(
+        name="branch"
+        :branch="branch"
+        :isExpanded="isExpanded"
+      )
+    template(#leaf="{ leaf }")
+      slot(
+        name="leaf"
+        :leaf="leaf"
+      )
 </template>
 
 <script>
